@@ -1,0 +1,7 @@
+{
+  "name": "tm_app_front",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
