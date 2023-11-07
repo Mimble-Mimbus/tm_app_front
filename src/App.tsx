@@ -1,7 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import { IonApp, IonButtons, IonHeader, IonMenuButton, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,19 +18,31 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Router from './components/Router';
+import Menu from './components/Menu';
+import { IonReactRouter } from '@ionic/react-router';
+import { Route } from 'react-router';
+import Footer from './components/Footer';
 
 setupIonicReact();
 
+const menuId = "test"
+
 const App: React.FC = () => (
   <IonApp>
+    <Menu id={menuId} />
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons>
+          test
+          <IonMenuButton />
+        </IonButtons>
+        <IonTitle>Menu</IonTitle>
+      </IonToolbar>
+    </IonHeader>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
+        <Route path="/tabs" component={Router} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

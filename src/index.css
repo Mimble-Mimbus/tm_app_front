@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.test {
+  background-color: rgb(245, 240, 255);
+}
+
+.ion-color-purple {
+  --ion-color-base: #3D1B47
+}
