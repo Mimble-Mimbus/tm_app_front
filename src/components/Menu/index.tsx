@@ -1,8 +1,7 @@
 import { FC } from "react";
 import MenuLink from './Link'
-import { IonContent, IonHeader, IonMenu, IonTitle, IonToolbar } from "@ionic/react";
 
-const Menu: FC<{ id: string}> = ({ id }) => {
+const Menu: FC = () => {
   const linkList = [{
     title: 'Terra Mimbusia',
     path: '/terra-mimbusia',
@@ -33,17 +32,11 @@ const Menu: FC<{ id: string}> = ({ id }) => {
   }]
 
   return (
-    <IonMenu>
-      <IonHeader>
-          <IonToolbar>
-            <IonTitle>Menu Content</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">This is the menu content.</IonContent>
-      {/* {linkList.map((link, index) => (
+    <nav>
+      {linkList.map((link, index) => (
         <MenuLink key={index} link={link.path} content={link.title} />
-      ))} */}
-    </IonMenu>
+      ))}
+    </nav>
   )
 }
 

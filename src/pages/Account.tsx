@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Account: FC = () => {
-  return (<div>Account</div>)
+  return (<IonPage>Account</IonPage>)
 }
 
 export default Account

@@ -1,4 +1,4 @@
-import { IonApp, IonButtons, IonHeader, IonMenuButton, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar, setupIonicReact } from '@ionic/react';
+import { IonApp, IonContent, IonFooter, IonHeader, IonImg, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -19,33 +19,40 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Router from './components/Router';
-import Menu from './components/Menu';
 import { IonReactRouter } from '@ionic/react-router';
-import { Route } from 'react-router';
+import Menu from './components/Menu';
 import Footer from './components/Footer';
+import HeaderMobile from './components/HeaderMobile';
+import HeaderWeb from './components/HeaderWeb';
+import { isMobile } from './util';
+import imgUrl from './assets/img/dishonored.jpg'
 
 setupIonicReact();
 
-const menuId = "test"
-
-const App: React.FC = () => (
-  <IonApp>
-    <Menu id={menuId} />
-    <IonHeader>
-      <IonToolbar>
-        <IonButtons>
-          test
-          <IonMenuButton />
-        </IonButtons>
-        <IonTitle>Menu</IonTitle>
-      </IonToolbar>
-    </IonHeader>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/tabs" component={Router} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const menuId = "navMenu"
+const App: React.FC = () => {
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonMenu contentId={menuId} menuId="navMenuControl">
+          <IonHeader>
+            <IonImg src={imgUrl} alt="dishonored" />
+          </IonHeader>
+          <IonContent color={"purple"} className="ion-padding">
+            <Menu />
+          </IonContent>
+        </IonMenu>
+        <IonPage id={menuId}>
+          {isMobile ? <HeaderMobile /> : <HeaderWeb />}
+          <IonContent>
+            <Router />
+          </IonContent>
+          {isMobile && <Footer />}
+        </IonPage>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
 
 export default App;

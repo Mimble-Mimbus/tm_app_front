@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const InteractiveMap: FC = () => {
-  return (<div>InteractiveMap</div>)
+  return (<IonPage>InteractiveMap</IonPage>)
 }
 
 export default InteractiveMap

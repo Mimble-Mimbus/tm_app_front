@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const VoluntaryInteface: FC = () => {
-  return (<div>VoluntaryInteface</div>)
+  return (<IonPage>VoluntaryInteface</IonPage>)
 }
 
 export default VoluntaryInteface

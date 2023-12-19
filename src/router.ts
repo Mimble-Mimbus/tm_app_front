@@ -1,58 +1,59 @@
 export type PageType = "all" | "app" | "web"
 
 interface RouteData {
-  path: string
-  componentPath: string
-  type?: PageType
+  readonly path: string
+  readonly pageName :string
+  readonly type?: PageType
 }
 
-export const router: RouteData[] = [{
+// @ts-ignore
+export const router = [{
     path: '/animation-creation',
-    componentPath: '../pages/AnimationCreation.tsx',
+    pageName: 'AnimationCreation',
     type: 'all',
   }, {
     path: '/animation/:id',
-    componentPath: "../pages/Animation.tsx",
+    pageName: "Animation",
     type: 'all',
   }, {
     path: '/quest',
-    componentPath: "../pages/Quest.tsx",
+    pageName: "Quest",
     type: 'all',
   }, {
     path: '/accueil',
-    componentPath: "../pages/Accueil.tsx",
+    pageName: "Accueil",
     type: 'app',
   }, {
     path: '/informations',
-    componentPath: "../pages/Informations.tsx",
+    pageName: "Informations",
     type: 'all',
   }, {
     path: '/QRCode',
-    componentPath: "../pages/QRCode.tsx",
+    pageName: "QRCode",
     type: "app",
   }, {
     path: '/mimble-mibus',
-    componentPath: "../pages/MimbleMimbus.tsx",
+    pageName: "MimbleMimbus",
     type: 'app',
   }, {
     path: '/account',
-    componentPath: "../pages/Account.tsx",
+    pageName: "Account",
     type: 'all',
   }, {
     path: '/animations',
-    componentPath: "../pages/ListAnimations.tsx",
+    pageName: "ListAnimations",
     type: 'all',
   }, {
     path: '/caracter-card',
-    componentPath: "../pages/CaracterCard.tsx",
+    pageName: "CaracterCard",
     type: 'all',
   }, {
     path: '/voluntary-interface',
-    componentPath: "../pages/VoluntaryInterface.tsx",
+    pageName: "VoluntaryInterface",
     type: 'web',
   }, {
     path: '/interactive-map',
-    componentPath: "../pages/InteractiveMap.tsx",
+    pageName: "InteractiveMap",
     type: "all",
   }
-]
+] as const satisfies RouteData[]

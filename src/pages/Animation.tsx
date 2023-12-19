@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Animation: FC = () => {
-  return (<div>Animation</div>)
+  return (<IonPage>Animation</IonPage>)
 }
 
 export default Animation

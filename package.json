@@ -11,7 +11,10 @@
     "test.unit": "vitest",
     "lint": "eslint",
     "ios": "npx cap run ios",
-    "android": "npx cap run android"
+    "android": "npx cap run android",
+    "sync:android": "npm run build && npx cap sync android",
+    "sync:ios": "npm run build && npx cap sync ios",
+    "sync": "vite build && npx cap sync android && npx cap sync ios"
   },
   "dependencies": {
     "@capacitor/android": "^5.3.0",

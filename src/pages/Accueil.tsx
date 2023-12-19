@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Accueil: FC = () => {
-  return (<div>Accueil</div>)
+  return (<IonPage>Accueil</IonPage>)
 }
 
 export default Accueil

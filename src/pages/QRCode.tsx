@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const QRCode: FC = () => {
-  return (<div>QRCode</div>)
+  return (<IonPage>QRCode</IonPage>)
 }
 
 export default QRCode

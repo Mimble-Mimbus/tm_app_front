@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Quest: FC = () => {
-  return (<div>Quest</div>)
+  return (<IonPage>Quest</IonPage>)
 }
 
 export default Quest

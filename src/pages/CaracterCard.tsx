@@ -1,7 +1,8 @@
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const CaracterCard: FC = () => {
-  return (<div>CaracterCard</div>)
+  return (<IonPage>CaracterCard</IonPage>)
 }
 
 export default CaracterCard

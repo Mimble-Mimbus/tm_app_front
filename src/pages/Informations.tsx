@@ -1,8 +1,8 @@
-import { IonContent } from "@ionic/react"
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Informations: FC = () => {
-  return (<IonContent>Informations</IonContent>)
+  return (<IonPage>Informations</IonPage>)
 }
 
 export default Informations

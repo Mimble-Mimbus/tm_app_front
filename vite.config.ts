@@ -8,9 +8,15 @@ export default defineConfig({
     react(),
     legacy()
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+  esbuild: {
+    supported: {
+      'top-level-await': true
+    },
+    target: 'esnext'
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext'
+    }
   }
 })

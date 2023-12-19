@@ -1,9 +1,16 @@
-import { IonFooter, IonTabBar } from "@ionic/react";
 import { FC, PropsWithChildren } from "react";
+import { personOutline } from 'ionicons/icons'
+import IconButton from "./IconeButton";
+import { IonFooter } from "@ionic/react";
 
-const Footer: FC<PropsWithChildren> = ({ children }) => {
+const Footer: FC<PropsWithChildren> = () => {
   return (
-    <div></div>
+    <IonFooter className="flex justify-center space-x-2 items-center bg-gray-500 h-16 w-full ">
+      <IconButton icon={personOutline} />
+      <IconButton icon={personOutline} />
+      <IconButton icon={personOutline} />
+      <IconButton icon={personOutline} />
+    </IonFooter>
   )
 }
 
