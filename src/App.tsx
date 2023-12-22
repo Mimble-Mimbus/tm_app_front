@@ -1,7 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import { IonApp, IonContent, IonFooter, IonHeader, IonImg, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,22 +18,41 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Router from './components/Router';
+import { IonReactRouter } from '@ionic/react-router';
+import Menu from './components/Menu';
+import Footer from './components/Footer';
+import HeaderMobile from './components/HeaderMobile';
+import HeaderWeb from './components/HeaderWeb';
+import { isMobile } from './util';
+import imgUrl from './assets/img/dishonored.jpg'
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const menuId = "navMenu"
+const App: React.FC = () => {
+  
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonMenu contentId={menuId} menuId="navMenuControl">
+          <IonHeader>
+            <IonImg src={imgUrl} alt="dishonored" />
+          </IonHeader>
+          <IonContent color={"purple"} className="ion-padding">
+            <Menu />
+          </IonContent>
+        </IonMenu>
+        <IonPage id={menuId}>
+          {isMobile ? <HeaderMobile /> : <HeaderWeb />}
+          <IonContent>
+            <Router />
+          </IonContent>
+          {isMobile && <Footer />}
+        </IonPage>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
 
 export default App;
