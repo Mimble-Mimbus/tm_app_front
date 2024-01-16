@@ -26,12 +26,13 @@ import HeaderMobile from './components/HeaderMobile';
 import HeaderWeb from './components/HeaderWeb';
 import { isMobile } from './util';
 import imgUrl from './assets/img/dishonored.jpg'
+import { useMediaQuery } from 'usehooks-ts';
 
 setupIonicReact();
 
 const menuId = "navMenu"
 const App: React.FC = () => {
-  
+  const isOnPhone = useMediaQuery('(max-width: 768px)')
   return (
     <IonApp>
       <IonReactRouter>
@@ -44,11 +45,11 @@ const App: React.FC = () => {
           </IonContent>
         </IonMenu>
         <IonPage id={menuId}>
-          {isMobile ? <HeaderMobile /> : <HeaderWeb />}
+          {isOnPhone ? <HeaderMobile /> : <HeaderWeb />}
           <IonContent>
             <Router />
           </IonContent>
-          {isMobile && <Footer />}
+          {isOnPhone && <Footer />}
         </IonPage>
       </IonReactRouter>
     </IonApp>
