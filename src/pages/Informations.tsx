@@ -52,7 +52,7 @@ const Informations: FC<EventParams> = ({ match }) => {
             
           </HidingContainer>
           <HidingContainer title="Restaurations" icon={timeOutline}>
-            <div className="middle">
+            <div className="middle flex flex-col">
               {data.paymentables.map((item, index) => (
                 <div key={index} className="w-11/12 mt-2 text-black text-sm flex">
                   <div className="flex flex-row text-sm horizontal_dotted_line">{item.name}</div>
@@ -92,7 +92,7 @@ const Informations: FC<EventParams> = ({ match }) => {
             </div>
           </div> 
           <div className="flex justify-center space-x-3 w-full">
-            <div className="w-1/3 h-[400px] bg-red-500"> MAP</div>
+            <OsmMap address={data.address} />
             <div className="w-1/3 flex flex-col h-min">
               <div className="bg-gray-400 w-full middle py-1 font-medium text-xl"> Restauration sur place</div>
               <div className="middle">

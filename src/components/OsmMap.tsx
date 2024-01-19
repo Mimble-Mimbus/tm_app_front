@@ -1,48 +1,30 @@
-import { FC, useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { GeocoderControl } from "leaflet-control-geocoder/dist/control";
-import { geocoder } from "leaflet-control-geocoder";
-import { LatLngExpression } from "leaflet";
-
-
-const MapComponent: FC<{ geocoder: GeocoderControl }> = ({ geocoder }) => {
-  const map = useMap()
-  geocoder.addTo(map)
-
-  return (<div className="w-96 h-96" id="map"></div>)
-}
+import { FC, useCallback } from "react";
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { Map, tileLayer, Marker } from "leaflet";
 
 const OsmMap: FC<{ address: string, zoom?: number}> = ({ zoom, address }) => {
-  const control = geocoder({ query: address})
-  const [center, setCenter] = useState<LatLngExpression>({ lat: 8, lng: 7 })
+  const provider = new OpenStreetMapProvider()
 
-  control.listens('locationfound', (event) => {
-    console.log('locatoin listen')
-  })
-  control.addEventListener('locationfound', (event) => {
-    console.log('locatoin addevent')
-  })
-  control.on('markgeocode', (event) => {
-    console.log('market set')
-    setCenter(event.geocode.center)
-  })
-  control.on('locationfound', (event) => {
-    console.log('location found on')
-    setCenter(event.latlng)
-  })
+  const geocoder = GeoSearchControl({ provider })
+
+  const ref = useCallback(async (node: HTMLDivElement | null ) => {
+    if (node) {
+      let newMap = new Map('OSMap').setZoom(17)
+
+      tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(newMap)
+
+      const result = (await provider.search({ query: address }))[0]
+      const marker = new Marker({ lat: result.y, lng: result.x })
+      newMap.setView({ lat: result.y, lng: result.x })
+      marker.addTo(newMap)
+      geocoder.addTo(newMap)
+    }
+  }, []);
 
   return (
-    <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-  <Marker position={[51.505, -0.09]}>
-    <Popup>
-      A pretty CSS3 popup. <br /> Easily customizable.
-    </Popup>
-  </Marker>
-</MapContainer>
+    <div id="OSMap" className="w-1/3" ref={ref}></div>
   )
 }
 

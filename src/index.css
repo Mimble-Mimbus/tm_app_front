@@ -36,9 +36,8 @@
   overflow: hidden;
 }
 
-#map {
-  width: 500px;
-  height: 500px;
+#OSMap {
+  aspect-ratio : 5 / 4
 }
 
 .md body {
