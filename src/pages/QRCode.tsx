@@ -1,8 +1,15 @@
 import { IonPage } from "@ionic/react"
-import { FC } from "react"
+import { FC, useEffect } from "react"
+import QRCodeScanner from "../components/QRCodeScanner"
 
 const QRCode: FC = () => {
-  return (<IonPage>QRCode</IonPage>)
+
+  return (
+    <IonPage>
+      <QRCodeScanner onScan={(event) => console.log(event.barcode)} />
+      
+    </IonPage>
+  )
 }
 
 export default QRCode

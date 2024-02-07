@@ -5,10 +5,12 @@ import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    
     react(),
     legacy()
   ],
   esbuild: {
+    keepNames: true,
     supported: {
       'top-level-await': true
     },
@@ -18,6 +20,6 @@ export default defineConfig({
     esbuildOptions: {
       target: 'esnext'
     },
-    exclude: ['js-big-decimal']
+    exclude: ['js-big-decimal', 'jeep-sqlite/loader']
   }
 })

@@ -1,4 +1,4 @@
-import { IonApp, IonContent, IonFooter, IonHeader, IonImg, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
+import { IonApp, IonContent, IonFooter, IonHeader, IonImg, IonItem, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,7 +24,6 @@ import Menu from './components/Menu';
 import Footer from './components/Footer';
 import HeaderMobile from './components/HeaderMobile';
 import HeaderWeb from './components/HeaderWeb';
-import { isMobile } from './util';
 import imgUrl from './assets/img/dishonored.jpg'
 import { useMediaQuery } from 'usehooks-ts';
 
