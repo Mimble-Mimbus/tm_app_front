@@ -11,7 +11,7 @@ const HeaderWeb: FC = () => {
   return (
     <IonHeader>
       <IonToolbar color="purple">
-        <h1 className="text-secondary flex items-center font-bold w-full justify-center text-4xl h-[15vh]"> Terra nimbusia </h1>
+        <h1 className="text-secondary flex items-center font-bold w-full justify-center text-4xl h-[15vh]"> Terra Mimbusia </h1>
         <nav className="flex justify-around">
           <div className="flex">
             <Link path="/program"> Programmes </Link>
