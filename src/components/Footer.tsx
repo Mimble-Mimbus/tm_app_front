@@ -5,7 +5,7 @@ import { IonFooter } from "@ionic/react";
 
 const Footer: FC<PropsWithChildren> = () => {
   return (
-    <IonFooter className="flex justify-center space-x-2 items-center bg-gray-500 h-16 w-full ">
+    <IonFooter className="flex justify-center space-x-4 items-center bg-gray-500 h-16 w-full ">
       <IconButton icon={personOutline} />
       <IconButton icon={personOutline} />
       <IconButton icon={personOutline} />

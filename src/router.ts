@@ -8,7 +8,7 @@ interface RouteData {
   readonly type?: PageType
 }
 
-// @ts-ignore
+//@ts-ignore
 export const router = [{
     path: '/event/:idevent/animation-creation',
     pageName: 'AnimationCreation',
@@ -29,10 +29,6 @@ export const router = [{
     path: '/event/:idevent/informations',
     pageName: "Informations",
     type: 'all',
-  }, {
-    path: ':/QRCode',
-    pageName: "QRCode",
-    type: "app",
   }, {
     path: '/mimble-mibus',
     pageName: "MimbleMimbus",
@@ -57,9 +53,14 @@ export const router = [{
     path: '/event/:idevent/interactive-map',
     pageName: "InteractiveMap",
     type: "all",
+  }, {
+    path: '/tickets',
+    pageName: 'Tickets',
+    type: 'app'
   }
-] as const satisfies RouteData[]
+] as const
 
 export interface EventParams<T extends Record<string, any> = {}> extends RouteComponentProps<T & { idevent: string }> {}
 export interface IdParams <T extends Record<string, any> = {}> extends RouteComponentProps<T & { id: string }> {}
 export interface EventAndIdParams <T extends Record<string, any> = {}> extends RouteComponentProps<T & { id: string, idevent: string }> {}
+export type RouteName = typeof router[number]['path']

@@ -1,4 +1,4 @@
-import { IonApp, IonContent, IonFooter, IonHeader, IonImg, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonMenu, IonModal, IonPage, IonToolbar, setupIonicReact, useIonModal } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,15 +24,37 @@ import Menu from './components/Menu';
 import Footer from './components/Footer';
 import HeaderMobile from './components/HeaderMobile';
 import HeaderWeb from './components/HeaderWeb';
-import { isMobile } from './util';
 import imgUrl from './assets/img/dishonored.jpg'
 import { useMediaQuery } from 'usehooks-ts';
+import { useQRCodeScanner } from './components/useQRCodeScanner';
+import { FC, useEffect, useState } from 'react';
+import { closeOutline } from 'ionicons/icons';
 
 setupIonicReact();
 
 const menuId = "navMenu"
-const App: React.FC = () => {
+
+const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
+  const { scan, error } = useQRCodeScanner((value) => {
+    console.log(value)
+  })
+  const [isOpen, setIsopen] = useState(false)
+  
+  async function scanQrcode () {
+    if (error) {
+      setIsopen(true)
+    } else {
+      await scan()
+    }
+  }
+
+  useEffect(() => {
+    if (error) {
+      setIsopen(true)
+    }
+  }, [error])
+
   return (
     <IonApp>
       <IonReactRouter>
@@ -45,10 +67,22 @@ const App: React.FC = () => {
           </IonContent>
         </IonMenu>
         <IonPage id={menuId}>
-          {isOnPhone ? <HeaderMobile /> : <HeaderWeb />}
+          {isOnPhone ? <HeaderMobile scan={scanQrcode} /> : <HeaderWeb />}
           <IonContent>
             <Router />
           </IonContent>
+          <IonModal isOpen={isOpen}>
+            <IonHeader>
+              <IonToolbar>
+              <IonButton color={'white'} onClick={() => setIsopen(false)}>
+                <IonIcon icon={closeOutline} />
+              </IonButton>
+              </IonToolbar>
+            </IonHeader>
+            <IonContent class='middle'>
+              {error && <p className='text-xl text-red-600 font-bold h-full w-full'>{error}</p>}
+            </IonContent>
+          </IonModal>
           {isOnPhone && <Footer />}
         </IonPage>
       </IonReactRouter>
