@@ -17,7 +17,11 @@ const Menu: FC = () => {
   },{
     title: 'Billets',
     path: '/tickets',
-  },{
+  }, {
+    title: 'Billets2',
+    path: '/tickets2'
+  }
+  ,{
     title: 'Animations',
     path: '/animations',
   },{
@@ -28,7 +32,7 @@ const Menu: FC = () => {
     path: '/caracter-card',
   },{
     title: 'Espace bénévole',
-    path: '/Voluntary-interface'
+    path: '/voluntary-interface'
   }]
 
   return (

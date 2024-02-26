@@ -41,5 +41,26 @@
 }
 
 .md body {
-  --ion-text-color: black
+  --ion-text-color: black;
+  --ion-background-color: white;
+}
+
+.only-corner {
+  --s: 50px; /* the size on the corner */
+  --t: 5px;  /* the thickness of the border */
+  --g: 20px; /* the gap between the border and image */
+  left: 50%;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  width: 300px;
+  border-radius: 10%;
+  transform: translate(-50%, -50%);
+  padding: calc(var(--g) + var(--t));
+  outline: var(--t) solid #000000; /* the color here */
+  outline-offset: calc(-1*var(--t));
+  mask:
+    conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
+    0 0/calc(100% - var(--s)) calc(100% - var(--s)),
+    linear-gradient(#000 0 0) content-box;
 }

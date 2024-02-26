@@ -12,7 +12,7 @@ const Router: FC = () => {
   return (
     <IonRouterOutlet>
       {router.filter(route => isOnPhone ? (route.type !== 'web') : (route.type !== 'app') ).map((route, index) => (
-        <Route key={index} component={pages[route.pageName]} path={route.path} />
+        <Route key={index}  component={pages[route.pageName]} path={route.path} />
       ))}
     </IonRouterOutlet>
   )

@@ -30,10 +30,6 @@ export const router = [{
     pageName: "Informations",
     type: 'all',
   }, {
-    path: '/QRCode',
-    pageName: "QRCode",
-    type: "app",
-  }, {
     path: '/mimble-mibus',
     pageName: "MimbleMimbus",
     type: 'app',
@@ -57,8 +53,7 @@ export const router = [{
     path: '/event/:idevent/interactive-map',
     pageName: "InteractiveMap",
     type: "all",
-  },
-  {
+  }, {
     path: '/tickets',
     pageName: 'Tickets',
     type: 'app'

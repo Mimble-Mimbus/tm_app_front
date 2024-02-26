@@ -3,17 +3,18 @@ import { Ticket } from "../storage/entitys/Ticket";
 import { DatabaseService } from "../storage/database";
 import SwiperWrapper from "../components/Swiper";
 import QRCodeImage from "../components/QRCodeImage";
+import { IonPage } from "@ionic/react";
 
 const Tickets: FC = () => {
   const [tickets, setTickets] = useState<null | Ticket[]>(null)
   useEffect(() => {
     DatabaseService.getTickets().then(data => {
-      console.log(data)
       setTickets(data)
     })
 
   }, [])
-  return (<div className="h-full bg-slate-50">
+  return (<IonPage className="h-full bg-slate-50">
+    <div className="h-full">
     {tickets ? 
       <SwiperWrapper>
       {tickets.map((ticket, index) => (
@@ -30,8 +31,8 @@ const Tickets: FC = () => {
       </SwiperWrapper> :
       <div>vous n'avez pas de billets</div>
       }
-    
-  </div>)
+    </div>
+  </IonPage>)
 }
 
 export default Tickets
