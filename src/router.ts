@@ -14,7 +14,7 @@ export const router = [{
     pageName: 'AnimationCreation',
     type: 'all',
   }, {
-    path: 'event/:idevent/animation/:id',
+    path: '/event/:idevent/animation/:id',
     pageName: "Animation",
     type: 'all',
   }, {

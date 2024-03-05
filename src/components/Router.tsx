@@ -2,7 +2,6 @@ import { IonRouterOutlet } from "@ionic/react";
 import { FC } from "react";
 import { router } from '../router'
 import { Route } from "react-router";
-import { isMobile } from "../util";
 
 import pages from '../pages'
 import { useMediaQuery } from "usehooks-ts";

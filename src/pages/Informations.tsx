@@ -1,5 +1,5 @@
 import { IonPage } from "@ionic/react"
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import { EventParams } from "../router"
 import { timeOutline } from 'ionicons/icons'
 import HidingContainer from "../components/HidingContainer"
@@ -7,14 +7,13 @@ import { useApi } from "../hook/useApi"
 import { EventInformations, OpenDay } from "../types/event"
 import { useMediaQuery } from "usehooks-ts"
 import  OsmMap from "../components/OsmMap"
+import { time, week } from "../utils/date"
 
 const Informations: FC<EventParams> = ({ match }) => {
   const { data } = useApi<EventInformations>('/get_event_informations/' + match.params.idevent)
   const isOnPhone = useMediaQuery('(max-width: 768px)')
-  const week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche']
   
   const getDates = (dates: OpenDay[]) => (dates.map(x => ({dayStart: new Date(x.dayStart), dayEnd: new Date(x.dayEnd)})))
-  const time = (date: Date) => `${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`
 
   return (
     data ?
