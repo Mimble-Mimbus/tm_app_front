@@ -3,11 +3,11 @@ import { useApi } from "../hook/useApi";
 import { RpgActivity } from "../types/activity";
 import HidingContainer from "./HidingContainer";
 import { IonButton } from "@ionic/react";
-import { time, week } from "../utils/date";
+import { time } from "../utils/date";
 
 const AnimationsJdr: FC<{ eventId: string}> = ({ eventId }) => {
   const { data } = useApi<RpgActivity[]>(`/event/${eventId}/rpg_activities`)
-  console.log(data)
+
   return <div className="flex flex-col items-center mt-5 h-full justify-between">
     <div className="flex flex-col space-y-5 w-full">
       {data && data.map((activity, key) => (

@@ -1,10 +1,12 @@
-import { IonButton, IonContent, IonInput, IonItem, IonPage, IonRadio, IonRadioGroup, IonSelect, IonSelectOption } from "@ionic/react"
-import { FC, FormEvent, useEffect, useMemo, useState } from "react"
+import { IonButton, IonContent, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
+import { FC, FormEvent, useEffect, useMemo, useRef, useState } from "react"
 import { useApi } from "../hook/useApi"
 import { Entertainment } from "../types/activity"
 import { EventAndIdParams } from "../router"
 import { time } from "../utils/date"
 import axios from '../utils/axios'
+import { AxiosError } from "axios"
+import Modal from '../components/Modal'
 
 const Animation: FC<EventAndIdParams> = ({ match }) => {
   const { data } = useApi<Entertainment>(`/entertainement/${match.params.id}`)
@@ -14,7 +16,8 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState<string>()
-  const [error, setError] = useState()
+  const [error, setError] = useState<string>()
+    const [modalIsOpen, setIsOpen] = useState(false);
   const places = [1, 2 , 3, 4]
 
   async function submit (event: FormEvent<HTMLFormElement>) {
@@ -25,11 +28,14 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
     await axios.post('/entertainment_reservation/' + currentScheduleId, {
       name,
       phoneNumber,
-      bookings: seats
+      bookings: seats,
+      email
     }).then(() => {
       setError(undefined)
-    }).catch((err) => {
-      setError(err)
+      setIsOpen(true)
+    }).catch((err: AxiosError<{ detail: string}>) => {
+      let msg = err.response?.data.detail
+      setError(msg || 'erreur lors de la requête')
     })
 
     
@@ -43,6 +49,9 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
 
   return (
     <IonPage>
+      <Modal isOpen={modalIsOpen} setIsOpen={setIsOpen}>
+        <div className="text-green-500 font-bold h-full w-full opacity-100">{'Votre réservation a bien été éffectuée'}</div>
+      </Modal>
       {data && <IonContent className="flex flex-col items-center">
         <div className="flex flex-col items-center mx-8 ">
           <h1 className="w-auto text-center font-bold text-3xl mt-10 mb-16">{data.name}</h1>
@@ -71,6 +80,7 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
             <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
             <input className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
             <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
+            {error && <div className="text-red-700 font-bold text-lg">{error}</div>}
             <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
           </form>
         </div>
