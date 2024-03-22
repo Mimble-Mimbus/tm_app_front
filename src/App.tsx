@@ -29,6 +29,8 @@ import { useMediaQuery } from 'usehooks-ts';
 import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
 import { closeOutline } from 'ionicons/icons';
+import eventStore from './store/eventStore';
+import { useApi } from './hook/useApi';
 
 setupIonicReact();
 
@@ -36,6 +38,10 @@ const menuId = "navMenu"
 
 const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
+  useApi<string>('/random_event_id', (value => {
+    eventStore.setEventid(value)
+  }))
+
   const { scan, error } = useQRCodeScanner((value) => {
     console.log(value)
   })

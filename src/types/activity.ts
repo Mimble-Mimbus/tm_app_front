@@ -3,25 +3,19 @@ export interface UserGm {
   name: string
 }
 
-export interface RpgTable {
-  id: string
+export interface Schedule {
+  id: number
   start: string
   duration: number
+  availableSeats: number
 }
 
 export interface RpgActivity {
   id: number
   name: string
   description: string
-  rpgTables: RpgTable[]
+  schedules: Schedule[]
   userGm: UserGm
-}
-
-export interface EntertainmentSchedule {
-  id: number
-  start: string
-  duration: number
-  availableSeats: number
 }
 
 export interface EntertainmentType {
@@ -34,6 +28,11 @@ export interface Entertainment {
   id: number
   name: string
   description: string
-  entertainmentSchedules: EntertainmentSchedule[]
+  schedules: Schedule[]
   entertainmentType: EntertainmentType
+}
+
+export interface IActivities {
+  rpgActivities: RpgActivity[]
+  entertainments: Entertainment[]
 }

@@ -1,23 +1,32 @@
 import { IonButton, IonContent, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
-import { FC, FormEvent, useEffect, useMemo, useRef, useState } from "react"
+import { FC, FormEvent, useEffect, useMemo, useState } from "react"
 import { useApi } from "../hook/useApi"
-import { Entertainment } from "../types/activity"
+import { Entertainment, RpgActivity, Schedule } from "../types/activity"
 import { EventAndIdParams } from "../router"
-import { time } from "../utils/date"
+import { time, week } from "../utils/date"
 import axios from '../utils/axios'
 import { AxiosError } from "axios"
 import Modal from '../components/Modal'
+import { useMediaQuery } from "usehooks-ts"
 
-const Animation: FC<EventAndIdParams> = ({ match }) => {
-  const { data } = useApi<Entertainment>(`/entertainement/${match.params.id}`)
+const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
+  const { params } = match
+  const { data } = useApi<Entertainment | RpgActivity>(`/${params.type.replace('-', '_')}/${params.id}`)
   const [currentScheduleId, setCurrentScheduleId] = useState<number>();
-  const currenSchedule = useMemo(() => data?.entertainmentSchedules.find(schedule => schedule.id === currentScheduleId), [currentScheduleId])
+
+  const currentSchedule = useMemo<Schedule | undefined>(function () {
+    if (!data) return
+
+    return data.schedules.find(schedule => schedule.id === currentScheduleId)
+  }, [currentScheduleId, data])
+
   const [seats, setSeats] = useState(1)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState<string>()
   const [error, setError] = useState<string>()
-    const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const isOnPhone = useMediaQuery('(max-width: 768px)')
   const places = [1, 2 , 3, 4]
 
   async function submit (event: FormEvent<HTMLFormElement>) {
@@ -43,7 +52,7 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
 
   useEffect(() => {
     if (data) {
-      setCurrentScheduleId(data.entertainmentSchedules[0].id)
+      setCurrentScheduleId(data.schedules[0].id)
     }
   }, [data])
 
@@ -52,37 +61,52 @@ const Animation: FC<EventAndIdParams> = ({ match }) => {
       <Modal isOpen={modalIsOpen} setIsOpen={setIsOpen}>
         <div className="text-green-500 font-bold h-full w-full opacity-100">{'Votre réservation a bien été éffectuée'}</div>
       </Modal>
-      {data && <IonContent className="flex flex-col items-center">
-        <div className="flex flex-col items-center mx-8 ">
-          <h1 className="w-auto text-center font-bold text-3xl mt-10 mb-16">{data.name}</h1>
-          <p className="text-center">{data.description}</p>
-          <div className="h-px my-8 w-4/5 border-0 bg-black" />
-          <p className="text-2xl mb-4">Reserver</p>
-          <div className="w-full h-16 flex">
-            <div className="w-1/6 h-full bg-orange-400"></div>
-            <div className="w-5/6 h-full bg-orange-200 flex items-center">
-              <p className="ml-5">Plus que {currenSchedule?.availableSeats} restantes !</p> 
+      {data && <IonContent className="w-full">
+        <div className="flex flex-col w-full items-center px-8 md:px-0">
+          <h1 className="md:bg-gray-400 title py-2 w-full text-center md:w-2/3">{data.name}</h1>
+          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between md:w-2/3 w-full mt-2">
+            {isOnPhone ?  
+              <p className="text-center">{data.description}</p> :
+              <div className="flex flex-col w-[47%] text-center items-center">
+                <p className="w-full bg-gray-400 py-2 text-xl font-medium">Description</p>
+                <p className="mt-6 w-11/12 text-start">{data.description}</p>
+              </div>
+            }
+            
+            {isOnPhone && <div className="h-px my-6 border-0 bg-black w-full font-semibold" />}
+            <div className="md:w-[47%]">
+              {isOnPhone ? 
+                <p className="text-2xl mb-4 text-center">Reserver</p>:
+                <p className="text-xl py-2 bg-gray-400 font-medium text-center">Horaires et zones</p>
+              }
+              <div className="w-full h-16 flex">
+                <div className="w-1/6 h-full bg-orange-400"></div>
+                <div className="w-5/6 h-full bg-orange-200 flex items-center">
+                  <p className="ml-5">Plus que {currentSchedule?.availableSeats} restantes !</p> 
+                </div>  
+              </div>
+              <form onSubmit={submit} className="self-start mt-8 space-y-6 w-full">
+                <IonRadioGroup class="flex flex-col space-y-6 w-full" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
+                  {data.schedules.map(schedule => {
+                    const date = new Date(schedule.start)
+                    return <IonRadio key={schedule.id} className="text-xl md:text-base w-full" value={schedule.id} justify="start" labelPlacement="end" color="purple">
+                       Créneau de {week[date.getDay()]} {time(date)}
+                    </IonRadio>
+                  })}
+                </IonRadioGroup>
+                <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
+                  {places.map((num, index) => (
+                    <option value={num} key={index}>{num} places</option>
+                  ))}
+                </select>
+                <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
+                <input className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
+                <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
+                {error && <div className="text-red-700 font-bold text-lg">{error}</div>}
+                <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
+              </form>
             </div>
           </div>
-          <form onSubmit={submit} className="self-start mt-8 space-y-6 w-full">
-            <IonRadioGroup class="flex flex-col space-y-6 w-2/5" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
-              {data.entertainmentSchedules.map(schedule => (
-                <IonRadio key={schedule.id} className="text-xl" value={schedule.id} labelPlacement="end" color="purple">
-                  Créneau de {time(new Date(schedule.start))}
-                </IonRadio>
-              ))}
-            </IonRadioGroup>
-            <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
-              {places.map((num, index) => (
-                <option value={num} key={index}>{num} places</option>
-              ))}
-            </select>
-            <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
-            <input className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
-            <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
-            {error && <div className="text-red-700 font-bold text-lg">{error}</div>}
-            <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
-          </form>
         </div>
       </IonContent>}
     </IonPage>
