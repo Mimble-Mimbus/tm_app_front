@@ -1,44 +1,46 @@
-import { ChangeEvent, FC, FormEvent, HTMLInputTypeAttribute, useCallback } from "react";
-import { isNumeric } from "../utils";
-import { time } from "../utils/date";
+import { ChangeEvent, FC, FormEvent, FormEventHandler, HTMLInputTypeAttribute, useCallback, useEffect, useMemo } from "react";
+import clsx from "clsx";
+import { observer } from "mobx-react";
+import FormError from "./FormError";
 
 interface ITextInputBase {
   label: string
   required?: boolean
   name?: string
-  numeric?: boolean
   placeHolder?: string
   type?: HTMLInputTypeAttribute
+  disabled?: boolean
+  max?: number
+  min?: number
+  path?: string
 }
 
 interface ITextInput extends ITextInputBase {
   textArea?: false
   onChange? (event:  ChangeEvent<HTMLInputElement>): void
+  onBeforeInput?: FormEventHandler<HTMLInputElement>
 }
 
 interface ITextInputArea extends ITextInputBase {
   textArea: true
   onChange? (event:  ChangeEvent<HTMLTextAreaElement>): void
+  onBeforeInput?: FormEventHandler<HTMLTextAreaElement>
 }
 
-const TextInput: FC<ITextInput | ITextInputArea> = ({ name, required, label, onChange, placeHolder, textArea, numeric, type }) => {
+const TextInput: FC<ITextInput | ITextInputArea> = ({ name, required, label, onChange, placeHolder, textArea, type, disabled, onBeforeInput, max, min, path }) => {
   function beforeInput (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) {
-      let value = (event.nativeEvent as Event & { data?: string }).data
-
-      if (!value) return
-
-      if (numeric && !isNumeric(value)) {
-        event.preventDefault()
-      }
+    //@ts-ignore
+    onBeforeInput?.(event)
   }
 
   return (<label htmlFor={name || label} className="flex flex-col w-11/12">
-    <span className="text-lg font-extrabold">{label}</span>
+    <span className="text-lg font-extrabold flex">{label}</span>
     {!textArea ?
-      <input  type={type} className="px-4 py-3 border-gray-500 rounded-md border-[1px] bg-white w-full mt-3" name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} /> :
-      <textarea className="px-4 py-3 border-gray-500 rounded-md border-[1px] bg-white w-full mt-3 h-32" name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} />
+      <input max={max} min={min} disabled={disabled}  type={type} className={clsx("px-4 py-3 bg-white rounded-md border-[1px] w-full mt-3", disabled ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} /> :
+      <textarea className={clsx("px-4 py-3 rounded-md border-[1px] bg-white w-full mt-3 h-32", disabled ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} />
     }
+    {path && <FormError path="path" />}
   </label>)
 }
 
-export default TextInput
+export default observer(TextInput)

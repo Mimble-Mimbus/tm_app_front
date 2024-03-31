@@ -1,13 +1,18 @@
 import { makeAutoObservable } from 'mobx'
 
 export class EventStore {
-  eventId?: string
+  eventId?: number
+  rpgZoneId?: number
   constructor () {
     makeAutoObservable(this)
   }
 
-  setEventid (str: string) {
-    this.eventId = str
+  setEventid (num: number) {
+    this.eventId = num
+  }
+
+  setRpgZoneId (num: number) {
+    this.rpgZoneId = num
   }
 }
 

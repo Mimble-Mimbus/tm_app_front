@@ -2,9 +2,11 @@ import { FC } from "react";
 import MenuLink from './Link'
 import { observer } from 'mobx-react'
 import eventStore from "../../store/eventStore";
+import authStore from "../../store/authStore";
 
-const Menu: FC = observer(() => {
+const Menu: FC = () => {
   const data = eventStore.eventId
+  const { isLogged } = authStore
   const linkList = [{
     title: 'Terra Mimbusia',
     path: '/terra-mimbusia',
@@ -32,6 +34,9 @@ const Menu: FC = observer(() => {
   },{
     title: 'Espace bénévole',
     path: '/voluntary-interface'
+  }, {
+    title: isLogged ? 'Mon compte' : 'Connexion',
+    path: isLogged ? '/account' : '/login'
   }]
 
   return (
@@ -41,6 +46,6 @@ const Menu: FC = observer(() => {
       ))}
     </nav>
   )
-})
+}
 
-export default Menu
+export default observer(Menu)

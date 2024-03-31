@@ -10,6 +10,12 @@ export interface Schedule {
   availableSeats: number
 }
 
+export interface ScheduleData {
+  start: string
+  duration: string
+  maxNumberSeats: string
+}
+
 export interface RpgActivity {
   id: number
   name: string

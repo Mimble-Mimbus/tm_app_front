@@ -4,10 +4,13 @@ import { useApi } from "../hook/useApi"
 import { Entertainment, RpgActivity, Schedule } from "../types/activity"
 import { EventAndIdParams } from "../router"
 import { time, week } from "../utils/date"
-import axios from '../utils/axios'
+import fetchApi from '../utils/axios'
 import { AxiosError } from "axios"
 import Modal from '../components/Modal'
 import { useMediaQuery } from "usehooks-ts"
+import { useWindow } from "../hook/useWindow"
+import { ConstraintError } from "../types"
+import FormError from "../components/FormError"
 
 const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
   const { params } = match
@@ -24,8 +27,7 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState<string>()
-  const [error, setError] = useState<string>()
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isOpen, toggle] = useWindow()
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const places = [1, 2 , 3, 4]
 
@@ -33,21 +35,15 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
     event.preventDefault()
 
     if (!(name && phoneNumber && seats && email)) return
-
-    await axios.post('/entertainment_reservation/' + currentScheduleId, {
+    const url = 'userGm' in data! ? '/rpg_reservation/' : '/entertainment_reservation/'
+    await fetchApi.post(url + currentScheduleId, {
       name,
       phoneNumber,
       bookings: seats,
       email
     }).then(() => {
-      setError(undefined)
-      setIsOpen(true)
-    }).catch((err: AxiosError<{ detail: string}>) => {
-      let msg = err.response?.data.detail
-      setError(msg || 'erreur lors de la requête')
-    })
-
-    
+      toggle()
+    }).catch()
   }
 
   useEffect(() => {
@@ -58,7 +54,7 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
 
   return (
     <IonPage>
-      <Modal isOpen={modalIsOpen} setIsOpen={setIsOpen}>
+      <Modal isOpen={isOpen} toggle={toggle} useBackdrop={true}>
         <div className="text-green-500 font-bold h-full w-full opacity-100">{'Votre réservation a bien été éffectuée'}</div>
       </Modal>
       {data && <IonContent className="w-full">
@@ -100,9 +96,11 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
                   ))}
                 </select>
                 <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
-                <input className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
+                <FormError path="name"/>
+                <input type="number" className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
+                <FormError path="phoneNumber"/>
                 <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
-                {error && <div className="text-red-700 font-bold text-lg">{error}</div>}
+                <FormError path="email"/>
                 <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
               </form>
             </div>

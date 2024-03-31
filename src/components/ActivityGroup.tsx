@@ -22,7 +22,7 @@ const ActivityGroup: FC<{ activity: RpgActivity | Entertainment, eventId: string
   }
 
   return <>
-    {activity.schedules.filter(filterFromDate).map((schedule) => <Balise title={activity.name} key={schedule.id} className="w-full">
+    {activity.schedules.filter(filterFromDate).map((schedule) => <Balise title={activity.name} key={schedule.id} className="w-full mt-4">
       <IonItem  className="w-full" color="white" lines="none" routerLink={`/event/${eventId}/activity/${type}/${activity.id}`}> 
         <div className="w-full flex justify-between text-sm">
           <p className="w-1/3 ml-4">{firstToUpper(week[new Date(schedule.start).getDay()])} : {time(new Date(schedule.start))}</p>

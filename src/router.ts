@@ -57,6 +57,11 @@ export const router = [{
     path: '/tickets',
     pageName: 'Tickets',
     type: 'app'
+  },
+  {
+    path: '/login',
+    pageName: 'Login',
+    type: 'all'
   }
 ] as const
 
