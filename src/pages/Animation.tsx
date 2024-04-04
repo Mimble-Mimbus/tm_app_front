@@ -54,8 +54,8 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
 
   return (
     <IonPage>
-      <Modal isOpen={isOpen} toggle={toggle} useBackdrop={true}>
-        <div className="text-green-500 font-bold h-full w-full opacity-100">{'Votre réservation a bien été éffectuée'}</div>
+      <Modal isOpen={isOpen} toggle={toggle} timeout={3000} useBackdrop={true}>
+        <div className="text-green-500 font-bold h-full w-full p-6 opacity-100">{'Votre réservation a bien été éffectuée'}</div>
       </Modal>
       {data && <IonContent className="w-full">
         <div className="flex flex-col w-full items-center px-8 md:px-0">

@@ -25,8 +25,8 @@ const Login: FC = () => {
   return <IonPage className="middle">
       <form onSubmit={onSubmit} className="w-3/5 space-y-8 flex flex-col items-center">
         <TextInput label={labels.username} />
-        <TextInput label={labels.password} />
-        <IonButton className="flex w-2/5" shape="round" color='purple'>connexion</IonButton>
+        <TextInput type="password" label={labels.password} />
+        <IonButton type="submit" className="flex w-2/5" shape="round" color='purple'>connexion</IonButton>
       </form>
       {error && <div className="text-red-500 font-bold text-xl">identifiants invalides</div>}
   </IonPage>

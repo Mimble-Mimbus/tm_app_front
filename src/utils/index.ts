@@ -14,7 +14,9 @@ export function firstToUpper(str: string) {
 export function getDataFromForm<const T extends Record<string, string>>(labels: T, target: HTMLFormElement) {
   const formData = Object.fromEntries(new FormData(target).entries()) as Record<string , string>
   const data = Object.keys(labels).reduce((acc, val) => {
-    acc[val] = formData[labels[val]]
+    if(labels[val]) { 
+      acc[val] = formData[labels[val]]
+    }
 
     return acc
   }, {} as Record<keyof typeof labels, string>)

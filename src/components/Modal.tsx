@@ -5,7 +5,7 @@ import { useTimeout } from "usehooks-ts";
 const Modal: FC<PropsWithChildren<{ isOpen: boolean, toggle?: () => void, useBackdrop?: boolean, timeout?: number }>> = ({ isOpen, children, toggle, useBackdrop, timeout }) => {
   useTimeout(()=> {
     toggle?.()
-  }, timeout ?? null)
+  }, isOpen ? (timeout ?? null) : null)
 
   if (!isOpen) {
     return null

@@ -2,6 +2,8 @@ import { makeAutoObservable } from 'mobx'
 import { ConstraintError } from '../types'
 import fetchApi from '../utils/axios'
 import { AxiosError } from 'axios'
+import authStore from './authStore'
+import retry from 'axios-retry'
 interface FormError {
   path: string
   message: string
@@ -12,7 +14,8 @@ export class ErrorStore {
   errors: FormError[] = []
   constructor () {
     makeAutoObservable(this, {
-      get: false
+      get: false,
+      initialise: false
     })
   }
 
@@ -21,14 +24,47 @@ export class ErrorStore {
   }
 
   initialise () {
+    retry(fetchApi, {
+      retries: 1,
+      async retryCondition (err) {
+        if (!authStore.retried) {
+          const code = err.response?.status
+          if (code === 401) {
+            return await authStore.refresh()
+              .then(() => {
+                return true
+              })
+              .catch(() => {
+                authStore.setIslogged(false)
+                authStore.setToken(undefined)
+                authStore.setRefreshToken(undefined)
+                authStore.setRetried(true)
+                return false
+              })
+          }
+        }
+        return false
+      }
+    })
+
+    fetchApi.interceptors.request.use(config => {
+      if (authStore.token) {
+        config.headers.Authorization = 'Bearer ' + authStore.token
+      } else {
+        config.headers.Authorization = ''
+      }
+      return config
+    })
+
     fetchApi.interceptors.response.use(res => {
       this.setErrors([])
       return res
-    }, (err: AxiosError<ConstraintError>) => {
+    }, async (err: AxiosError<ConstraintError>) => {
       const data = err.response?.data
       if (data && 'type' in data && data.type === 'ConstraintError' ) {
         this.addError(data)
       }
+
       return Promise.reject(err)
     })
   }

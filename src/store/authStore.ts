@@ -5,7 +5,7 @@ import fetchApi from '../utils/axios'
 type ReqMethod = 'post' | 'get' | 'patch' | 'put' | 'option' | 'head' | 'delete'
 
 interface TokenReponse {
-  token: string
+  token: string 
   refresh_token: string
 }
 
@@ -18,12 +18,13 @@ interface EndpointsList {
   login: Endpoint
   user?: Endpoint
   logout?: Endpoint
+  refresh: Endpoint
 }
 
 export class AuthStore {
   endpoints: EndpointsList = {
     user: {
-      url: '/api/apirest/user',
+      url: '/user/me',
       method: 'get'
     },
     login: {
@@ -33,11 +34,21 @@ export class AuthStore {
     logout: {
       url: '/logout',
       method: 'post'
+    },
+    refresh: {
+      url: '/token/refresh',
+      method: 'post'
     }
   }
 
+  axios = axios.create({
+    baseURL: import.meta.env.VITE_REACT_APP_API + '/api'
+  })
+
   constructor () {
-    makeAutoObservable(this)
+    makeAutoObservable(this, {
+      refresh: false,
+    })
   }
 
   isLogged = false
@@ -47,19 +58,35 @@ export class AuthStore {
     return localStorage.getItem('auth_token')
   }
 
-  set token (token: string) {
-    localStorage.setItem('auth_token', token)
+  private set token (token: string | undefined) {
+    if (!token) {
+      localStorage.removeItem('auth_token')
+    } else {
+      localStorage.setItem('auth_token', token)
+    }
   }
 
   get refreshToken (): string | null {
     return localStorage.getItem('auth_token_refresh')
   }
 
-  set refreshToken (token: string) {
-    localStorage.setItem('auth_token_refresh', token)
+  get retried (): boolean {
+    return JSON.parse(localStorage.getItem('retried-connexion') || 'false')
   }
 
-  setToken (token: string) {
+  private set retried (bool: boolean) {
+      localStorage.setItem('retried-connexion', JSON.stringify(bool))
+  }
+
+  set refreshToken (token: string | undefined) {
+    if (!token) {
+      localStorage.removeItem('auth_token_refresh')
+    } else {
+      localStorage.setItem('auth_token_refresh', token)
+    }
+  }
+
+  setToken (token?: string) {
     this.token = token
   }
   
@@ -71,8 +98,12 @@ export class AuthStore {
     this.user = user
   }
 
-  setRefreshToken (refreshToken: string) {
+  setRefreshToken (refreshToken?: string) {
     this.refreshToken = refreshToken
+  }
+
+  setRetried (retried: boolean) {
+    this.retried = retried
   }
 
   async fetchUser () {
@@ -81,20 +112,35 @@ export class AuthStore {
     if (!user) {
       throw new Error('no user endpoint')
     }
-  
-    const { data } = await axios.get(user.url, { method: user.method })
+
+    const { data } = await fetchApi.get(user.url, { method: user.method })
     this.setUser(data)
     return data
     
   }
+
+  async refresh () {
+    if (this.refreshToken) {
+      const data = { refresh_token: this.refreshToken }
+      const { url, method } = this.endpoints.refresh
+      await this.axios<TokenReponse>(url, { method, data })
+      .then(({data}) => {
+        this.setToken(data.token)
+        this.setRefreshToken(data.refresh_token)
+        this.setIslogged(true)
+      }).catch(() => {
+        fetchApi.defaults.headers.Authorization = ''
+      })
+    }
+  }
   
   async login(data: { username: string, password: string}) {
     const { url, method } = this.endpoints.login
-    const { token, refresh_token } = (await axios<TokenReponse>(url, { method, data })).data
+    const { token, refresh_token } = (await this.axios<TokenReponse>(url, { method, data })).data
       this.setToken(token)
       this.setRefreshToken(refresh_token)
-      fetchApi.defaults.headers.Authorization = 'Bearer ' + token
       this.setIslogged(true)
+      this.setRetried(false)
       if (this.endpoints.user) {
         await this.fetchUser()
       }
@@ -102,18 +148,24 @@ export class AuthStore {
 
   async logout () {
     const logout = this.endpoints.logout
+  
     if (!logout) {
       throw new Error('no logout endpoint') 
     }
-    this.setIslogged(false)
-    return axios(logout.url, { method: logout.method }) 
+
+    await axios(logout.url, { method: logout.method })
+      .then(() => {
+        this.setIslogged(false)
+      })
   }
   
 
   async initialize () {
+    this.setRetried(false)
     if (this.token) {
-      this.fetchUser()
-      this.setIslogged(true)
+      this.fetchUser().then(() => {
+        this.setIslogged(true)
+      })
     }
   }
 }

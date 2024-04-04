@@ -6,6 +6,20 @@ export function useApis<const T extends any[]>(paths: string[], dependency?: (st
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<unknown>(undefined)
 
+  function refresh (index: number) {
+    return fetchApi.get<T[number]>(paths[index]).then(res => {
+      const newdata = [...data] as T
+      newdata[index] = res.data
+      setData(newdata)
+    })
+  }
+
+  function set (index: number, value: any) {
+    const newdata = [...data] as T
+    newdata[index] = value
+    setData(newdata)
+  }
+
   useEffect(() => {
     if (dependency && (!dependency.every(val => val))) return
     Promise.all(paths.map(path => fetchApi.get<T[number]>(path).then(res => res.data))).then((data) => {
@@ -18,5 +32,5 @@ export function useApis<const T extends any[]>(paths: string[], dependency?: (st
     })
   }, dependency ?? [])
 
-  return ({ data , error, isLoading } as const)
+  return ({ data , error, isLoading, refresh, set } as const)
 }

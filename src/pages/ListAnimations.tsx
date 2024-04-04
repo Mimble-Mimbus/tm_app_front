@@ -7,6 +7,7 @@ import { useApi } from "../hook/useApi"
 import { EventInformations, OpenDay } from "../types/event"
 import { week } from "../utils/date"
 import { firstToUpper } from "../utils"
+import authStore from "../store/authStore"
 
 const ListAnimation: FC<EventParams> = ({ match }) => {
   const id = match.params.idevent
@@ -48,7 +49,7 @@ const ListAnimation: FC<EventParams> = ({ match }) => {
               </div>
             </div>
           }
-            {!(isOnPhone && type !== 'JDR') && <IonButton color={'purple'} routerLink={`/event/${id}/animation-creation`}  className="md:max-w-[33%] self-center mt-6" shape="round">Proposer une table de jdr</IonButton>}
+            {(isOnPhone && (type === 'JDR') && authStore.isLogged) && <IonButton color={'purple'} routerLink={`/event/${id}/animation-creation`}  className="md:max-w-[33%] self-center mt-6" shape="round">Proposer une table de jdr</IonButton>}
           </div>
       </IonContent>
     }
