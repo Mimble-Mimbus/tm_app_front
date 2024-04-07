@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.test {
-  background-color: #888888;
-}
-
 .middle {
   @apply flex justify-center items-center
 }
@@ -63,4 +59,12 @@
     conic-gradient(at var(--s) var(--s),#0000 75%,#000 0)
     0 0/calc(100% - var(--s)) calc(100% - var(--s)),
     linear-gradient(#000 0 0) content-box;
+}
+
+.input {
+   @apply px-4 py-3 border-gray-500 rounded-md border-[1px] bg-white w-full
+}
+
+.title {
+  @apply w-auto text-center font-bold md:font-medium text-3xl md:text-xl mt-10 mb-16 md:mb-4 md:mt-6
 }

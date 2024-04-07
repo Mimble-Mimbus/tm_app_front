@@ -23,9 +23,14 @@ interface Transit {
 }
 
 export interface EventInformations {
-  id: string
+  id: number
   paymentables: Paymentable[]
   transits: Transit[]
   openDays: OpenDay[]
   address: string
+}
+
+export interface Event {
+  id: number
+  rpgZone: { id: number }
 }

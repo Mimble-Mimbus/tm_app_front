@@ -1,6 +1,5 @@
 import QRCodeStyling from "qr-code-styling";
 import { FC, useCallback, useRef } from "react";
-import Decoder from 'qrcode-decoder'
 
 const QRCodeImage: FC<{ data: string }> = ({ data }) => {
   const optionsRef = useRef(new QRCodeStyling({

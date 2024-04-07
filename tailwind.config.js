@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        secondary: "#FFF8E6"
+        secondary: "#FFF8E6",
+        'purple-base': '#3D1B47'
       }
     },
   },

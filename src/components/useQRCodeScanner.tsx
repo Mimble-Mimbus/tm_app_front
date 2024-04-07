@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { BarcodeScanner, BarcodeFormat, Barcode } from '@capacitor-mlkit/barcode-scanning';
-import { isMobile } from "../util";
+import { isMobile } from "../utils";
 
 export function useQRCodeScanner (onScan: (value: Barcode[]) => void | Promise<void>, onError?: (err: any) => void | Promise<void>) {
   const [isScanning, setIsScanning] = useState(false)

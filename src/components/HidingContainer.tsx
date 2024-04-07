@@ -5,7 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import { Transition } from '@headlessui/react'
 import clsx from "clsx";
 
-const HidingContainer: FC<PropsWithChildren<{ title: string, icon: string, className?: string }>> = ({ children, title, icon, className }) => {
+const HidingContainer: FC<PropsWithChildren<{ title: string, icon?: string, className?: string }>> = ({ children, title, icon, className }) => {
   const [showChildren, setShowChildren] = useState(false);
 
   function show () {

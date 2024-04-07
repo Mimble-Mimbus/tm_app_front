@@ -2,10 +2,11 @@ import { RouteComponentProps } from 'react-router'
 
 export type PageType = "all" | "app" | "web"
 
-interface RouteData {
+export interface RouteData {
   readonly path: string
   readonly pageName :string
   readonly type?: PageType
+  readonly auth?: boolean
 }
 
 //@ts-ignore
@@ -13,8 +14,9 @@ export const router = [{
     path: '/event/:idevent/animation-creation',
     pageName: 'AnimationCreation',
     type: 'all',
+    auth: true
   }, {
-    path: 'event/:idevent/animation/:id',
+    path: '/event/:idevent/activity/:type/:id',
     pageName: "Animation",
     type: 'all',
   }, {
@@ -57,6 +59,11 @@ export const router = [{
     path: '/tickets',
     pageName: 'Tickets',
     type: 'app'
+  },
+  {
+    path: '/login',
+    pageName: 'Login',
+    type: 'all'
   }
 ] as const
 

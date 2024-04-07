@@ -10,5 +10,6 @@ import Quest from './Quest'
 import MimbleMimbus from './MimbleMimbus'
 import ListAnimations from './ListAnimations'
 import Tickets from './Tickets'
+import Login from './Login'
 
-export default { Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, Quest, MimbleMimbus, ListAnimations, Tickets }
+export default { Login ,Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, Quest, MimbleMimbus, ListAnimations, Tickets }

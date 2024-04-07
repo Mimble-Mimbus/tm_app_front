@@ -1,4 +1,4 @@
-import { IonApp, IonButton, IonContent, IonHeader, IonIcon, IonImg, IonItem, IonMenu, IonModal, IonPage, IonToolbar, setupIonicReact, useIonModal } from '@ionic/react';
+import { IonApp, IonButton, IonContent, IonHeader, IonIcon, IonImg, IonMenu, IonModal, IonPage, IonToolbar, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,6 +29,11 @@ import { useMediaQuery } from 'usehooks-ts';
 import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
 import { closeOutline } from 'ionicons/icons';
+import eventStore from './store/eventStore';
+import { useApi } from './hook/useApi';
+import authStore from './store/authStore';
+import { Event } from './types/event';
+import errorStore from './store/errorStore';
 
 setupIonicReact();
 
@@ -36,6 +41,12 @@ const menuId = "navMenu"
 
 const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
+
+  useApi<Event>('/random_event', (value => {
+    eventStore.setEventid(value.id)
+    eventStore.setRpgZoneId(value.rpgZone.id)
+  }))
+
   const { scan, error } = useQRCodeScanner((value) => {
     console.log(value)
   })
@@ -54,6 +65,11 @@ const App: FC = () => {
       setIsopen(true)
     }
   }, [error])
+
+  useEffect(() => {
+    authStore.initialize()
+    errorStore.initialise()
+  }, [])
 
   return (
     <IonApp>
