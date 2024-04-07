@@ -24,7 +24,7 @@ const ListAnimation: FC<EventParams> = ({ match }) => {
         <IonContent className="h-full w-full">
           <div className="flex flex-col h-full w-full">
           {isOnPhone ? <>
-            <div className="flex flex-col justify-center h-[25%]">
+            <div className="flex flex-col justify-center h-[200px]">
               <h1 className="w-auto text-center font-bold text-3xl mt-10 mb-16">Animations</h1>
               <div className="w-full h-12 bg-zinc-900 flex justify-around items-end">
                 <div onClick={() => setType('Animations') } className="w-[45%] h-5/6 text-white text-center rounded bg-zinc-800 middle translate-y-[2px]">Animations</div>
