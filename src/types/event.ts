@@ -1,6 +1,6 @@
 interface Price {
   price: number
-  priceCondition: string | null
+  priceCondition?: string
 }
 
 interface Paymentable {

@@ -39,9 +39,12 @@ await applyPolyfills().then(() => {
       await dataSource.initialize()
       
     }
-
+    
     await dataSource.dropDatabase()
-    await dataSource.runMigrations()
+
+    if (await dataSource.showMigrations()) {
+      await dataSource.runMigrations()
+    }
 
     await loadTickets()
     if (platform === 'web') {

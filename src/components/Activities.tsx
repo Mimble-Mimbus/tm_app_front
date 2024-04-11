@@ -1,10 +1,9 @@
 import type { FC } from "react";
-import { useApi } from "../hook/useApi";
-import type { IActivities } from "../types/activity";
+import { apiPaths, useApi } from "../hook/useApi";
 import ActivityGroup from "./ActivityGroup";
 
 const Activities: FC<{ type: string, date: string, eventId: string}> = ({ type, date, eventId }) => {
-  const { data } = useApi<IActivities>(`/event/${eventId}/activities`)
+  const { data } = useApi(apiPaths.activities, { eventId })
   const isBoth = type === 'Voir tout'
   const isAnimations = type === 'Animations'
   const isJDR = type === 'JDR'

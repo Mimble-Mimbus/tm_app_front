@@ -3,15 +3,15 @@ import { FC, useState } from "react"
 import { EventParams } from "../router"
 import { useMediaQuery } from "usehooks-ts"
 import Activities from "../components/Activities"
-import { useApi } from "../hook/useApi"
-import { EventInformations, OpenDay } from "../types/event"
+import { apiPaths, useApi } from "../hook/useApi"
+import { OpenDay } from "../types/event"
 import { week } from "../utils/date"
 import { firstToUpper } from "../utils"
 import authStore from "../store/authStore"
 
 const ListAnimation: FC<EventParams> = ({ match }) => {
   const id = match.params.idevent
-  const { data } = useApi<EventInformations>('/get_event_informations/' + id)
+  const { data } = useApi(apiPaths.eventInformations , {id} ) 
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const [type, setType] = useState('Voir tout')
   const [date, setDate] = useState('Tous les jours')

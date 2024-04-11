@@ -30,9 +30,8 @@ import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
 import { closeOutline } from 'ionicons/icons';
 import eventStore from './store/eventStore';
-import { useApi } from './hook/useApi';
+import { apiPaths, useApi } from './hook/useApi';
 import authStore from './store/authStore';
-import { Event } from './types/event';
 import errorStore from './store/errorStore';
 
 setupIonicReact();
@@ -42,7 +41,7 @@ const menuId = "navMenu"
 const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
 
-  useApi<Event>('/random_event', (value => {
+  useApi(apiPaths.randomEvent, undefined, (value => {
     eventStore.setEventid(value.id)
     eventStore.setRpgZoneId(value.rpgZone.id)
   }))

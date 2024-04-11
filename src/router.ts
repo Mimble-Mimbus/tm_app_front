@@ -64,6 +64,11 @@ export const router = [{
     path: '/login',
     pageName: 'Login',
     type: 'all'
+  },
+  {
+    path: '/generate-migration',
+    pageName: 'GenerateMigration',
+    type: 'all'
   }
 ] as const
 

@@ -1,18 +1,41 @@
 import { CapacitorSQLite, SQLiteConnection } from '@capacitor-community/sqlite';
 import { DataSource } from 'typeorm'
-import { Ticket } from './entitys/Ticket';
-import { Migration1705970458262 } from './migrations/1705970458262-migration'
+import { Entertainment } from './entity/Entertainment';
+import { EntertainmentReservation } from './entity/EntertainmentReservation';
+import { EntertainmentSchedule } from './entity/EntertainmentSchedule';
+import { EntertainmentType } from './entity/EntertainmentType';
+import { Event } from './entity/Event';
+import { OpenDay } from './entity/OpenDay';
+import { RpgActivity } from './entity/RpgActivity';
+import { RpgTable } from './entity/RpgTable';
+import { RpgReservation } from './entity/RpgReservation';
+import { Rpg } from './entity/Rpg';
+import { Quest } from './entity/Quest';
+import { RpgZone } from './entity/RpgZone';
+import { Zone } from './entity/Zone';
+import { Tag } from './entity/Tag';
+import { TriggerWarning } from './entity/TriggerWarning';
+import { Ticket } from './entity/Ticket';
+import { Paymentable } from './entity/Paymentable';
+import { TypePaymentable } from './entity/TypePaymentables';
+import { Price } from './entity/Price';
+import { Transit } from './entity/Transit';
+import { Migration1712879213036 } from './migrations/1712879213036-migration';
 
 export const connection = new SQLiteConnection(CapacitorSQLite);
+
 const dataSource = new DataSource({
   type: 'capacitor',
   driver: connection,
   database: 'ionic-storage',
-  entities: [Ticket],
-  migrations: [Migration1705970458262],
+  entities: [Entertainment, EntertainmentReservation, EntertainmentSchedule, EntertainmentType,
+    RpgActivity, RpgTable, RpgReservation, Rpg, RpgZone,
+    Event, OpenDay, Quest, Zone, Tag, TriggerWarning, Ticket, Paymentable, TypePaymentable, Price, Transit
+  ],
+  migrations: [Migration1712879213036],
 })
 
-const em = dataSource.manager
+export const em = dataSource.manager
 
 export const DatabaseService = {
   em,
