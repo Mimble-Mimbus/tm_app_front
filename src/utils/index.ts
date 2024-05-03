@@ -23,3 +23,7 @@ export function getDataFromForm<const T extends Record<string, string>>(labels: 
 
   return data
 }
+
+export function isDbAvailable () {
+  return (!import.meta.env.PROD) || (Capacitor.getPlatform() !== 'web')
+}

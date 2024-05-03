@@ -113,10 +113,9 @@ export class AuthStore {
       throw new Error('no user endpoint')
     }
 
-    const { data } = await fetchApi.get(user.url, { method: user.method })
+    const { data } = await fetchApi(user.url, { method: user.method })
     this.setUser(data)
     return data
-    
   }
 
   async refresh () {

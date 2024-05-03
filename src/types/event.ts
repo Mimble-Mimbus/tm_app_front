@@ -1,20 +1,32 @@
-interface Price {
+import { ApiPartialRgpZone } from "./rpgZone"
+import { ApiZone } from "./zone"
+
+interface ApiPrice {
+  id: number
   price: number
-  priceCondition: string | null
+  priceCondition?: string
 }
 
-interface Paymentable {
-  type: string
-  priceDetails: Price[]
+
+interface ApiTypePaymentable {
+  id: number
+  name: string
+}
+interface ApiPaymentable {
+  id: number
+  typePaymentable: ApiTypePaymentable
+  priceDetails: ApiPrice[]
   name: string
 }
 
-export interface OpenDay {
+export interface ApiOpenDay {
+  id: number
   dayStart: string
   dayEnd: string
 }
 
 interface Transit {
+  id: number
   name: string,
   address: string,
   arrival: string,
@@ -22,15 +34,16 @@ interface Transit {
   availableSeats: number
 }
 
-export interface EventInformations {
+export interface ApiEvent {
   id: number
-  paymentables: Paymentable[]
+  paymentables: ApiPaymentable[]
   transits: Transit[]
-  openDays: OpenDay[]
+  openDays: ApiOpenDay[]
   address: string
 }
-
-export interface Event {
+export interface ApiBaseEvent {
+  address: string
   id: number
-  rpgZone: { id: number }
+  rpgZones: ApiPartialRgpZone[]
+  zones: ApiZone[]
 }

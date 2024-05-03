@@ -59,10 +59,17 @@ export const router = [{
     path: '/tickets',
     pageName: 'Tickets',
     type: 'app'
-  },
-  {
+  }, {
     path: '/login',
     pageName: 'Login',
+    type: 'all'
+  }, {
+    path: '/generate-migration',
+    pageName: 'GenerateMigration',
+    type: 'all'
+  }, {
+    path: '*',
+    pageName: 'NotFound',
     type: 'all'
   }
 ] as const

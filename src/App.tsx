@@ -30,10 +30,13 @@ import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
 import { closeOutline } from 'ionicons/icons';
 import eventStore from './store/eventStore';
-import { useApi } from './hook/useApi';
 import authStore from './store/authStore';
-import { Event } from './types/event';
 import errorStore from './store/errorStore';
+import fetchApi from './utils/axios'
+import {  ApiBaseEvent } from './types/event';
+import { initializeEvent, repo } from  './storage/database';
+import { Event } from './storage/entity/Event';
+import { isDbAvailable } from './utils';
 
 setupIonicReact();
 
@@ -42,15 +45,11 @@ const menuId = "navMenu"
 const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
 
-  useApi<Event>('/random_event', (value => {
-    eventStore.setEventid(value.id)
-    eventStore.setRpgZoneId(value.rpgZone.id)
-  }))
-
   const { scan, error } = useQRCodeScanner((value) => {
     console.log(value)
   })
   const [isOpen, setIsopen] = useState(false)
+  const [isLoading, setIsloading] = useState(true)
   
   async function scanQrcode () {
     if (error) {
@@ -67,8 +66,20 @@ const App: FC = () => {
   }, [error])
 
   useEffect(() => {
-    authStore.initialize()
-    errorStore.initialise()
+    (async() => {
+      authStore.initialize()
+      errorStore.initialise()
+      await fetchApi.get<ApiBaseEvent>(`/next_event`).then(async({ data }) => {
+        if (isDbAvailable()) {
+          const event = await repo(Event).findOneBy({ id: data.id })
+          if (!event) {
+            await initializeEvent(data)
+          }
+        }
+        eventStore.setEventid(data.id)
+        eventStore.setRpgZoneId(data.rpgZones[0].id)
+      }).finally(() => setIsloading(false))
+    })()
   }, [])
 
   return (
@@ -83,9 +94,9 @@ const App: FC = () => {
           </IonContent>
         </IonMenu>
         <IonPage id={menuId}>
-          {isOnPhone ? <HeaderMobile scan={scanQrcode} /> : <HeaderWeb />}
-          <IonContent>
-            <Router />
+           {isOnPhone ? <HeaderMobile scan={scanQrcode} /> : <HeaderWeb />}
+          <IonContent> 
+            {!isLoading && <Router />}
           </IonContent>
           <IonModal isOpen={isOpen}>
             <IonHeader>

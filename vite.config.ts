@@ -17,8 +17,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'esnext'
+      target: 'esnext',
+      keepNames: true,
     },
-    exclude: ['js-big-decimal', 'jeep-sqlite/loader']
+    exclude: ['jeep-sqlite/loader', 'js-big-decimal']
   }
 })

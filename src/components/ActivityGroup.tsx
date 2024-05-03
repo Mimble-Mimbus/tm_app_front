@@ -4,7 +4,7 @@ import { IonItem } from "@ionic/react";
 import { time, week } from "../utils/date";
 import { useMediaQuery } from "usehooks-ts";
 import { firstToUpper } from "../utils";
-import { Entertainment, RpgActivity } from "../types/activity";
+import { ApiEntertainment, ApiRpgActivity } from "../types/activity";
 
 interface Schedule {
   start: string
@@ -12,7 +12,7 @@ interface Schedule {
   id: number
 }
 
-const ActivityGroup: FC<{ activity: RpgActivity | Entertainment, eventId: string, date: string, type: string }> = ({ eventId, date, type, activity }) => {
+const ActivityGroup: FC<{ activity: ApiRpgActivity | ApiEntertainment, eventId: string, date: string, type: string }> = ({ eventId, date, type, activity }) => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const Balise = isOnPhone ? HidingContainer : 'div' 
   function filterFromDate (val: Schedule) {

@@ -3,17 +3,17 @@ import { FC } from "react"
 import { EventParams } from "../router"
 import { timeOutline } from 'ionicons/icons'
 import HidingContainer from "../components/HidingContainer"
-import { useApi } from "../hook/useApi"
-import { EventInformations, OpenDay } from "../types/event"
+import { apiPaths, useApi } from "../hook/useApi"
+import { ApiOpenDay } from "../types/event"
 import { useMediaQuery } from "usehooks-ts"
 import  OsmMap from "../components/OsmMap"
 import { time, week } from "../utils/date"
 
 const Informations: FC<EventParams> = ({ match }) => {
-  const { data } = useApi<EventInformations>('/get_event_informations/' + match.params.idevent)
+  const { data } = useApi(apiPaths.eventInformations, { id: match.params.idevent })
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   
-  const getDates = (dates: OpenDay[]) => (dates.map(x => ({dayStart: new Date(x.dayStart), dayEnd: new Date(x.dayEnd)})))
+  const getDates = (dates: ApiOpenDay[]) => (dates.map(x => ({dayStart: new Date(x.dayStart), dayEnd: new Date(x.dayEnd)})))
 
   return (
     data ?

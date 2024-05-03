@@ -1,8 +1,8 @@
-import { IonButton, IonCheckbox, IonContent, IonPage } from "@ionic/react"
+import { IonButton, IonContent, IonPage } from "@ionic/react"
 import { FC, FormEvent, useMemo, useState } from "react"
 import TextInput from "../components/TextInput"
 import { TagsAndTriggers } from "../types/tags-triggerCarnings"
-import { Rpg, RpgData } from "../types/rpg"
+import { ApiRpg, RpgData } from "../types/rpg"
 import { Schedule, ScheduleData } from "../types/activity"
 import { useApis } from "../hook/useApis"
 import IconButton from "../components/IconeButton"
@@ -23,7 +23,7 @@ import FormError from "../components/FormError"
 
 const AnimationCreation: FC = () => {
   const id = eventStore.rpgZoneId
-  const { data, set } = useApis<[TagsAndTriggers, Rpg[], RpgZone]>(['/tags_and_trigger_warnings', '/rpgs', '/rpg_zone/' + id], [id])
+  const { data, set } = useApis<[TagsAndTriggers, ApiRpg[], RpgZone]>(['/tags_and_trigger_warnings', '/rpgs', '/rpg_zone/' + id], [id])
   const [tagsAndTriggers, rpgs, rpgZone] = data
   const [isRpgOpen, toggleRpg] = useWindow()
   const [isSuccess, toggleSuccess] = useWindow()

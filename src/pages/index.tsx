@@ -11,5 +11,7 @@ import MimbleMimbus from './MimbleMimbus'
 import ListAnimations from './ListAnimations'
 import Tickets from './Tickets'
 import Login from './Login'
+import GenerateMigration from './GenerateMigration'
+import NotFound from './NotFound'
 
-export default { Login ,Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, Quest, MimbleMimbus, ListAnimations, Tickets }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, Quest, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound }

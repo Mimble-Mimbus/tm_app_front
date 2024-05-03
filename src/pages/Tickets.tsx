@@ -1,21 +1,21 @@
 import { FC, useEffect, useState } from "react";
-import { Ticket } from "../storage/entitys/Ticket";
-import { DatabaseService } from "../storage/database";
+// import { Ticket } from "../storage/entitys/Ticket";
+// import { DatabaseService } from "../storage/database";
 import SwiperWrapper from "../components/Swiper";
 import QRCodeImage from "../components/QRCodeImage";
 import { IonPage } from "@ionic/react";
 
 const Tickets: FC = () => {
-  const [tickets, setTickets] = useState<null | Ticket[]>(null)
-  useEffect(() => {
-    DatabaseService.getTickets().then(data => {
-      setTickets(data)
-    })
+  // const [tickets, setTickets] = useState<null | Ticket[]>(null)
+  // useEffect(() => {
+  //   DatabaseService.getTickets().then(data => {
+  //     setTickets(data)
+  //   })
 
-  }, [])
+  // }, [])
   return (<IonPage className="h-full bg-slate-50">
     <div className="h-full">
-    {tickets ? 
+    {/* {tickets ? 
       <SwiperWrapper>
       {tickets.map((ticket, index) => (
         <div className="w-64 h-96 shadow-md rounded-2xl flex flex-col justify-around bg-white" key={index}>
@@ -30,7 +30,7 @@ const Tickets: FC = () => {
       ))}
       </SwiperWrapper> :
       <div>vous n'avez pas de billets</div>
-      }
+      } */}
     </div>
   </IonPage>)
 }

@@ -1,7 +1,7 @@
 import { IonRouterOutlet } from "@ionic/react";
 import { FC } from "react";
 import { RouteData, router } from '../router'
-import { Redirect, Route, RouterProps } from "react-router";
+import { Redirect, Route, RouterProps, Switch } from "react-router";
 
 import pages from '../pages'
 import { useMediaQuery } from "usehooks-ts";
@@ -17,9 +17,11 @@ const Router: FC = () => {
   }
   return (
     <IonRouterOutlet>
-      {router.filter(route => isOnPhone ? (route.type !== 'web') : (route.type !== 'app') ).map((route, index) => (
-        <Route key={index}  path={route.path} render={(props) => render(props, pages[route.pageName], route)} />
-      ))}
+      <Switch>
+        {router.filter(route => isOnPhone ? (route.type !== 'web') : (route.type !== 'app') ).map((route, index) => (
+          <Route key={index} exact path={route.path} render={(props) => render(props, pages[route.pageName], route)} />
+        ))}
+      </Switch>
     </IonRouterOutlet>
   )
 }

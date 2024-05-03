@@ -1,20 +1,18 @@
 import { IonButton, IonContent, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
 import { FC, FormEvent, useEffect, useMemo, useState } from "react"
-import { useApi } from "../hook/useApi"
-import { Entertainment, RpgActivity, Schedule } from "../types/activity"
+import { apiPaths, useApi } from "../hook/useApi"
+import { Schedule } from "../types/activity"
 import { EventAndIdParams } from "../router"
 import { time, week } from "../utils/date"
 import fetchApi from '../utils/axios'
-import { AxiosError } from "axios"
 import Modal from '../components/Modal'
 import { useMediaQuery } from "usehooks-ts"
 import { useWindow } from "../hook/useWindow"
-import { ConstraintError } from "../types"
 import FormError from "../components/FormError"
 
 const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
   const { params } = match
-  const { data } = useApi<Entertainment | RpgActivity>(`/${params.type.replace('-', '_')}/${params.id}`)
+  const { data } = useApi(apiPaths.activity,{ activityType: params.type.replace('-', '_'), id: params.id })
   const [currentScheduleId, setCurrentScheduleId] = useState<number>();
 
   const currentSchedule = useMemo<Schedule | undefined>(function () {

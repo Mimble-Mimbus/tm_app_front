@@ -1,4 +1,4 @@
-import { Preferences } from '@capacitor/preferences'
+import { nativeStorage } from "./nativeStorage";
 
 const subtle = window.crypto.subtle
 const iv = new Uint8Array([188, 185, 57, 146, 246, 194, 114, 34, 12, 80, 198, 77])
@@ -12,14 +12,15 @@ function importKey (key: JsonWebKey) {
 }
 
 async function getCryptoKey () {
-  let data = (await Preferences.get({ key: 'crypto-key' })).value
+  let data = await nativeStorage.get('cryptoKey') || null
 
   if (data) {
     return importKey(JSON.parse(data))
   }
-  
+
   let cryptoKey = await subtle.generateKey({ name: "AES-GCM", length: 128 }, true, ["encrypt", "decrypt"])
-  await Preferences.set({ key: 'crypto-key',value: JSON.stringify(await subtle.exportKey('jwk', cryptoKey)) })
+
+  await nativeStorage.set('cryptoKey',JSON.stringify(await subtle.exportKey('jwk', cryptoKey)))
 
   return cryptoKey
 }
