@@ -1,4 +1,4 @@
-import { Column } from "typeorm";
+import { Column } from "typeorm/browser";
 
 export abstract class AActivity {
   @Column({ type: 'varchar', length: 255 })
@@ -8,10 +8,10 @@ export abstract class AActivity {
   description: string
 
   @Column({ nullable: true, type: 'int' })
-  maxNumberSeats: number
+  maxNumberSeats?: number
 
   @Column({ nullable: true, type: 'int' })
-  duration: number  
+  duration?: number  
 
   @Column({ default: false, type: 'boolean' })
   onReservation = false

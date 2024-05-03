@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm/browser";
 import { Event } from "./Event";
 
 @Entity('transit')
@@ -18,9 +18,9 @@ export class Transit {
   @ManyToOne(() => Event, event => event.transits)
   event: Event
 
-  @Column({ type: 'datetime'})
-  start: Date
+  @Column({ type: 'varchar'})
+  start: string
 
-  @Column({ type: 'datetime'})
-  arrival: Date
+  @Column({ type: 'varchar'})
+  arrival: string
 }

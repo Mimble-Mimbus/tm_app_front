@@ -1,3 +1,5 @@
+import { RpgBase } from "./rpg"
+
 export interface UserGm {
   id: number
   name: string
@@ -16,29 +18,34 @@ export interface ScheduleData {
   maxNumberSeats: string
 }
 
-export interface RpgActivity {
+export interface ApiRpgActivity {
   id: number
+  eventId: number
+  rpgZoneId: number
   name: string
+  rpg: RpgBase
   description: string
   schedules: Schedule[]
   userGm: UserGm
 }
 
-export interface EntertainmentType {
+export interface ApiEntertainmentType {
   id: number
   name: string
-  description: string
+  description?: string
 }
 
-export interface Entertainment {
+export interface ApiEntertainment {
+  eventId: number
+  zoneId: number
   id: number
   name: string
   description: string
   schedules: Schedule[]
-  entertainmentType: EntertainmentType
+  entertainmentType: ApiEntertainmentType
 }
 
-export interface IActivities {
-  rpgActivities: RpgActivity[]
-  entertainments: Entertainment[]
+export interface ApiActivities {
+  rpgActivities: ApiRpgActivity[]
+  entertainments: ApiEntertainment[]
 }

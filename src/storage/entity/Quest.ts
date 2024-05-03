@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, ManyToOne, PrimaryColumn } from "typeorm/browser";
 import { Event } from "./Event";
 import { Zone } from "./Zone";
 

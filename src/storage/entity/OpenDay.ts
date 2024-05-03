@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm/browser";
 import { Event } from "./Event";
 
 @Entity('open_day')
@@ -9,9 +9,9 @@ export class OpenDay {
   @ManyToOne(() => Event, event => event.opendays)
   event: Event
 
-  @Column({ type: 'datetime'})
-  dayStart: Date
+  @Column({ type: 'varchar'})
+  dayStart: string
 
-  @Column({ type: 'datetime'})
-  dayEnd: Date
+  @Column({ type: 'varchar'})
+  dayEnd: string
 }

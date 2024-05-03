@@ -4,18 +4,18 @@ import { EventParams } from "../router"
 import { useMediaQuery } from "usehooks-ts"
 import Activities from "../components/Activities"
 import { apiPaths, useApi } from "../hook/useApi"
-import { OpenDay } from "../types/event"
+import { ApiOpenDay } from "../types/event"
 import { week } from "../utils/date"
 import { firstToUpper } from "../utils"
 import authStore from "../store/authStore"
 
 const ListAnimation: FC<EventParams> = ({ match }) => {
   const id = match.params.idevent
-  const { data } = useApi(apiPaths.eventInformations , {id} ) 
+  const { data } = useApi(apiPaths.eventInformations , { id } ) 
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const [type, setType] = useState('Voir tout')
   const [date, setDate] = useState('Tous les jours')
-  function formatOpenDay (val: OpenDay) {
+  function formatOpenDay (val: ApiOpenDay) {
     const str = week[new Date(val.dayStart).getDay()]
     return firstToUpper(str);
   }

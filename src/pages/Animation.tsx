@@ -1,7 +1,7 @@
 import { IonButton, IonContent, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
 import { FC, FormEvent, useEffect, useMemo, useState } from "react"
 import { apiPaths, useApi } from "../hook/useApi"
-import { Entertainment, RpgActivity, Schedule } from "../types/activity"
+import { Schedule } from "../types/activity"
 import { EventAndIdParams } from "../router"
 import { time, week } from "../utils/date"
 import fetchApi from '../utils/axios'

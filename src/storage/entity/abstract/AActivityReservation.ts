@@ -1,4 +1,4 @@
-import { Column } from "typeorm";
+import { Column } from "typeorm/browser";
 
 export abstract class AActvityReservation {
   @Column({ length: 255, type: 'varchar' })

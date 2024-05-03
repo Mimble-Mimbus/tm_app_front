@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { AActivitySchedule } from "./abstract/AActivitySchedule";
 import { RpgActivity } from "./RpgActivity";
 import { RpgReservation } from "./RpgReservation";
@@ -11,6 +11,6 @@ export class RpgTable extends AActivitySchedule {
   @ManyToOne(() => RpgActivity, rpgActivity => rpgActivity.rpgTables)
   rpgActivity: RpgActivity
 
-  @OneToMany(() => RpgReservation, rpgReservation => rpgReservation.rpgTable)
+  @OneToMany(() => RpgReservation, rpgReservation => rpgReservation.rpgTable, { cascade: ['remove'] })
   rpgReservations: RpgReservation[]
 }

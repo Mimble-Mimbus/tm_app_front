@@ -1,6 +1,6 @@
 import { IonButton, IonContent, IonPage } from "@ionic/react"
 import { FC } from "react"
-import { migrationGenerate as mg } from "../storage/GenerateMigration"
+import { migrationGenerate as mg } from "../storage/generateMigration"
 import dataSource from "../storage/database"
 
 const GenerateMigration: FC = () => {

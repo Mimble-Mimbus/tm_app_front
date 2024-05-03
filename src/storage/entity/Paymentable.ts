@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { Price } from "./Price";
 import { Event } from "./Event";
 import { TypePaymentable } from "./TypePaymentables";
@@ -11,7 +11,7 @@ export class Paymentable {
   @Column({ type: 'varchar', length: 255 })
   name: string
 
-  @OneToMany(() => Price, price => price.paymentable)
+  @OneToMany(() => Price, price => price.paymentable, { orphanedRowAction: 'delete', cascade: ['insert', 'update'] })
   prices: Price[]
 
   @ManyToOne(() => Event, event => event.paymentables)

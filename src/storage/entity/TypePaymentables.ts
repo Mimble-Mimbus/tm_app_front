@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { Paymentable } from "./Paymentable";
 
 @Entity('type_paymentable')

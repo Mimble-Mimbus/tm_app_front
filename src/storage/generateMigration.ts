@@ -1,5 +1,5 @@
 import { format } from "@sqltools/formatter/lib/sqlFormatter";
-import { DataSource } from "typeorm";
+import { DataSource } from "typeorm/browser";
 
 export const migrationGenerate = {
   camelCase(str: string, firstCapital: boolean = false): string {
@@ -80,7 +80,7 @@ export const migrationGenerate = {
   getTemplate(name: string, upSqls: string[], downSqls: string[]): string {
     const migrationName = `${this.camelCase(name, true)}`;
 
-    return `import { MigrationInterface, QueryRunner } from "typeorm";
+    return `import { MigrationInterface, QueryRunner } from "typeorm/browser";
 
 export class ${migrationName} implements MigrationInterface {
     name = '${migrationName}'
@@ -105,7 +105,7 @@ ${downSqls.join(`
   ): string {
     const migrationName = `${this.camelCase(name, true)}`;
 
-    return `const { MigrationInterface, QueryRunner } = require("typeorm");
+    return `const { MigrationInterface, QueryRunner } = require("typeorm/browser");
 
 module.exports = class ${migrationName} {
     name = '${migrationName}'

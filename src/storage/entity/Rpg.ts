@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { RpgActivity } from "./RpgActivity";
 import { Tag } from "./Tag";
 import { TriggerWarning } from "./TriggerWarning";

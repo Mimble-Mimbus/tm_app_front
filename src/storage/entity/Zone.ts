@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm";
+import { Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm/browser";
 import { AZone } from "./abstract/AZone";
 import { Event } from "./Event";
 import { RpgZone } from "./RpgZone";
@@ -13,8 +13,8 @@ export class Zone extends AZone {
   @ManyToOne(() => Event, event => event.zones)
   event: Event
 
-  @OneToOne(() => RpgZone, rpgZone => rpgZone.zone)
-  rpgZone: RpgZone
+  @OneToOne(() => RpgZone, rpgZone => rpgZone.zone, { cascade: ['insert', 'update', 'remove'], nullable: true })
+  rpgZone?: RpgZone
 
   @OneToMany(() => Quest, quest => quest.event)
   quests: Quest[]

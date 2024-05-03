@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { AActivitySchedule } from "./abstract/AActivitySchedule";
 import { Entertainment } from "./Entertainment";
 import { EntertainmentReservation } from "./EntertainmentReservation";
@@ -11,6 +11,6 @@ export class EntertainmentSchedule extends AActivitySchedule {
   @ManyToOne(() => Entertainment, (entertainement) => entertainement.entertainmentSchedules)
   entertainement: Entertainment
 
-  @OneToMany(() => EntertainmentReservation, er => er.entertainmentSchedule)
+  @OneToMany(() => EntertainmentReservation, er => er.entertainmentSchedule, { cascade: ['remove']})
   entertainmentReservations: EntertainmentReservation[]
 }

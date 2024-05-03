@@ -1,4 +1,4 @@
-import { Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Entity, ManyToOne, PrimaryColumn } from "typeorm/browser";
 import { AActvityReservation } from "./abstract/AActivityReservation";
 import { RpgTable } from "./RpgTable";
 

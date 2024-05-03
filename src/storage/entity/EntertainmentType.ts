@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm/browser";
 import { Entertainment } from "./Entertainment";
 
 @Entity('entertainment_type')
@@ -10,7 +10,7 @@ export class EntertainmentType {
   name: string
 
   @Column({ type: 'text', nullable: true })
-  description: string
+  description?: string
 
   @OneToMany(() => Entertainment ,entertainment => entertainment.entertainmentType)
   entertainments: Entertainment[]

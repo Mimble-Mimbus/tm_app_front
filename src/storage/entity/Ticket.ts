@@ -1,5 +1,5 @@
-import { AfterLoad, BeforeInsert, Column, Entity, PrimaryColumn } from "typeorm";
-import { decrypt, encrypt } from "../../utils/crypto";
+import { AfterLoad, BeforeInsert, Column, Entity, PrimaryColumn } from "typeorm/browser";
+import { encrypt, decrypt } from "../../utils/crypto";
 
 @Entity("ticket")
 export class Ticket {

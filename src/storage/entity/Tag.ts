@@ -1,4 +1,4 @@
-import { Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { Entity, ManyToMany, PrimaryColumn } from "typeorm/browser";
 import { RpgActivity } from "./RpgActivity";
 import { Rpg } from "./Rpg";
 
