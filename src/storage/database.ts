@@ -22,8 +22,8 @@ import { Price } from './entity/Price';
 import { Transit } from './entity/Transit';
 import { User } from './entity/User';
 import { ApiBaseEvent } from '../types/event';
-import { Migration1713792184672 } from './migrations/1713792184672-migration';
 import { Capacitor } from '@capacitor/core';
+import { Migration1722354170947 } from './migrations/1722354170947-migration';
 
 export const connection = new SQLiteConnection(CapacitorSQLite);
 export const DB_NAME = 'ionic-storage'
@@ -42,7 +42,7 @@ const dataSource = new DataSource({
     RpgActivity, RpgTable, RpgReservation, Rpg, RpgZone,
     Event, OpenDay, Quest, Zone, Tag, TriggerWarning, Paymentable, TypePaymentable, Price, Transit, User, Ticket
   ],
-  migrations: [Migration1713792184672],
+  migrations: [Migration1722354170947],
   // logging: true
 })
 

@@ -1,13 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm/browser";
 
-export class Migration1713792184672 implements MigrationInterface {
-    name = 'Migration1713792184672'
+export class Migration1722354170947 implements MigrationInterface {
+    name = 'Migration1722354170947'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "entertainment_reservation" ("name" varchar(255) NOT NULL, "email" varchar(255) NOT NULL, "phoneNumber" varchar(255) NOT NULL, "booking" integer NOT NULL, "id" integer PRIMARY KEY NOT NULL, "entertainmentScheduleId" integer)`);
         await queryRunner.query(`CREATE TABLE "entertainment_schedule" ("duration" integer, "start" varchar NOT NULL, "isCanceled" boolean NOT NULL DEFAULT (false), "availableSeats" integer NOT NULL, "id" integer PRIMARY KEY NOT NULL, "entertainementId" integer)`);
         await queryRunner.query(`CREATE TABLE "entertainment_type" ("id" integer PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL, "description" text)`);
-        await queryRunner.query(`CREATE TABLE "quest" ("id" integer PRIMARY KEY NOT NULL, "eventId" integer, "zoneId" integer)`);
+        await queryRunner.query(`CREATE TABLE "quest" ("id" integer PRIMARY KEY NOT NULL, "title" varchar NOT NULL, "infos" varchar NOT NULL, "isFullFilled" boolean NOT NULL DEFAULT (0), "type" varchar NOT NULL, "points" integer NOT NULL, "eventId" integer, "zoneId" integer)`);
         await queryRunner.query(`CREATE TABLE "open_day" ("id" integer PRIMARY KEY NOT NULL, "dayStart" varchar NOT NULL, "dayEnd" varchar NOT NULL, "eventId" integer)`);
         await queryRunner.query(`CREATE TABLE "price" ("id" integer PRIMARY KEY NOT NULL, "value" integer NOT NULL, "priceCondition" varchar, "paymentableId" integer)`);
         await queryRunner.query(`CREATE TABLE "type_paymentable" ("id" integer PRIMARY KEY NOT NULL, "name" varchar(255) NOT NULL)`);
@@ -33,8 +33,8 @@ export class Migration1713792184672 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "temporary_entertainment_schedule"("duration", "start", "isCanceled", "availableSeats", "id", "entertainementId") SELECT "duration", "start", "isCanceled", "availableSeats", "id", "entertainementId" FROM "entertainment_schedule"`);
         await queryRunner.query(`DROP TABLE "entertainment_schedule"`);
         await queryRunner.query(`ALTER TABLE "temporary_entertainment_schedule" RENAME TO "entertainment_schedule"`);
-        await queryRunner.query(`CREATE TABLE "temporary_quest" ("id" integer PRIMARY KEY NOT NULL, "eventId" integer, "zoneId" integer, CONSTRAINT "FK_6e3db865100724bac88e7b174c1" FOREIGN KEY ("eventId") REFERENCES "event" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_580a431e14a4ee49ecd1fdccde7" FOREIGN KEY ("zoneId") REFERENCES "zone" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
-        await queryRunner.query(`INSERT INTO "temporary_quest"("id", "eventId", "zoneId") SELECT "id", "eventId", "zoneId" FROM "quest"`);
+        await queryRunner.query(`CREATE TABLE "temporary_quest" ("id" integer PRIMARY KEY NOT NULL, "title" varchar NOT NULL, "infos" varchar NOT NULL, "isFullFilled" boolean NOT NULL DEFAULT (0), "type" varchar NOT NULL, "points" integer NOT NULL, "eventId" integer, "zoneId" integer, CONSTRAINT "FK_6e3db865100724bac88e7b174c1" FOREIGN KEY ("eventId") REFERENCES "event" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_580a431e14a4ee49ecd1fdccde7" FOREIGN KEY ("zoneId") REFERENCES "zone" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
+        await queryRunner.query(`INSERT INTO "temporary_quest"("id", "title", "infos", "isFullFilled", "type", "points", "eventId", "zoneId") SELECT "id", "title", "infos", "isFullFilled", "type", "points", "eventId", "zoneId" FROM "quest"`);
         await queryRunner.query(`DROP TABLE "quest"`);
         await queryRunner.query(`ALTER TABLE "temporary_quest" RENAME TO "quest"`);
         await queryRunner.query(`CREATE TABLE "temporary_open_day" ("id" integer PRIMARY KEY NOT NULL, "dayStart" varchar NOT NULL, "dayEnd" varchar NOT NULL, "eventId" integer, CONSTRAINT "FK_d6cb130c1d5e32f87d4d0c455a0" FOREIGN KEY ("eventId") REFERENCES "event" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
@@ -121,8 +121,8 @@ export class Migration1713792184672 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "open_day"("id", "dayStart", "dayEnd", "eventId") SELECT "id", "dayStart", "dayEnd", "eventId" FROM "temporary_open_day"`);
         await queryRunner.query(`DROP TABLE "temporary_open_day"`);
         await queryRunner.query(`ALTER TABLE "quest" RENAME TO "temporary_quest"`);
-        await queryRunner.query(`CREATE TABLE "quest" ("id" integer PRIMARY KEY NOT NULL, "eventId" integer, "zoneId" integer)`);
-        await queryRunner.query(`INSERT INTO "quest"("id", "eventId", "zoneId") SELECT "id", "eventId", "zoneId" FROM "temporary_quest"`);
+        await queryRunner.query(`CREATE TABLE "quest" ("id" integer PRIMARY KEY NOT NULL, "title" varchar NOT NULL, "infos" varchar NOT NULL, "isFullFilled" boolean NOT NULL DEFAULT (0), "type" varchar NOT NULL, "points" integer NOT NULL, "eventId" integer, "zoneId" integer)`);
+        await queryRunner.query(`INSERT INTO "quest"("id", "title", "infos", "isFullFilled", "type", "points", "eventId", "zoneId") SELECT "id", "title", "infos", "isFullFilled", "type", "points", "eventId", "zoneId" FROM "temporary_quest"`);
         await queryRunner.query(`DROP TABLE "temporary_quest"`);
         await queryRunner.query(`ALTER TABLE "entertainment_schedule" RENAME TO "temporary_entertainment_schedule"`);
         await queryRunner.query(`CREATE TABLE "entertainment_schedule" ("duration" integer, "start" varchar NOT NULL, "isCanceled" boolean NOT NULL DEFAULT (false), "availableSeats" integer NOT NULL, "id" integer PRIMARY KEY NOT NULL, "entertainementId" integer)`);

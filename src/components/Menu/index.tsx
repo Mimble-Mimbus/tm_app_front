@@ -10,28 +10,31 @@ const Menu: FC = () => {
   const linkList = [{
     title: 'Terra Mimbusia',
     path: '/terra-mimbusia',
-  },{
+  }, {
     title: 'Informations',
     path: `/event/${data}/informations`,
-  },{
+  }, {
     title: 'Guildes',
     path: '/guilds',
-  },{
+  }, {
     title: 'Paramètres',
     path: '/parameters',
-  },{
+  }, {
     title: 'Billets',
     path: '/tickets',
-  },{
+  }, {
     title: 'Animations',
     path: `/event/${data}/animations`,
-  },{
+  }, {
+    title: 'Quêtes',
+    path: `/event/${data}/quests`
+  }, {
     title: 'Carte Intéractive',
     path: '/interactive-map',
-  },{
+  }, {
     title: 'Fiche de personnage',
     path: '/caracter-card',
-  },{
+  }, {
     title: 'Espace bénévole',
     path: '/voluntary-interface'
   }, {

@@ -1,4 +1,4 @@
-import { Equal, ObjectLiteral } from "typeorm/browser"
+import { ObjectLiteral } from "typeorm/browser"
 import { ApiPathsType } from "../hook/useApi"
 import { em, findOrcreate, initializeEvent, isEventInitialized } from './database'
 import { Event } from "./entity/Event"
@@ -21,6 +21,7 @@ import fetchApi from '../utils/axios'
 import { ApiBaseEvent } from "../types/event"
 import { Transit } from "./entity/Transit"
 import { OpenDay } from "./entity/OpenDay"
+import { Quest } from "./entity/Quest"
 
 type IDbRequests = { [K in keyof ApiPathsType]: (arg: Record<string, string>) => Promise<ApiPathsType[K]>}
 type IDbMutations = { [K in keyof ApiPathsType]: (arg: ApiPathsType[K], params: Record<string, string>) => Promise<any>}
@@ -170,6 +171,39 @@ export const dbRequests: IDbRequests = {
           universe: data.rpg.universe,
         }
       }))
+    }
+  },
+  '/event/{eventId}/quests': async ({ eventId }) => {
+    const quests = await repo(Quest).find({ where: { event: { id: parseInt(eventId)} }, relations: { zone: true }})
+    return quests.map(quest => ({
+      id: quest.id,
+      title: quest.title,
+      isFullFilled: quest.isFullFilled,
+      infos: quest.infos,
+      zone: {
+        id: quest.zone.id,
+        name: quest.zone.name
+      },
+      type: quest.type,
+      points: quest.points
+    }))
+  },
+  '/quest/{id}': async ({ id }) => {
+    const quest = await repo(Quest).findOne({ where: { id: parseInt(id) }, relations: { zone: true }})
+    
+    if (!quest) throw new Error('invalid quest id')
+
+    return {
+      id: quest.id,
+      title: quest.title,
+      isFullFilled: quest.isFullFilled,
+      infos: quest.infos,
+      zone: {
+        id: quest.zone.id,
+        name: quest.zone.name
+      },
+      type: quest.type,
+      points: quest.points
     }
   }
 }
@@ -360,5 +394,45 @@ export const dbMutations: IDbMutations = {
       zone.entertainments = [entity].concat(zone.entertainments || [])
       await em.save(zone)
     }
+  },
+  '/event/{eventId}/quests': async (quests, {eventId}) => {
+    if(!await isEventInitialized(parseInt(eventId))) {
+      const event = (await fetchApi<ApiBaseEvent>('/event/' + eventId)).data
+      await initializeEvent(event)
+    }
+
+    let event = await repo(Event).findOneBy({ id: parseInt(eventId)})
+
+    if (!event) throw new Error('invalid eventId')
+
+    const entities = await Promise.all(quests.map(async(quest) => {
+      const entity = await findOrcreate(Quest, quest.id)
+      const zone = await findOrcreate(Zone, quest.zone.id)
+      entity.infos = quest.infos
+      entity.isFullFilled = quest.isFullFilled
+      entity.points = quest.points
+      entity.type = quest.type
+      entity.zone = zone
+      entity.title = quest.title
+      entity.id = quest.id
+
+      return entity
+    }))
+
+    await em.save([...entities, event])
+  },
+  '/quest/{id}': async (quest, {id}) => {
+    const entity = await findOrcreate(Quest, parseInt(id))
+    const zone = await findOrcreate(Zone, quest.zone.id)
+
+    entity.infos = quest.infos
+    entity.isFullFilled = quest.isFullFilled
+    entity.points = quest.points
+    entity.type = quest.type
+    entity.zone = zone
+    entity.title = quest.title
+    entity.id = quest.id
+
+    await em.save(entity)
   }
 }

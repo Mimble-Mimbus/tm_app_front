@@ -6,17 +6,22 @@ import { dbMutations, dbRequests } from "../storage/apiRequests";
 import { Network } from '@capacitor/network'
 import { saveDb } from "../storage/database";
 import { isDbAvailable } from "../utils";
+import { ApiQuest } from "../types/quest";
 
 export const apiPaths = {
   eventInformations: '/get_event_informations/{id}',
   activities: '/event/{eventId}/activities',
-  activity: '/{activityType}/{id}'
+  activity: '/{activityType}/{id}',
+  quests: '/event/{eventId}/quests',
+  quest: '/quest/{id}'
 } as const
 
 export type ApiPathsType = {
   '/get_event_informations/{id}': ApiEvent
   '/event/{eventId}/activities': ApiActivities
-  '/{activityType}/{id}': ApiRpgActivity | ApiEntertainment
+  '/{activityType}/{id}': ApiRpgActivity | ApiEntertainment,
+  '/event/{eventId}/quests': ApiQuest[]
+  '/quest/{id}': ApiQuest
 }
 
 export function useApi<S extends keyof ApiPathsType>(path: S, params: Record<string, string> = {} ,onResult?: (value: ApiPathsType[S]) => void) {
