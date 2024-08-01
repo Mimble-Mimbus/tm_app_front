@@ -20,10 +20,6 @@ export const router = [{
     pageName: "Animation",
     type: 'all',
   }, {
-    path: '/event/:idevent/quest',
-    pageName: "Quest",
-    type: 'all',
-  }, {
     path: '/accueil',
     pageName: "Accueil",
     type: 'app',
@@ -66,6 +62,14 @@ export const router = [{
   }, {
     path: '/generate-migration',
     pageName: 'GenerateMigration',
+    type: 'all'
+  }, {
+    path: '/event/:idevent/quests',
+    pageName: 'Quests',
+    type: 'all'
+  }, {
+    path: '/quest-details/:id',
+    pageName: 'QuestDetails',
     type: 'all'
   }, {
     path: '*',

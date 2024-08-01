@@ -6,12 +6,13 @@ import CaracterCard from './CaracterCard'
 import Informations from './Informations'
 import InteractiveMap from './InteractiveMap'
 import VoluntaryInterface from './VoluntaryInterface'
-import Quest from './Quest'
 import MimbleMimbus from './MimbleMimbus'
 import ListAnimations from './ListAnimations'
 import Tickets from './Tickets'
 import Login from './Login'
 import GenerateMigration from './GenerateMigration'
 import NotFound from './NotFound'
+import Quests from './Quests'
+import QuestDetails from './QuestDetails'
 
-export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, Quest, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails }
