@@ -10,7 +10,14 @@ export interface RouteData {
 }
 
 //@ts-ignore
-export const router = [{
+export const router = [
+  
+  {
+    path: '/',
+    pageName: "Accueil",
+    type: 'all',
+  },
+  {
     path: '/event/:idevent/animation-creation',
     pageName: 'AnimationCreation',
     type: 'all',
@@ -20,17 +27,17 @@ export const router = [{
     pageName: "Animation",
     type: 'all',
   }, {
-    path: '/accueil',
-    pageName: "Accueil",
-    type: 'app',
-  }, {
+    path: '/event/:idevent/quest',
+    pageName: "Quest",
+    type: 'all',
+  },  {
     path: '/event/:idevent/informations',
     pageName: "Informations",
     type: 'all',
   }, {
     path: '/mimble-mibus',
     pageName: "MimbleMimbus",
-    type: 'app',
+    type: 'all',
   }, {
     path: '/account',
     pageName: "Account",
@@ -46,7 +53,7 @@ export const router = [{
   }, {
     path: '/event/:idevent/voluntary-interface',
     pageName: "VoluntaryInterface",
-    type: 'web',
+    type: 'all',
   }, {
     path: '/event/:idevent/interactive-map',
     pageName: "InteractiveMap",
@@ -71,7 +78,8 @@ export const router = [{
     path: '/quest-details/:id',
     pageName: 'QuestDetails',
     type: 'all'
-  }, {
+  }, 
+  {
     path: '*',
     pageName: 'NotFound',
     type: 'all'

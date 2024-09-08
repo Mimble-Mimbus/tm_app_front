@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "chancery";
+  src: url("./assets/fonts/BLKCHCRY.TTF");
+}
+@font-face {
+  font-family: "pala";
+  src: url("./assets/fonts/pala.ttf");
+}
+
+@font-face {
+  font-family: "solander";
+  src: url("./assets/fonts/solander.ttf");
+}
+
 .middle {
   @apply flex justify-center items-center
 }
@@ -12,6 +26,10 @@
 
 .ion-color-grey {
   --ion-color-base: #888888
+}
+
+.ion-color-base {
+  --ion-color-base: #fefcfd
 }
 
 
@@ -67,4 +85,14 @@
 
 .title {
   @apply w-auto text-center font-bold md:font-medium text-3xl md:text-xl mt-10 mb-16 md:mb-4 md:mt-6
+}
+
+.stroke-yellow {
+  color: #3D1B47;
+  -webkit-text-stroke: 0.6px #f3ddb4;
+}
+
+.bg-gradiant {
+  background: rgb(254,252,253);
+  background: linear-gradient(90deg, rgba(254,252,253,1) 0%, rgba(245,241,230,1) 5%, rgba(245,241,230,1) 95%, rgba(254,252,253,1) 100%);
 }

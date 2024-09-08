@@ -8,8 +8,16 @@ export default {
     extend: {
       colors: {
         secondary: "#FFF8E6",
-        'purple-base': '#3D1B47'
-      }
+        'purple-base': '#3D1B47',
+        'base': "#fefcfd",
+        'page-base' : "#f5f1e6",
+        'gold-base': "#937c4a",
+        'gold-border': "#f3ddb4",
+      },
+
+    fontFamily: {
+      palab: ["Palab", "sans-serif"],
+    },
     },
   },
   plugins: [],
