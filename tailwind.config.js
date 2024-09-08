@@ -8,11 +8,12 @@ export default {
     extend: {
       colors: {
         secondary: "#FFF8E6",
-        'purple-base': '#3D1B47',
-        'base': "#fefcfd",
+        'purple-base': 'rgb(60, 30, 70)',
+        'base': "rgb(245, 245, 230)",
         'page-base' : "#f5f1e6",
-        'gold-base': "#937c4a",
-        'gold-border': "#f3ddb4",
+        'aura' : 'rgb(230, 210, 170)',
+        'tm-orange' : 'rgb(160, 90, 70)',
+        'tm-vert' : 'rgb(140, 140, 90)'
       },
 
     fontFamily: {
