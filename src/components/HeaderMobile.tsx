@@ -13,18 +13,16 @@ const HeaderMobile: FC<{ scan: () => Promise<void> }> = ({ scan }) => {
           <img src="src/assets/img/burger_fold_icon.png" alt="menu" className="mx-auto" />
           Menu
         </button>
-        <div className="w-2/4">
-          <div className="flex flex-col justify-center">
-            <div className="text-center">
+          <div className="flex flex-col justify-center w-2/4">
+            <div className="text-center relative top-[14px]">
               <span className="stroke-yellow font-['solander'] text-6xl uppercase font-bold">
                 <span className="text-7xl">T</span>erra
               </span>
             </div>
-            <div className="relative bottom-[14px] text-center">
+            <div className="text-center">
               <span className="text-black text-2xl font-['pala'] uppercase tracking-wide">Mimbusia</span>
             </div>
           </div>
-        </div>
         <button className="font-bold stroke-yellow w-1/4 align-baseline mx-auto text-center font-['chancery'] text-xl" onClick={() => menuController.open('navMenuControl')}>
           <img src="src/assets/img/profile_icon.png" alt="profil" className="mx-auto" />
           Profil

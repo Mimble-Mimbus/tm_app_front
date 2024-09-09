@@ -17,7 +17,7 @@ const HeaderWeb: FC = observer(() => {
         <h1 className="text-secondary flex items-center font-bold w-full justify-center text-4xl h-[15vh]"> Terra Mimbusia </h1>
         <nav className="flex justify-around">
           <div className="flex">
-            <Link path="/program"> Programmes </Link>
+            <Link path="/program"> Programme </Link>
             <Link path="/mimble-mimbus"> mimble mimbus </Link>
             <Link path={`/event/${id}/informations`}> Informations pratiques </Link>
           </div>
