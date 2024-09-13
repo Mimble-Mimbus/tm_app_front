@@ -36,7 +36,7 @@ const Menu: FC = () => {
     path: '/caracter-card',
   }, {
     title: 'Espace bénévole',
-    path: '/voluntary-interface'
+    path: `/event/${data}/voluntary-interface`
   }, {
     title: isLogged ? 'Mon compte' : 'Connexion',
     path: isLogged ? '/account' : '/login'

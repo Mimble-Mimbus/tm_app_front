@@ -47,28 +47,28 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
   return bytes.buffer;
 }
 
-export async function encrypt(data: string) {
-	const buffer = await subtle.encrypt(
-	    {
-	      name: "AES-GCM",
-	      iv: iv,
-	      tagLength: 128,
-	    },
-	    keys,
-	    enc.encode(data)
-	)
-  return arrayBufferToBase64(buffer)
-}
+// export async function encrypt(data: string) {
+// 	const buffer = await subtle.encrypt(
+// 	    {
+// 	      name: "AES-GCM",
+// 	      iv: iv,
+// 	      tagLength: 128,
+// 	    },
+// 	    keys,
+// 	    enc.encode(data)
+// 	)
+//   return arrayBufferToBase64(buffer)
+// }
 
-export async function decrypt(data: string) {
-	const buffer = await subtle.decrypt(
-	    {
-	        name: "AES-GCM",
-	        iv: iv,
-	        tagLength: 128,
-	    },
-	    keys,
-      base64ToArrayBuffer(data)
-	)
-  return dec.decode(buffer)
-}
+// export async function decrypt(data: string) {
+// 	const buffer = await subtle.decrypt(
+// 	    {
+// 	        name: "AES-GCM",
+// 	        iv: iv,
+// 	        tagLength: 128,
+// 	    },
+// 	    keys,
+//       base64ToArrayBuffer(data)
+// 	)
+//   return dec.decode(buffer)
+// }

@@ -46,7 +46,7 @@ export const router = [{
   }, {
     path: '/event/:idevent/voluntary-interface',
     pageName: "VoluntaryInterface",
-    type: 'web',
+    type: 'all',
   }, {
     path: '/event/:idevent/interactive-map',
     pageName: "InteractiveMap",
@@ -76,7 +76,7 @@ export const router = [{
     pageName: 'NotFound',
     type: 'all'
   }
-] as const
+] satisfies RouteData[]
 
 export interface EventParams<T extends Record<string, any> = {}> extends RouteComponentProps<T & { idevent: string }> {}
 export interface IdParams <T extends Record<string, any> = {}> extends RouteComponentProps<T & { id: string }> {}

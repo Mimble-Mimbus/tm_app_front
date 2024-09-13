@@ -24,6 +24,7 @@ import { User } from './entity/User';
 import { ApiBaseEvent } from '../types/event';
 import { Capacitor } from '@capacitor/core';
 import { Migration1722354170947 } from './migrations/1722354170947-migration';
+import { QrCodeData } from '../types/qrcode';
 
 export const connection = new SQLiteConnection(CapacitorSQLite);
 export const DB_NAME = 'ionic-storage'
@@ -109,6 +110,7 @@ export async function isEventInitialized (eventId: number) {
 }
 
 export async function loadTickets() {
+  // await repo(Ticket).clear()
   const tickets = await DatabaseService.getTickets()
   if(tickets.length === 0) {
     await Promise.all([{ username: 'pierre', email: 'emaildepierre@gmail.com', data: 'salt¤1003¤uhe5cz82¤1707007967380¤pepper'}, { username: 'paul', email: 'emaildepaul@gmail.com', data: 'salt¤2004¤fhe6cz32¤1707007967380¤pepper'}].map(data => {
@@ -120,6 +122,17 @@ export async function loadTickets() {
       return DatabaseService.ticketRepository.save(ticket)
     }))
   }
+}
+
+export async function registerTicket (qrCodedata: QrCodeData) {
+  const ticket = new Ticket()
+  const timeStamp = new Date(qrCodedata.data).getTime()
+  ticket.ticketdId = qrCodedata.id.toString()
+  ticket.email = qrCodedata.email
+  ticket.username = qrCodedata.firstName
+  ticket.data = `${import.meta.env.VITE_REACT_APP_SALT}¤${qrCodedata.type}¤${qrCodedata.rawQrcode}¤${timeStamp}¤${import.meta.env.VITE_REACT_APP_PEPPER}`
+
+  await em.save(ticket)
 }
 
 export default dataSource

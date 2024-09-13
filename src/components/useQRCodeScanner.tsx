@@ -15,7 +15,6 @@ export function useQRCodeScanner (onScan: (value: Barcode[]) => void | Promise<v
       throw 'not supported'
     }
 
-    isSupportedRef.current = true
     return BarcodeScanner.installGoogleBarcodeScannerModule().then(() => {
       moduleInstallRef.current= true
     })
@@ -43,18 +42,22 @@ export function useQRCodeScanner (onScan: (value: Barcode[]) => void | Promise<v
       }}
     }
 
-    await BarcodeScanner.requestPermissions()
-      .then(async({ camera }) => {
-        if (camera === 'granted') {
-          setError(undefined)
-          const { barcodes } = await BarcodeScanner.scan({ formats: [BarcodeFormat.QrCode] })
-          setIsScanning(true)
-          await onScan(barcodes)
-        } else {
+    try {
+      const status = await BarcodeScanner.checkPermissions()
+      if (status.camera !== 'granted') {
+        const newStatut = await BarcodeScanner.requestPermissions()
+        if (newStatut.camera !== 'granted') {
           setError('Permissions refusées')
+          return
         }
-      })
-      .catch(() => setError('Error de permissions'))
+      }
+      setError(undefined)
+      const { barcodes } = await BarcodeScanner.scan({ formats: [BarcodeFormat.QrCode] })
+      setIsScanning(true)
+      await onScan(barcodes)
+    } catch {() => {
+      setError('Erreur de permissions')
+    }}
   }
 
   useEffect(() => {
@@ -64,8 +67,8 @@ export function useQRCodeScanner (onScan: (value: Barcode[]) => void | Promise<v
         const isAvailable = (await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable()).available
         if (!isAvailable) {
           await installModule()
-
         }
+        isSupportedRef.current = true
         moduleInstallRef.current = true
       } catch {(err: any) => {
         console.error(err)
