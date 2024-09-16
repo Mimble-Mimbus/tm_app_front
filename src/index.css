@@ -68,3 +68,7 @@
 .title {
   @apply w-auto text-center font-bold md:font-medium text-3xl md:text-xl mt-10 mb-16 md:mb-4 md:mt-6
 }
+
+.button-voluntary {
+  @apply w-11/12 bg-purple-base text-white rounded-sm text-center h-14 middle text-lg font-bold
+}
