@@ -24,8 +24,6 @@ export class Ticket {
       separatedData[separatedData.length - 1] === import.meta.env.VITE_REACT_APP_PEPPER,
     ]
 
-    console.log(conditions, separatedData)
-
     if (!conditions.every((val) => val)) {
       throw Error('invalid format')
     }

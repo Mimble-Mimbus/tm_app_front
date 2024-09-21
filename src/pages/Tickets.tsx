@@ -9,7 +9,6 @@ const Tickets: FC = () => {
   const [tickets, setTickets] = useState<null | ITicket[]>(null)
   useEffect(() => {
     DatabaseService.getTickets().then(data => {
-      console.log(data)
       setTickets(data)
     })
 

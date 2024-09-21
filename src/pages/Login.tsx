@@ -3,6 +3,7 @@ import { FC, FormEvent, useState } from "react";
 import TextInput from "../components/TextInput";
 import { getDataFromForm } from "../utils";
 import authStore from "../store/authStore";
+import { Redirect } from "react-router";
 
 const Login: FC = () => {
   const router = useIonRouter()
@@ -12,12 +13,18 @@ const Login: FC = () => {
     password: 'Mot de passe'
   }
 
+  if (authStore.isLogged) {
+    return <Redirect to="/accueil" />
+  }
+
+
   async function onSubmit (event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const data = getDataFromForm(labels, event.currentTarget)
     await authStore.login(data)
       .then(() => {
-        router.push('/accueil')
+        const { lastPathname } = router.routeInfo
+        router.push(lastPathname || '/accueil')
       }).catch(() => {
         setError(true)
       })

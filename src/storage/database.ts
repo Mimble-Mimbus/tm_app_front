@@ -23,8 +23,9 @@ import { Transit } from './entity/Transit';
 import { User } from './entity/User';
 import { ApiBaseEvent } from '../types/event';
 import { Capacitor } from '@capacitor/core';
-import { Migration1722354170947 } from './migrations/1722354170947-migration';
 import { QrCodeData } from '../types/qrcode';
+import { VolunteerShift } from './entity/VolunteerShift';
+import { Migration1726672088066 } from './migrations/1726672088066-migration';
 
 export const connection = new SQLiteConnection(CapacitorSQLite);
 export const DB_NAME = 'ionic-storage'
@@ -41,9 +42,9 @@ const dataSource = new DataSource({
   entities: [
     Entertainment, EntertainmentReservation, EntertainmentSchedule, EntertainmentType,
     RpgActivity, RpgTable, RpgReservation, Rpg, RpgZone,
-    Event, OpenDay, Quest, Zone, Tag, TriggerWarning, Paymentable, TypePaymentable, Price, Transit, User, Ticket
+    Event, OpenDay, Quest, Zone, Tag, TriggerWarning, Paymentable, TypePaymentable, Price, Transit, User, Ticket, VolunteerShift
   ],
-  migrations: [Migration1722354170947],
+  migrations: [Migration1726672088066],
   // logging: true
 })
 

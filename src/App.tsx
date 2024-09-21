@@ -47,7 +47,6 @@ const App: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const [msg, setMsg] = useState<string>()
   const { scan, error } = useQRCodeScanner(async(value) => {
-    console.log(value)
     if (error) {
       setMsg(error)
       return
@@ -67,7 +66,6 @@ const App: FC = () => {
     if (msg) {
       setIsopen(true)
     } else {
-      console.log('scan')
       await scan()
     }
   }
