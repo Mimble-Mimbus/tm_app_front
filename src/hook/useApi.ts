@@ -72,7 +72,7 @@ export function useApi<S extends keyof ApiPathsType>(path: S, params: Record<str
         })
       }
 
-      // await request()
+      await request()
     })()
   }, [])
 

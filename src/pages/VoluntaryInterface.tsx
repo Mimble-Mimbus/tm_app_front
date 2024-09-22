@@ -1,6 +1,6 @@
 import { IonButton, IonContent, IonIcon, IonItem, IonPage } from "@ionic/react"
-import { searchOutline } from "ionicons/icons"
-import { FC, useEffect, useState } from "react"
+import { chevronDownOutline, chevronUpOutline, searchOutline } from "ionicons/icons"
+import { FC, PropsWithChildren, useEffect, useState } from "react"
 import { useQRCodeScanner } from "../components/useQRCodeScanner"
 import fetchApi from '../utils/axios'
 import { QrCodeData } from "../types/qrcode"
@@ -12,19 +12,9 @@ import eventStore from "../store/eventStore"
 import { ApiVolunteerShift } from "../types/VolunteerShift"
 import { time, week } from "../utils/date"
 import { Link } from "react-router-dom"
+import { Transition } from "@headlessui/react"
 
-const VoluntaryInteface: FC = () => {
-  const id = eventStore.eventId
-
-  if (!id) return null
-
-  const isOnPhone = useMediaQuery('(max-width: 768px)')
-  const [msg, setMsg] = useState<string>()
-  const [isOpen, setIsOpen] = useState(false)
-  const [qrcodeInfo, setQrcodeInfo] = useState<ITicket>()
-  const { data } = useApi(apiPaths.volunteerShifts, { eventId: id.toString()})
-
-
+const Planning: FC<{ data: ApiVolunteerShift[]}> = ({ data }) => {
   function groupByDay (volunteerShifts: ApiVolunteerShift[]) {
     const groupedValues = volunteerShifts.reduce<Partial<Record<number,(ApiVolunteerShift & { start: string, end: string })[]>>>((acc, val) => {
         const day = new Date(val.shiftStart)
@@ -37,6 +27,52 @@ const VoluntaryInteface: FC = () => {
 
     return Object.keys(groupedValues).sort().map(x => [week[x], groupedValues[x]] as const)
   }
+  return <div className="flex flex-col items-center mb-4 space-y-4">{groupByDay(data).map((group, i) => <div className="w-10/12" key={i}>
+      <h2 className="bg-gray-500 rounded-sm text-center text-white py-4 font-medium mb-4">Activités du {group[0]}</h2>
+      <div>{group[1]?.map((val, y) => <div className="bg-gray-400 py-5 text-center space-y-4 font-medium rounded-xl text-slate-700" key={y}>
+        <p>{val.start}-{val.end}</p>
+        <p>Zone: {val.zone.name}</p>
+        <p className="mx-6">Mission: {val.description}</p>
+      </div>)}</div>
+    </div>)}
+  </div>
+}
+
+const PlanningContainer: FC<PropsWithChildren> = ({ children }) => {
+  const [showChildren, setShowchildren] = useState(false)
+  const show = () => setShowchildren(val => !val)
+  return <div className="w-full mb-2">
+      <div className="w-full flex justify-center">
+        <div className="button-voluntary ">Planning</div>
+        <IonIcon onClick={show} className="h-12 w-1/6 mr-2 self-center text-white absolute right-7" icon={!showChildren ? chevronDownOutline : chevronUpOutline} />
+      </div>
+      <Transition
+      show={showChildren}
+      enter="transition-transform duration-150"
+      enterFrom="-translate-y-8"
+      enterTo="translate-y-0"
+      leave="transition-transform duration-150"
+      leaveFrom="translate-y-0"
+      leaveTo="-translate-y-[]"
+    >
+      <div className="mt-2">
+        {children}
+      </div>
+    </Transition>
+  </div>
+}
+
+
+const VoluntaryInteface: FC = () => {
+  const id = eventStore.eventId
+
+  if (!id) return null
+
+  const isOnPhone = useMediaQuery('(max-width: 768px)')
+  const [msg, setMsg] = useState<string>()
+  const [isOpen, setIsOpen] = useState(false)
+  const [qrcodeInfo, setQrcodeInfo] = useState<ITicket>()
+  const { data } = useApi(apiPaths.volunteerShifts, { eventId: id.toString()})
 
   const { scan, error } = useQRCodeScanner(async(value) => {
     if (error) {
@@ -80,18 +116,13 @@ const VoluntaryInteface: FC = () => {
       </div>
       <h1 className="text-center font-bold text-2xl md:mt-8">Bénévole</h1>
       <div className="flex flex-col items-center space-y-2 mt-10">
-        <div className="button-voluntary">Planning</div>
         <div className="flex items-start w-[95%] md:flex-row flex-col justify-center">
-          <div className="flex flex-col items-center mb-4 space-y-4">
-            {data && [...groupByDay(data), ...groupByDay(data), ...groupByDay(data), ...groupByDay(data)].map((group, i) => <div className="w-10/12" key={i}>
-              <h2 className="bg-gray-500 rounded-sm text-center text-white py-4 font-medium mb-4">Activités du {group[0]}</h2>
-              <div>{group[1]?.map((val, y) => <div className="bg-gray-400 py-5 text-center space-y-4 font-medium rounded-xl text-slate-700" key={y}>
-                <p>{val.start}-{val.end}</p>
-                <p>Zone: {val.zone.name}</p>
-                <p className="mx-6">Mission: {val.description}</p>
-              </div>)}</div>
-            </div>)}
-          </div>
+            {data && (isOnPhone ? (
+              <PlanningContainer>
+                <Planning  data={data}/>
+              </PlanningContainer>) : 
+              (<Planning data={data}/>)
+            )}
           <div className="space-y-2 w-full flex flex-col items-center">
             <a target="_blank" href="https://mimble-mimbus.fr/wp-content/uploads/2024/07/Guide-du-benevole.pdf" className="button-voluntary">Lire la charte bénévole</a>
             <a target="_blank" href="https://docs.google.com/spreadsheets/d/1FtxXAP-kRi8uICEtmEzwE0ydTzEAxm4_VGZaSzcRQ8M/edit?gid=0#gid=0" className="button-voluntary">Consulter le planning général</a>
