@@ -14,5 +14,6 @@ import GenerateMigration from './GenerateMigration'
 import NotFound from './NotFound'
 import Quests from './Quests'
 import QuestDetails from './QuestDetails'
+import Contact from './Contact'
 
-export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact }

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm/browser";
 
-export class Migration1722354170947 implements MigrationInterface {
-    name = 'Migration1722354170947'
+export class Migration1726672088066 implements MigrationInterface {
+    name = 'Migration1726672088066'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "entertainment_reservation" ("name" varchar(255) NOT NULL, "email" varchar(255) NOT NULL, "phoneNumber" varchar(255) NOT NULL, "booking" integer NOT NULL, "id" integer PRIMARY KEY NOT NULL, "entertainmentScheduleId" integer)`);
@@ -21,6 +21,7 @@ export class Migration1722354170947 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "user" ("id" integer PRIMARY KEY NOT NULL, "name" varchar NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "rpg_activity" ("name" varchar(255) NOT NULL, "description" text NOT NULL, "maxNumberSeats" integer, "duration" integer, "onReservation" boolean NOT NULL DEFAULT (0), "isCanceled" boolean NOT NULL DEFAULT (0), "id" integer PRIMARY KEY NOT NULL, "rpgZoneId" integer, "rpgId" integer, "userId" integer)`);
         await queryRunner.query(`CREATE TABLE "rpg_zone" ("name" varchar(255) NOT NULL, "id" integer PRIMARY KEY NOT NULL, "eventId" integer)`);
+        await queryRunner.query(`CREATE TABLE "volunteer_shift" ("id" integer PRIMARY KEY NOT NULL, "description" varchar NOT NULL, "shiftStart" varchar NOT NULL, "shiftEnd" varchar NOT NULL, "zoneId" integer, "eventId" integer)`);
         await queryRunner.query(`CREATE TABLE "event" ("id" integer PRIMARY KEY NOT NULL, "address" varchar(255) NOT NULL)`);
         await queryRunner.query(`CREATE TABLE "zone" ("name" varchar(255) NOT NULL, "id" integer PRIMARY KEY NOT NULL, "eventId" integer)`);
         await queryRunner.query(`CREATE TABLE "entertainment" ("name" varchar(255) NOT NULL, "description" text NOT NULL, "maxNumberSeats" integer, "duration" integer, "onReservation" boolean NOT NULL DEFAULT (0), "isCanceled" boolean NOT NULL DEFAULT (0), "id" integer PRIMARY KEY NOT NULL, "zoneId" integer, "entertainmentTypeId" integer)`);
@@ -69,6 +70,10 @@ export class Migration1722354170947 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "temporary_rpg_zone"("name", "id", "eventId") SELECT "name", "id", "eventId" FROM "rpg_zone"`);
         await queryRunner.query(`DROP TABLE "rpg_zone"`);
         await queryRunner.query(`ALTER TABLE "temporary_rpg_zone" RENAME TO "rpg_zone"`);
+        await queryRunner.query(`CREATE TABLE "temporary_volunteer_shift" ("id" integer PRIMARY KEY NOT NULL, "description" varchar NOT NULL, "shiftStart" varchar NOT NULL, "shiftEnd" varchar NOT NULL, "zoneId" integer, "eventId" integer, CONSTRAINT "FK_f8d424c0f3153d308339ceae60d" FOREIGN KEY ("zoneId") REFERENCES "zone" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, CONSTRAINT "FK_0027211fef0794b942f90e21897" FOREIGN KEY ("eventId") REFERENCES "event" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
+        await queryRunner.query(`INSERT INTO "temporary_volunteer_shift"("id", "description", "shiftStart", "shiftEnd", "zoneId", "eventId") SELECT "id", "description", "shiftStart", "shiftEnd", "zoneId", "eventId" FROM "volunteer_shift"`);
+        await queryRunner.query(`DROP TABLE "volunteer_shift"`);
+        await queryRunner.query(`ALTER TABLE "temporary_volunteer_shift" RENAME TO "volunteer_shift"`);
         await queryRunner.query(`CREATE TABLE "temporary_zone" ("name" varchar(255) NOT NULL, "id" integer PRIMARY KEY NOT NULL, "eventId" integer, CONSTRAINT "FK_49f39598f875692670fe3121c1d" FOREIGN KEY ("eventId") REFERENCES "event" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION)`);
         await queryRunner.query(`INSERT INTO "temporary_zone"("name", "id", "eventId") SELECT "name", "id", "eventId" FROM "zone"`);
         await queryRunner.query(`DROP TABLE "zone"`);
@@ -88,6 +93,10 @@ export class Migration1722354170947 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "zone" ("name" varchar(255) NOT NULL, "id" integer PRIMARY KEY NOT NULL, "eventId" integer)`);
         await queryRunner.query(`INSERT INTO "zone"("name", "id", "eventId") SELECT "name", "id", "eventId" FROM "temporary_zone"`);
         await queryRunner.query(`DROP TABLE "temporary_zone"`);
+        await queryRunner.query(`ALTER TABLE "volunteer_shift" RENAME TO "temporary_volunteer_shift"`);
+        await queryRunner.query(`CREATE TABLE "volunteer_shift" ("id" integer PRIMARY KEY NOT NULL, "description" varchar NOT NULL, "shiftStart" varchar NOT NULL, "shiftEnd" varchar NOT NULL, "zoneId" integer, "eventId" integer)`);
+        await queryRunner.query(`INSERT INTO "volunteer_shift"("id", "description", "shiftStart", "shiftEnd", "zoneId", "eventId") SELECT "id", "description", "shiftStart", "shiftEnd", "zoneId", "eventId" FROM "temporary_volunteer_shift"`);
+        await queryRunner.query(`DROP TABLE "temporary_volunteer_shift"`);
         await queryRunner.query(`ALTER TABLE "rpg_zone" RENAME TO "temporary_rpg_zone"`);
         await queryRunner.query(`CREATE TABLE "rpg_zone" ("name" varchar(255) NOT NULL, "id" integer PRIMARY KEY NOT NULL, "eventId" integer)`);
         await queryRunner.query(`INSERT INTO "rpg_zone"("name", "id", "eventId") SELECT "name", "id", "eventId" FROM "temporary_rpg_zone"`);
@@ -136,6 +145,7 @@ export class Migration1722354170947 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "entertainment"`);
         await queryRunner.query(`DROP TABLE "zone"`);
         await queryRunner.query(`DROP TABLE "event"`);
+        await queryRunner.query(`DROP TABLE "volunteer_shift"`);
         await queryRunner.query(`DROP TABLE "rpg_zone"`);
         await queryRunner.query(`DROP TABLE "rpg_activity"`);
         await queryRunner.query(`DROP TABLE "user"`);

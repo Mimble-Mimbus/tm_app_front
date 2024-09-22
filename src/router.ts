@@ -47,6 +47,7 @@ export const router = [{
     path: '/event/:idevent/voluntary-interface',
     pageName: "VoluntaryInterface",
     type: 'all',
+    auth: true
   }, {
     path: '/event/:idevent/interactive-map',
     pageName: "InteractiveMap",
@@ -70,6 +71,11 @@ export const router = [{
   }, {
     path: '/quest-details/:id',
     pageName: 'QuestDetails',
+    type: 'all'
+  },
+  {
+    path: '/contact',
+    pageName: 'Contact',
     type: 'all'
   }, {
     path: '*',

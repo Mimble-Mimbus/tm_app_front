@@ -1,11 +1,10 @@
-import { IonContent, IonIcon } from "@ionic/react";
-import { FC, PropsWithChildren, useRef, useState } from "react"
+import { IonIcon } from "@ionic/react";
+import { FC, PropsWithChildren, useState } from "react"
 import { chevronDownOutline, chevronUpOutline } from "ionicons/icons";
-import { CSSTransition } from 'react-transition-group'
 import { Transition } from '@headlessui/react'
 import clsx from "clsx";
 
-const HidingContainer: FC<PropsWithChildren<{ title: string, icon?: string, className?: string }>> = ({ children, title, icon, className }) => {
+const HidingContainer: FC<PropsWithChildren<{ title: string, icon?: string, className?: string, titleClassName?: string }>> = ({ children, title, icon, className, titleClassName }) => {
   const [showChildren, setShowChildren] = useState(false);
 
   function show () {
@@ -13,7 +12,7 @@ const HidingContainer: FC<PropsWithChildren<{ title: string, icon?: string, clas
   }
 
   return (<div className="w-full flex flex-col">
-    <div className="w-full h-12 rounded-md bg-gray-400 flex justify-between z-10 text-white">
+    <div className={clsx('z-10', titleClassName || 'w-full h-12 rounded-md bg-gray-400 flex justify-between text-white')}>
       <div className="h-full flex w-full items-center">
         <IonIcon className="h-3/5 w-[10%] ml-1" icon={icon} />
         <div className="ml-3 w-auto font-bold flex items-cente">{ title }</div>

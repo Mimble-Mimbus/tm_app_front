@@ -22,6 +22,7 @@ import { ApiBaseEvent } from "../types/event"
 import { Transit } from "./entity/Transit"
 import { OpenDay } from "./entity/OpenDay"
 import { Quest } from "./entity/Quest"
+import { VolunteerShift } from "./entity/VolunteerShift"
 
 type IDbRequests = { [K in keyof ApiPathsType]: (arg: Record<string, string>) => Promise<ApiPathsType[K]>}
 type IDbMutations = { [K in keyof ApiPathsType]: (arg: ApiPathsType[K], params: Record<string, string>) => Promise<any>}
@@ -174,7 +175,7 @@ export const dbRequests: IDbRequests = {
     }
   },
   '/event/{eventId}/quests': async ({ eventId }) => {
-    const quests = await repo(Quest).find({ where: { event: { id: parseInt(eventId)} }, relations: { zone: true }})
+    const quests = await repo(Quest).find({ where: { event: { id: parseInt(eventId)} }, relations: { zone: true, event: true }})
     return quests.map(quest => ({
       id: quest.id,
       title: quest.title,
@@ -185,11 +186,12 @@ export const dbRequests: IDbRequests = {
         name: quest.zone.name
       },
       type: quest.type,
-      points: quest.points
+      points: quest.points,
+      event : { id: parseInt(eventId) }
     }))
   },
   '/quest/{id}': async ({ id }) => {
-    const quest = await repo(Quest).findOne({ where: { id: parseInt(id) }, relations: { zone: true }})
+    const quest = await repo(Quest).findOne({ where: { id: parseInt(id) }, relations: { zone: true, event: true }})
     
     if (!quest) throw new Error('invalid quest id')
 
@@ -203,8 +205,25 @@ export const dbRequests: IDbRequests = {
         name: quest.zone.name
       },
       type: quest.type,
-      points: quest.points
+      points: quest.points,
+      event: {
+        id: quest.event.id
+      }
     }
+  },
+  '/event/{eventId}/volunteer_shifts': async ({ eventId }) => {
+    const volunteerShifts = await repo(VolunteerShift).find({ where: { event: { id: parseInt(eventId)} }, relations: { zone: true, event: true }})
+    return volunteerShifts.map(volunteerShift => ({
+      id: volunteerShift.id,
+      description: volunteerShift.description,
+      shiftEnd: volunteerShift.shiftEnd,
+      shiftStart: volunteerShift.shiftStart,
+      zone: {
+        id: volunteerShift.zone.id,
+        name: volunteerShift.zone.name
+      },
+      event : { id: parseInt(eventId) }
+    }))
   }
 }
 
@@ -413,6 +432,7 @@ export const dbMutations: IDbMutations = {
       entity.points = quest.points
       entity.type = quest.type
       entity.zone = zone
+      entity.event = event
       entity.title = quest.title
       entity.id = quest.id
 
@@ -424,7 +444,7 @@ export const dbMutations: IDbMutations = {
   '/quest/{id}': async (quest, {id}) => {
     const entity = await findOrcreate(Quest, parseInt(id))
     const zone = await findOrcreate(Zone, quest.zone.id)
-
+    const event = await findOrcreate(Event, quest.event.id)
     entity.infos = quest.infos
     entity.isFullFilled = quest.isFullFilled
     entity.points = quest.points
@@ -432,7 +452,35 @@ export const dbMutations: IDbMutations = {
     entity.zone = zone
     entity.title = quest.title
     entity.id = quest.id
+    entity.event = event
 
     await em.save(entity)
+    await em.save([zone, event])
+  },
+  '/event/{eventId}/volunteer_shifts': async (volunteerShifts, { eventId }) => {
+    if(!await isEventInitialized(parseInt(eventId))) {
+      const event = (await fetchApi<ApiBaseEvent>('/event/' + eventId)).data
+      await initializeEvent(event)
+    }
+    
+    let event = await repo(Event).findOneBy({ id: parseInt(eventId)})
+
+    if (!event) throw new Error('invalid eventId')
+
+    const entities = await Promise.all(volunteerShifts.map(async(volunteerShift) => {
+      const entity = await findOrcreate(VolunteerShift ,volunteerShift.id)
+      const zone = await findOrcreate(Zone, volunteerShift.zone.id)
+
+      entity.shiftEnd = volunteerShift.shiftEnd
+      entity.shiftStart = volunteerShift.shiftStart
+      entity.description = volunteerShift.description
+      entity.id = volunteerShift.id
+      entity.zone = zone
+      entity.event = event
+
+      return entity
+    }))
+
+    await em.save([...entities, event])
   }
 }
