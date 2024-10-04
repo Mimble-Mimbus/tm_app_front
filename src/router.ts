@@ -34,6 +34,7 @@ export const router = [{
   }, {
     path: '/account',
     pageName: "Account",
+    // auth: true,
     type: 'all',
   }, {
     path: '/event/:idevent/animations',
@@ -77,6 +78,22 @@ export const router = [{
     path: '/contact',
     pageName: 'Contact',
     type: 'all'
+  }, {
+    path: '/register-account',
+    pageName: 'RegisterAccount',
+    type: 'all'
+  }, {
+    path: '/verify-email',
+    pageName: 'VerifyEmail',
+    type: 'web'
+  }, {
+    path: '/forgot-password',
+    pageName: 'ForgotPassword',
+    type: 'all'
+  }, {
+    path: '/reset-password',
+    pageName: 'ResetPassword',
+    type: 'web',
   }, {
     path: '*',
     pageName: 'NotFound',

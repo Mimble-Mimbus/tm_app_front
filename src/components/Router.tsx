@@ -6,6 +6,7 @@ import { Redirect, Route, RouterProps, Switch } from "react-router";
 import pages from '../pages'
 import { useMediaQuery } from "usehooks-ts";
 import authStore from "../store/authStore";
+import errorStore from "../store/errorStore";
 
 const Router: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
@@ -13,6 +14,7 @@ const Router: FC = () => {
     if (routeInfo.auth && !authStore.isLogged) {
       return <Redirect from={props.history.location.pathname} to='/login'/>
     }
+    errorStore.clear()
     return <Component {...props} />
   }
   return (
