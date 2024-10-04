@@ -18,7 +18,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Router from './components/Router';
 import { IonReactRouter } from '@ionic/react-router';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
@@ -29,8 +28,9 @@ import { useMediaQuery } from 'usehooks-ts';
 import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
 import eventStore from './store/eventStore';
-import authStore from './store/authStore';
+import Router from './components/Router';
 import errorStore from './store/errorStore';
+import authStore from './store/authStore';
 import fetchApi from './utils/axios'
 import { ApiBaseEvent } from './types/event';
 import { initializeEvent, registerTicket, repo } from  './storage/database';
@@ -84,7 +84,7 @@ const App: FC = () => {
 
   useEffect(() => {
     (async() => {
-      authStore.initialize()
+      await authStore.initialize()
       errorStore.initialise()
       await fetchApi.get<ApiBaseEvent>(`/next_event`).then(async({ data }) => {
         if (isDbAvailable()) {

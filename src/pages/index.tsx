@@ -15,5 +15,9 @@ import NotFound from './NotFound'
 import Quests from './Quests'
 import QuestDetails from './QuestDetails'
 import Contact from './Contact'
+import RegisterAccount from './RegisterAccount'
+import VerifyEmail from './VerifyEmail'
+import ResetPassword from './ResetPassword'
+import ForgotPassword from './ForgotPassword'
 
-export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact, RegisterAccount, VerifyEmail, ResetPassword, ForgotPassword }
