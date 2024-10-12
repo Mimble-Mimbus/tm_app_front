@@ -31,9 +31,6 @@ export class ErrorStore {
           const code = err.response?.status
           if (code === 401) {
             await authStore.refresh()
-              .then(() => {
-                return true
-              })
               .catch(() => {
                 authStore.setIslogged(false)
                 authStore.setToken(undefined)

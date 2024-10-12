@@ -1,10 +1,9 @@
 import { IonPage } from "@ionic/react"
-import { FC, FormEvent, useRef, useState } from "react"
+import { FC, FormEvent, useEffect, useRef, useState } from "react"
 import TextInput from "../components/TextInput"
 import { getDataFromForm } from "../utils"
 import { RegisterAccountLabels } from "../constants/label"
 import fetchApi from '../utils/axios'
-import { useUpdateEffect } from "usehooks-ts"
 
 const RegisterAccount: FC = () => {
   const [success, setSuccess] = useState(false)
@@ -30,7 +29,7 @@ const RegisterAccount: FC = () => {
       })
   }
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     console.log(password, confirmPassword)
     if ((password == confirmPassword)) {
       setIsPassWordInvalid(false)

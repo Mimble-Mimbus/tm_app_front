@@ -2,7 +2,6 @@ import { IonPage, useIonRouter } from "@ionic/react";
 import { FC, FormEvent, useEffect, useState } from "react";
 import TextInput from "../components/TextInput";
 import { ResetPassWordLabels } from "../constants/label";
-import { useUpdateEffect } from "usehooks-ts";
 import { getDataFromForm } from "../utils";
 import fetchApi from '../utils/axios'
 import qs from "query-string";
@@ -22,7 +21,7 @@ const ResetPassword: FC = () => {
     }
   }, [])
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     console.log(password, confirmPassword)
     if ((password == confirmPassword)) {
       setIsPassWordInvalid(false)

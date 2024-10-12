@@ -7,6 +7,7 @@ export interface RouteData {
   readonly pageName :string
   readonly type?: PageType
   readonly auth?: boolean
+  readonly isActive?: boolean
 }
 
 //@ts-ignore
@@ -34,7 +35,7 @@ export const router = [{
   }, {
     path: '/account',
     pageName: "Account",
-    // auth: true,
+    auth: true,
     type: 'all',
   }, {
     path: '/event/:idevent/animations',
@@ -44,6 +45,7 @@ export const router = [{
     path: '/event/:idevent/caracter-card',
     pageName: "CaracterCard",
     type: 'all',
+    isActive: false
   }, {
     path: '/event/:idevent/voluntary-interface',
     pageName: "VoluntaryInterface",
@@ -64,15 +66,18 @@ export const router = [{
   }, {
     path: '/generate-migration',
     pageName: 'GenerateMigration',
-    type: 'all'
+    type: 'all',
+    isActive: false
   }, {
     path: '/event/:idevent/quests',
     pageName: 'Quests',
-    type: 'all'
+    type: 'all',
+    isActive: false
   }, {
     path: '/quest-details/:id',
     pageName: 'QuestDetails',
-    type: 'all'
+    type: 'all',
+    isActive: false
   },
   {
     path: '/contact',

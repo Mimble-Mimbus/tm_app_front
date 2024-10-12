@@ -11,7 +11,7 @@ if (!apiPath) {
 }
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'terra.nimbusia',
   appName: 'tm_app_front',
   webDir: 'dist',
   server: {
