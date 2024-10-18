@@ -7,13 +7,15 @@ import { Network } from '@capacitor/network'
 import { saveDb } from "../storage/database";
 import { isDbAvailable } from "../utils";
 import { ApiQuest } from "../types/quest";
+import { ApiVolunteerShift } from "../types/VolunteerShift";
 
 export const apiPaths = {
   eventInformations: '/get_event_informations/{id}',
   activities: '/event/{eventId}/activities',
   activity: '/{activityType}/{id}',
   quests: '/event/{eventId}/quests',
-  quest: '/quest/{id}'
+  quest: '/quest/{id}',
+  volunteerShifts: '/event/{eventId}/volunteer_shifts'
 } as const
 
 export type ApiPathsType = {
@@ -21,7 +23,8 @@ export type ApiPathsType = {
   '/event/{eventId}/activities': ApiActivities
   '/{activityType}/{id}': ApiRpgActivity | ApiEntertainment,
   '/event/{eventId}/quests': ApiQuest[]
-  '/quest/{id}': ApiQuest
+  '/quest/{id}': ApiQuest,
+  '/event/{eventId}/volunteer_shifts': ApiVolunteerShift[]
 }
 
 export function useApi<S extends keyof ApiPathsType>(path: S, params: Record<string, string> = {} ,onResult?: (value: ApiPathsType[S]) => void) {

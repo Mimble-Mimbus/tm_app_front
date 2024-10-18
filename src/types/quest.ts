@@ -3,6 +3,7 @@ export interface ApiQuest {
   title: string
   isFullFilled: boolean
   zone: { id: number, name: string }
+  event : { id: number }
   type: string
   infos: string
   points: number

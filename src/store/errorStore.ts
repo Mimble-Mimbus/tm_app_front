@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import { ConstraintError } from '../types'
-import fetchApi from '../utils/axios'
+import fetchApi, { addRequestInterceptor, addResponseInterceptor } from '../utils/axios'
 import { AxiosError } from 'axios'
 import authStore from './authStore'
 import retry from 'axios-retry'
@@ -25,12 +25,12 @@ export class ErrorStore {
 
   initialise () {
     retry(fetchApi, {
-      retries: 1,
+      retries: 2,
       async retryCondition (err) {
         if (!authStore.retried) {
           const code = err.response?.status
           if (code === 401) {
-            return await authStore.refresh()
+            await authStore.refresh()
               .then(() => {
                 return true
               })
@@ -39,25 +39,24 @@ export class ErrorStore {
                 authStore.setToken(undefined)
                 authStore.setRefreshToken(undefined)
                 authStore.setRetried(true)
-                return false
               })
           }
         }
-        return false
+        return true
       }
     })
 
-    fetchApi.interceptors.request.use(config => {
+    addRequestInterceptor(config => {
       if (authStore.token) {
-        config.headers.Authorization = 'Bearer ' + authStore.token
+        config.headers.set('Authorization','Bearer ' + authStore.token)
       } else {
-        config.headers.Authorization = ''
+        config.headers.delete('Authorization')
       }
       return config
     })
 
-    fetchApi.interceptors.response.use(res => {
-      this.setErrors([])
+    addResponseInterceptor(res => {
+      this.clear()
       return res
     }, async (err: AxiosError<ConstraintError>) => {
       const data = err.response?.data
@@ -83,6 +82,10 @@ export class ErrorStore {
       })
     })
     this.setErrors(errors)
+ }
+
+ clear () {
+  this.setErrors([])
  }
 }
 

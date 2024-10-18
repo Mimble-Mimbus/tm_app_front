@@ -22,7 +22,7 @@ const QRCodeImage: FC<{ data: string }> = ({ data }) => {
       color: "#5b2bca",
       gradient: {
         type: "linear",
-        rotation: 0.3490658503988659,
+        // rotation: 0.3490658503988659,
         colorStops: [
           {
             offset: 0,

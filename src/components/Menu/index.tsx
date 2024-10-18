@@ -37,7 +37,7 @@ const Menu: FC = () => {
   if (authStore.isLogged) {
     linkList.push({
       title: 'Espace bénévole',
-      path: '/voluntary-interface',
+      path: `/event/${data}/voluntary-interface`,
       icon: people
     })
   }

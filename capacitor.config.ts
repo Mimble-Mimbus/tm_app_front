@@ -17,7 +17,7 @@ const config: CapacitorConfig = {
   server: {
     cleartext: true,
     androidScheme: 'http',
-    allowNavigation: [apiPath]
+    allowNavigation: [apiPath],
   },
   plugins: {
     CapacitorSQLite: {

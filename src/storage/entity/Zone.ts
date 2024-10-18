@@ -4,6 +4,7 @@ import { Event } from "./Event";
 import { RpgZone } from "./RpgZone";
 import { Entertainment } from "./Entertainment";
 import { Quest } from "./Quest";
+import { VolunteerShift } from "./VolunteerShift";
 
 @Entity('zone')
 export class Zone extends AZone {
@@ -21,4 +22,7 @@ export class Zone extends AZone {
 
   @OneToMany(() => Entertainment, entertainment => entertainment.zone)
   entertainments: Entertainment[]
+
+  @OneToMany(() => VolunteerShift, volunteerShift => volunteerShift.zone)
+  volunteerShifts: VolunteerShift[]
 }

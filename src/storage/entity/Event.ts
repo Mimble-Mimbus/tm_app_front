@@ -5,6 +5,7 @@ import { OpenDay } from "./OpenDay";
 import { Paymentable } from "./Paymentable";
 import { Transit } from "./Transit";
 import { RpgZone } from "./RpgZone";
+import { VolunteerShift } from "./VolunteerShift";
 
 @Entity('event')
 export class Event {
@@ -31,4 +32,7 @@ export class Event {
 
   @OneToMany(() => Transit, transit => transit.event, { orphanedRowAction: 'delete' })
   transits: Transit[]
+
+  @OneToMany(() => VolunteerShift, volunteerShift => volunteerShift.event)
+  volunteerShifts: VolunteerShift
 }

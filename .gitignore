@@ -31,3 +31,6 @@ yarn-error.log*
 /android
 /ios
 /dist
+
+/.ionic/ssl/cert.pem
+/.ionic/ssl/key.pem

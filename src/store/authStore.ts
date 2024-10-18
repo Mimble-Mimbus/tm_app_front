@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import axios from 'axios'
-import fetchApi from '../utils/axios'
+import { ApiUser } from '../types/user'
 
 type ReqMethod = 'post' | 'get' | 'patch' | 'put' | 'option' | 'head' | 'delete'
 
@@ -31,10 +31,10 @@ export class AuthStore {
       url: '/login_check',
       method: 'post'
     },
-    logout: {
-      url: '/logout',
-      method: 'post'
-    },
+    // logout: {
+    //   url: '/logout',
+    //   method: 'get'
+    // },
     refresh: {
       url: '/token/refresh',
       method: 'post'
@@ -108,12 +108,12 @@ export class AuthStore {
 
   async fetchUser () {
     const { user } = this.endpoints
-
+    
     if (!user) {
       throw new Error('no user endpoint')
     }
-
-    const { data } = await fetchApi(user.url, { method: user.method })
+    const fetchApi = (await import('../utils/axios')).default 
+    const { data } = await fetchApi<ApiUser>(user.url, { method: user.method })
     this.setUser(data)
     return data
   }
@@ -127,8 +127,6 @@ export class AuthStore {
         this.setToken(data.token)
         this.setRefreshToken(data.refresh_token)
         this.setIslogged(true)
-      }).catch(() => {
-        fetchApi.defaults.headers.Authorization = ''
       })
     }
   }
@@ -146,16 +144,10 @@ export class AuthStore {
   }
 
   async logout () {
-    const logout = this.endpoints.logout
-  
-    if (!logout) {
-      throw new Error('no logout endpoint') 
-    }
-
-    await axios(logout.url, { method: logout.method })
-      .then(() => {
-        this.setIslogged(false)
-      })
+    this.setIslogged(false)
+    this.setToken(undefined)
+    this.setUser(undefined)
+    this.setRefreshToken(undefined)
   }
   
 

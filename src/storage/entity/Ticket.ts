@@ -1,5 +1,4 @@
-import { AfterLoad, BeforeInsert, Column, Entity, PrimaryColumn } from "typeorm/browser";
-import { encrypt, decrypt } from "../../utils/crypto";
+import { AfterLoad, Column, Entity, PrimaryColumn } from "typeorm/browser";
 
 @Entity("ticket")
 export class Ticket {
@@ -16,10 +15,9 @@ export class Ticket {
   @Column('varchar')
   data!: string
 
-
-  static parseEncryptedData (data: string) {
+  static parseDecryptedData (data: string) {
     const separatedData = data.split('¤')
-
+    
     const conditions = [
       separatedData.length === 5,
       separatedData[0] === import.meta.env.VITE_REACT_APP_SALT,
@@ -31,28 +29,24 @@ export class Ticket {
     }
 
     return {
-      tickedId: separatedData[2],
+      rawQrcode: separatedData[2],
       type: separatedData[1],
       timestamp: parseInt(separatedData[3])
     }
   }
 
+  rawQrcode!: string
   ticketdId!: string
   createdAt!: number
   type!: string
 
   @AfterLoad()
   async getTickedData () {
-    const decryptedData = await decrypt(this.data)
-    const tickedData = Ticket.parseEncryptedData(decryptedData)
-
+    const tickedData = Ticket.parseDecryptedData(this.data)
+    const id = atob(tickedData.rawQrcode).split(':')[0]
     this.createdAt = tickedData.timestamp
-    this.ticketdId = tickedData.tickedId
+    this.ticketdId = id
     this.type = tickedData.type
-  }
-
-  @BeforeInsert()
-  async encrypt () {
-    this.data = await encrypt(this.data)
+    this.rawQrcode = tickedData.rawQrcode
   }
 }
