@@ -8,10 +8,11 @@ import { ApiOpenDay } from "../types/event"
 import { week } from "../utils/date"
 import { firstToUpper } from "../utils"
 import authStore from "../store/authStore"
+import clsx from "clsx"
 
 const ListAnimation: FC<EventParams> = ({ match }) => {
   const id = match.params.idevent
-  const { data } = useApi(apiPaths.eventInformations , { id } ) 
+  const { data } = useApi(apiPaths.eventInformations , { id })
   const isOnPhone = useMediaQuery('(max-width: 768px)')
   const [type, setType] = useState('Voir tout')
   const [date, setDate] = useState('Tous les jours')
@@ -24,11 +25,10 @@ const ListAnimation: FC<EventParams> = ({ match }) => {
         <IonContent className="h-full w-full">
           <div className="flex flex-col h-full w-full">
           {isOnPhone ? <>
-            <div className="flex flex-col justify-center h-[200px]">
-              <h1 className="w-auto text-center font-bold text-3xl mt-10 mb-16">Animations</h1>
-              <div className="w-full h-12 bg-zinc-900 flex justify-around items-end">
-                <div onClick={() => setType('Animations') } className="w-[45%] h-5/6 text-white text-center rounded bg-zinc-800 middle translate-y-[2px]">Animations</div>
-                <div onClick={() =>  setType('JDR')} className="w-[45%] h-5/6 text-white text-center bg-zinc-800 middle translate-y-[2px]">Jeux de rôle</div>
+            <div className="flex flex-col justify-center h-[200px] items-center">
+              <div className="w-4/5 h-12 flex justify-around items-end font-['chancery'] text-xl">
+                <div onClick={() => setType('Animations') } className={clsx("w-[45%] h-5/6 text-purple-base border-purple-base border border-solid text-center middle translate-y-[2px]", type === 'Animations' ? 'font-bold border-2 ': '')}>Animations</div>
+                <div onClick={() =>  setType('JDR')} className={clsx("w-[45%] h-5/6 text-center text-purple-base border-purple-base border border-solid middle translate-y-[2px]", type === 'JDR' ? 'font-bold border-2 ': '')}>Jeux de rôle</div>
               </div>
             </div>
             <Activities type={type} date={date} eventId={id} />

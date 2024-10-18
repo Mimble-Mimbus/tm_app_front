@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage } from "@ionic/react"
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 
 const Accueil: FC = () => {

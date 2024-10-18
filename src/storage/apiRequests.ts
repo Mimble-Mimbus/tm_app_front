@@ -289,6 +289,7 @@ export const dbMutations: IDbMutations = {
           throw new Error('invalide rpgZone id')
         }
         const rpg = await repo(Rpg).findOne({ where: { id: rpgActivity.rpg.id }, relations: { rpgActivities: true }}) || new Rpg()
+        rpg.id = rpgActivity.rpg.id
         rpg.description = rpgActivity.rpg.description
         rpg.name = rpgActivity.rpg.name
         rpg.publisher = rpgActivity.rpg.publisher
@@ -326,11 +327,12 @@ export const dbMutations: IDbMutations = {
 
     await em.save([
       ...rpgActivities.map(x => x.user),
-      ...entertainments, ...rpgActivities,
-      ...removeDuplicate(rpgActivities.map(x => x.rpg)),
       ...removeDuplicate(entertainments.map(x => x.entertainmentType)),
-      ...entertainments.map(x => x.entertainmentSchedules).flat(), 
+      ...removeDuplicate(rpgActivities.map(x => x.rpg)),
       ...rpgActivities.map(x => x.rpgTables).flat(), 
+      ...entertainments, 
+      ...rpgActivities,
+      ...entertainments.map(x => x.entertainmentSchedules).flat(), 
     ])
   },
   '/{activityType}/{id}': async (activity, { activityType, id }) => {

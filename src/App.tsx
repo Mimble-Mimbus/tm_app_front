@@ -15,6 +15,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import 'swiper/swiper-bundle.css'
 
 /* Theme variables */
 import './theme/variables.css';
@@ -86,10 +87,7 @@ const App: FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonMenu contentId={menuId} menuId="navMenuControl">
-          <IonHeader>
-            <IonImg src={imgUrl} alt="dishonored" />
-          </IonHeader>
-          <IonContent color={"purple"} className="ion-padding">
+          <IonContent className="ion-padding">
             <Menu />
           </IonContent>
         </IonMenu>

@@ -29,7 +29,7 @@
 }
 
 .ion-color-base {
-  --ion-color-base: #fefcfd
+  --ion-color-base: #f5f1e6
 }
 
 
@@ -52,11 +52,6 @@
 
 #OSMap {
   aspect-ratio : 5 / 4
-}
-
-.md body {
-  --ion-text-color: black;
-  --ion-background-color: white;
 }
 
 .only-corner {
@@ -89,12 +84,13 @@
 
 .stroke-yellow {
   color: #3D1B47;
-  -webkit-text-stroke: 0.6px #f3ddb4;
+  -webkit-text-stroke: 0.01px #f3ddb4;
+  font-weight: 700;
 }
 
 .bg-gradiant {
   background: rgb(254,252,253);
-  background: linear-gradient(90deg, rgba(254,252,253,1) 0%, rgba(245,241,230,1) 5%, rgba(245,241,230,1) 95%, rgba(254,252,253,1) 100%);
+  background: linear-gradient(90deg, rgba(254,252,253,1) 4%, rgba(245,241,230,1) 22%, rgba(245,241,230,1) 78%, rgba(254,252,253,1) 97%);
 }
 
 .qr-icon {

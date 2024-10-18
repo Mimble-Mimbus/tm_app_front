@@ -17,7 +17,7 @@ const Informations: FC<EventParams> = ({ match }) => {
 
   return (
     data ?
-      <IonPage className="bg-white flex flex-col items-center justify-start">
+      <IonPage className="flex flex-col items-center justify-start">
         {
           isOnPhone && <>
             <h1 className="font-bold text-lg my-8">Informations pratiques</h1>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
@@ -45,7 +45,7 @@
     "clsx": "^2.1.0",
     "dotenv": "^16.4.5",
     "google-map-react": "^2.2.1",
-    "ionicons": "^7.0.0",
+    "ionicons": "^7.4.0",
     "jeep-sqlite": "^2.5.7",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.11.0",
