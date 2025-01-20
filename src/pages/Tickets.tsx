@@ -13,7 +13,7 @@ const Tickets: FC = () => {
     })
 
   }, [])
-  return (<IonPage className="h-full bg-slate-50">
+  return (<IonPage className="h-full">
     <div className="h-full">
     {tickets ? 
       <SwiperWrapper>

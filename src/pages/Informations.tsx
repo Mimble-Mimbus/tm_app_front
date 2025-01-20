@@ -17,22 +17,17 @@ const Informations: FC<EventParams> = ({ match }) => {
 
   return (
     data ?
-      <IonPage className="flex flex-col items-center justify-start">
+      <IonPage className="flex flex-col items-center justify-start font-['centurygothic']">
+        {isOnPhone && <h1 className="font-bold text-lg my-8">Informations pratiques</h1>} 
         {
-          isOnPhone && <>
-            <h1 className="font-bold text-lg my-8">Informations pratiques</h1>
-            <div className="text-white bg-purple-950 rounded-md py-4 px-8 font-bold mb-5">Carte interactive</div>
-          </>
-        } 
-        {
-          isOnPhone ? <div className="w-full space-y-4">
+          isOnPhone ? <div className="w-full space-y-12 items-center flex flex-col">
             <HidingContainer className="space-y-2 text-sm flex flex-col items-start" title="Horaires et lieu" icon={timeOutline}>
-              <div className="mt-2 ml-4 space-y-2">
+              <div className="mt-2 ml-4 space-y-2 ">
                 <p className="whitespace-pre-wrap">{data.address} </p>
                 {
                   getDates(data.openDays).map(({ dayEnd, dayStart }, index) => {
-                    return (<div key={index}>
-                      <p>Horaires du {week[dayStart.getDay()]}</p>
+                    return (<div key={index} className="border border-purple-base rounded py-2 w-fit flex px-1 space-x-2">
+                      <p>Horaires du {week[dayStart.getDay()]} :</p>
                       <p>de {time(dayStart)} à {time(dayEnd)}</p>
                     </div>)
                   })
@@ -41,14 +36,12 @@ const Informations: FC<EventParams> = ({ match }) => {
           </HidingContainer>
           <HidingContainer title="Navettes" icon={timeOutline}>
             {data.transits.sort((a, b) => (new Date(a.start).getTime() - new Date(b.start).getTime())).map((transit, index) => (
-              <div key={index} className="text-black flex space-x-3 ml-4 text-sm mt-2">
+              <div key={index} className="text-black flex space-x-3 ml-4 text-sm mt-2 border border-purple-base rounded py-2 px-1">
+                <p>{transit.name}</p>
                 <p>{week[new Date(transit.start).getDay()]}</p>
                 <p>{time(new Date(transit.start))}</p>
               </div>
             ))}
-          </HidingContainer>
-          <HidingContainer title="Animations" icon={timeOutline}>
-            
           </HidingContainer>
           <HidingContainer title="Restaurations" icon={timeOutline}>
             <div className="middle flex flex-col">

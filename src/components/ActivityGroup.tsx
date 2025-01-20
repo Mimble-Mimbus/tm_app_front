@@ -22,11 +22,11 @@ const ActivityGroup: FC<{ activity: ApiRpgActivity | ApiEntertainment, eventId: 
   }
 
   return <>
-    {activity.schedules.filter(filterFromDate).map((schedule) => <Balise title={activity.name} key={schedule.id} className="w-full mt-4">
+    {activity.schedules.filter(filterFromDate).map((schedule) => <Balise title={activity.name} key={schedule.id} className="w-full border border-purple-base rounded-sm mt-4">
       <IonItem  className="w-full" color="white" lines="none" routerLink={`/event/${eventId}/activity/${type}/${activity.id}`}> 
-        <div className="w-full flex justify-between text-sm">
+        <div className="w-full flex justify-between text-sm items-center text-purple-base">
           <p className="w-1/3 ml-4">{firstToUpper(week[new Date(schedule.start).getDay()])} : {time(new Date(schedule.start))}</p>
-          <p className="w-1/3 text-center">{activity.name}</p>
+          <p className="w-1/3 text-center font-['centurygothic']">{activity.name}</p>
         </div>
       </IonItem>
     </Balise>)}

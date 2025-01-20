@@ -10,18 +10,25 @@ import errorStore from "../store/errorStore";
 
 const Router: FC = () => {
   const isOnPhone = useMediaQuery('(max-width: 768px)')
+
+  function isActive (route: RouteData) {
+    return 'isActivated' in route ? (route.isActivated !== false) : true
+  }
+
   function render (props: RouterProps, Component: any, routeInfo: RouteData) {
     if (routeInfo.auth && !authStore.isLogged) {
       return <Redirect from={props.history.location.pathname} to='/login'/>
     }
     errorStore.clear()
-    return <Component {...props} />
+    return  <>
+      <Component {...props} />
+    </>
   }
   return (
-    <IonRouterOutlet>
+    <IonRouterOutlet className="z-20">
       <Switch>
-        {router.filter(route => isOnPhone ? (route.type !== 'web') : (route.type !== 'app') ).map((route, index) => (
-          <Route key={index} exact path={route.path} render={(props) => render(props, pages[route.pageName], route)} />
+        {router.filter(route => isActive(route) && (isOnPhone ? (route.type !== 'web') : (route.type !== 'app')) ).map((route, index) => (
+          <Route  key={index }exact path={route.path} render={(props) => render(props, pages[route.pageName], route)} />
         ))}
       </Switch>
     </IonRouterOutlet>

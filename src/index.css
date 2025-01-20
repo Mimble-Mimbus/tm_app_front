@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --base-background-color:rgba(255, 255, 255, 0.1);
+}
+
 @font-face {
   font-family: "chancery";
   src: url("./assets/fonts/BLKCHCRY.TTF");
@@ -14,6 +18,11 @@
 @font-face {
   font-family: "solander";
   src: url("./assets/fonts/solander.ttf");
+}
+
+@font-face {
+  font-family: "centurygothic";
+  src: url('./assets/fonts/CenturyGothic.ttf');
 }
 
 input::-webkit-outer-spin-button,
@@ -42,7 +51,6 @@ input[type=number] {
 .ion-color-base {
   --ion-color-base: #f5f1e6
 }
-
 
 .horizontal_dotted_line {
   display: flex;
@@ -86,11 +94,11 @@ input[type=number] {
 }
 
 .input {
-   @apply px-4 py-3 border-gray-500 rounded-md border-[1px] bg-white w-full
+   @apply px-4 py-3 border-purple-base text-purple-base rounded-md border-[1px] bg-white w-full
 }
 
 .title {
-  @apply w-auto text-center font-bold md:font-medium text-3xl md:text-xl mt-10 mb-16 md:mb-4 md:mt-6
+  @apply text-center font-bold md:font-medium text-3xl md:text-xl mt-10 mb-16 md:mb-4 md:mt-6
 }
 
 .stroke-yellow {
@@ -100,14 +108,17 @@ input[type=number] {
 }
 
 .bg-gradiant {
-  background: rgb(254,252,253);
-  background: linear-gradient(90deg, rgba(254,252,253,1) 4%, rgba(245,241,230,1) 22%, rgba(245,241,230,1) 78%, rgba(254,252,253,1) 97%);
-}
-
-.qr-icon {
-  max-width: 200px;
+  background: var(--base-background-color);
 }
 
 .button-voluntary {
   @apply w-11/12 bg-purple-base text-white rounded-sm text-center h-14 middle text-lg font-bold
+}
+
+ion-content {
+  background: rgba(255, 255, 255, 0)
+}
+
+.app-content {
+  background: linear-gradient(90deg, rgba(254,252,253,1) 4%, rgba(245,241,230,1) 22%, rgba(245,241,230,1) 78%, rgba(254,252,253,1) 97%);
 }

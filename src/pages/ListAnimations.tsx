@@ -23,7 +23,7 @@ const ListAnimation: FC<EventParams> = ({ match }) => {
   return (<IonPage>
     {data &&
         <IonContent className="h-full w-full">
-          <div className="flex flex-col h-full w-full">
+          <div className="flex flex-col h-full w-full z-10">
           {isOnPhone ? <>
             <div className="flex flex-col justify-center h-[200px] items-center">
               <div className="w-4/5 h-12 flex justify-around items-end font-['chancery'] text-xl">

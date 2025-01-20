@@ -11,11 +11,11 @@ const HidingContainer: FC<PropsWithChildren<{ title: string, icon?: string, clas
     setShowChildren(val => !val)
   }
 
-  return (<div className="w-full flex flex-col">
-    <div className={clsx('z-10', titleClassName || 'w-full h-12 rounded-md bg-gray-400 flex justify-between text-white')}>
+  return (<div className="w-5/6 flex flex-col"> 
+    <div className={clsx('z-10', titleClassName || 'w-full h-12 rounded-md bg-purple-base flex justify-between text-white')}>
       <div className="h-full flex w-full items-center">
         <IonIcon className="h-3/5 w-[10%] ml-1" icon={icon} />
-        <div className="ml-3 w-auto font-bold flex items-center font-['alice']">{ title }</div>
+        <div className="ml-3 w-auto font-bold flex text-md items-center font-['centurygothic']">{ title }</div>
       </div>
       <IonIcon onClick={show} className="h-2/3 w-1/6 mr-2 self-center" icon={!showChildren ? chevronDownOutline : chevronUpOutline} />
     </div>

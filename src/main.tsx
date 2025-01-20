@@ -36,6 +36,7 @@ await applyPolyfills().then(() => {
     if (!dataSource.isInitialized) {
       await dataSource.initialize()
     }
+    // await dataSource.dropDatabase()
 
     if (await dataSource.showMigrations()) {
       await dataSource.runMigrations()

@@ -1,4 +1,4 @@
-import { IonImg, IonPage } from "@ionic/react"
+import { IonPage } from "@ionic/react"
 import { FC } from "react"
 import map from '../assets/img/Carte TM Double + Jeux de Piste-1.png'
 import { Pagination, Scrollbar, Zoom } from "swiper/modules"

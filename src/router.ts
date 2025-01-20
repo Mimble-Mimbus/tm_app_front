@@ -7,9 +7,9 @@ export interface RouteData {
   readonly pageName :string
   readonly type?: PageType
   readonly auth?: boolean
+  readonly isActivated?: boolean
 }
 
-//@ts-ignore
 export const router = [
   
   {
@@ -21,15 +21,17 @@ export const router = [
     path: '/event/:idevent/animation-creation',
     pageName: 'AnimationCreation',
     type: 'all',
-    auth: true
+    auth: true,
+    isActivated: false
   }, {
     path: '/event/:idevent/activity/:type/:id',
     pageName: "Animation",
     type: 'all',
   }, {
     path: '/event/:idevent/quest',
-    pageName: "Quest",
+    pageName: "QuestDetails",
     type: 'all',
+    isActivated: false
   },  {
     path: '/event/:idevent/informations',
     pageName: "Informations",
@@ -41,8 +43,9 @@ export const router = [
   }, {
     path: '/account',
     pageName: "Account",
-    // auth: true,
+    auth: true,
     type: 'all',
+    isActivated: false
   }, {
     path: '/event/:idevent/animations',
     pageName: "ListAnimations",
@@ -51,6 +54,7 @@ export const router = [
     path: '/event/:idevent/caracter-card',
     pageName: "CaracterCard",
     type: 'all',
+    isActivated: false
   }, {
     path: '/event/:idevent/voluntary-interface',
     pageName: "VoluntaryInterface",
@@ -67,19 +71,23 @@ export const router = [
   }, {
     path: '/login',
     pageName: 'Login',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   }, {
     path: '/generate-migration',
     pageName: 'GenerateMigration',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   }, {
     path: '/event/:idevent/quests',
     pageName: 'Quests',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   }, {
     path: '/quest-details/:id',
     pageName: 'QuestDetails',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   },{
     path: '/contact',
     pageName: 'Contact',
@@ -87,25 +95,29 @@ export const router = [
   }, {
     path: '/register-account',
     pageName: 'RegisterAccount',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   }, {
     path: '/verify-email',
     pageName: 'VerifyEmail',
-    type: 'web'
+    type: 'web',
+    isActivated: false
   }, {
     path: '/forgot-password',
     pageName: 'ForgotPassword',
-    type: 'all'
+    type: 'all',
+    isActivated: false
   }, {
     path: '/reset-password',
     pageName: 'ResetPassword',
     type: 'web',
+    isActivated: false
   }, {
     path: '*',
     pageName: 'NotFound',
-    type: 'all'
+    type: 'all',
   }
-] satisfies RouteData[]
+] as const satisfies RouteData[]
 
 export interface EventParams<T extends Record<string, any> = {}> extends RouteComponentProps<T & { idevent: string }> {}
 export interface IdParams <T extends Record<string, any> = {}> extends RouteComponentProps<T & { id: string }> {}

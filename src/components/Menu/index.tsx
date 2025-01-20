@@ -43,7 +43,7 @@ const Menu: FC = () => {
   }
 
   return (
-    <nav className="bg-gradiant h-full w-full ion-padding">
+    <nav className="h-full w-full ion-padding">
       {linkList.map((link, index) => (
         <MenuLink key={index} link={link.path} content={link.title} icon={link.icon}/>
       ))}

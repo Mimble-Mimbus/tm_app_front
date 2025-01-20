@@ -1,4 +1,4 @@
-import { IonApp, IonContent, IonHeader, IonImg, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
+import { IonApp, IonContent, IonMenu, IonPage, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,7 +24,6 @@ import Menu from './components/Menu';
 import Footer from './components/Footer';
 import HeaderMobile from './components/HeaderMobile';
 import HeaderWeb from './components/HeaderWeb';
-import imgUrl from './assets/img/dishonored.jpg'
 import { useMediaQuery } from 'usehooks-ts';
 import { useQRCodeScanner } from './components/useQRCodeScanner';
 import { FC, useEffect, useState } from 'react';
@@ -40,8 +39,11 @@ import { isDbAvailable } from './utils';
 import { QrCodeData } from './types/qrcode';
 import Modal from './components/Modal';
 
+import castleFooterSrc  from './assets/img/castle_footer.png'
+
 setupIonicReact();
 
+const defaultBg = 'linear-gradient(90deg, rgba(254,252,253,1) 4%, rgba(245,241,230,1) 22%, rgba(245,241,230,1) 78%, rgba(254,252,253,1) 97%)'
 const menuId = "navMenu"
 
 const App: FC = () => {
@@ -85,9 +87,11 @@ const App: FC = () => {
 
   useEffect(() => {
     (async() => {
+      document.documentElement.style.setProperty('--base-background-color', defaultBg)
       await authStore.initialize()
       errorStore.initialise()
       await fetchApi.get<ApiBaseEvent>(`/next_event`).then(async({ data }) => {
+        console.log(data)
         if (isDbAvailable()) {
           const event = await repo(Event).findOneBy({ id: data.id })
           if (!event) {
@@ -104,11 +108,11 @@ const App: FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonMenu contentId={menuId} menuId="navMenuControl">
-          <IonContent className="ion-padding">
+          <IonContent className="ion-padding bg-gradiant">
             <Menu />
           </IonContent>
         </IonMenu>
-        <IonPage id={menuId}>
+        <IonPage id={menuId} className='app-content'>
           <Modal isOpen={isOpen} timeout={2000} toggle={setIsopen} useBackdrop={true} onClose={() => setMsg(undefined)}>
             <div className='p-12 text-center'>
                 {error && msg ? <p className='text-xl text-red-600 font-bold h-full w-full'>{msg}</p> :
@@ -118,6 +122,7 @@ const App: FC = () => {
            {isOnPhone ? <HeaderMobile scan={scanQrcode} /> : <HeaderWeb />}
           <IonContent> 
             {!isLoading && <Router />}
+            <img src={castleFooterSrc}  className="absolute bottom-2 w-4/5 max-w-[500px] right-0 pointer-events-none z-10" alt="castle" />
           </IonContent>
           {isOnPhone && <Footer />}
         </IonPage>
