@@ -9,6 +9,7 @@ export default defineConfig({
     legacy()
   ],
   esbuild: {
+    keepNames: true,
     supported: {
       'top-level-await': true
     },
@@ -16,8 +17,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: 'esnext'
+      target: 'esnext',
+      keepNames: true,
     },
-    exclude: ['js-big-decimal']
+    exclude: ['jeep-sqlite/loader', 'js-big-decimal']
   }
 })
