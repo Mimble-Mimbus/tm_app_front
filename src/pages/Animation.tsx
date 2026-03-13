@@ -11,6 +11,7 @@ import { useWindow } from "../hook/useWindow"
 import FormError from "../components/FormError"
 
 import imageDragonSrc from '../assets/img/dragon_articles.png'
+import clsx from "clsx"
 
 const activityTypeDict: Record<string,any> = {
   'entertainment': 'Animation',
@@ -97,27 +98,29 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
                   <p className="ml-5">Plus que {currentSchedule?.availableSeats} places restantes !</p> 
                 </div>  
               </div>
-              <form onSubmit={submit} className="self-start mt-8 space-y-6 w-full">
-                <IonRadioGroup class="flex flex-col space-y-6 w-full" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
-                  {data.schedules.map(schedule => {
-                    const date = new Date(schedule.start)
-                    return <IonRadio key={schedule.id} className="text-xl md:text-base w-full" value={schedule.id} justify="start" labelPlacement="end" color="purple">
-                       Créneau de {week[date.getDay()]} {time(date)}
-                    </IonRadio>
-                  })}
-                </IonRadioGroup>
-                <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
-                  {places.map((num, index) => (
-                    <option value={num} key={index}>{num} places</option>
-                  ))}
-                </select>
-                <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
-                <FormError path="name"/>
-                <input type="number" className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
-                <FormError path="phoneNumber"/>
-                <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
-                <FormError path="email"/>
-                <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
+              <form onSubmit={submit} className={clsx(currentSchedule?.availableSeats! < 1 ? "opacity-50 ": " ", "mt-8 w-full")}>
+                <fieldset disabled={currentSchedule?.availableSeats! < 1} className="self-start space-y-6 w-full">
+                  <IonRadioGroup class="flex flex-col space-y-6 w-full" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
+                    {data.schedules.map(schedule => {
+                      const date = new Date(schedule.start)
+                      return <IonRadio key={schedule.id} className="text-xl md:text-base w-full" value={schedule.id} justify="start" labelPlacement="end" color="purple">
+                        Créneau de {week[date.getDay()]} {time(date)}
+                      </IonRadio>
+                    })}
+                  </IonRadioGroup>
+                  <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
+                    {places.map((num, index) => (
+                      <option value={num} key={index}>{num} places</option>
+                    ))}
+                  </select>
+                  <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
+                  <FormError path="name"/>
+                  <input type="number" className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
+                  <FormError path="phoneNumber"/>
+                  <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
+                  <FormError path="email"/>
+                  <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
+                </fieldset>
               </form>
             </div>
           </div>

@@ -17,7 +17,7 @@ const Informations: FC<EventParams> = ({ match }) => {
 
   return (
     data ?
-      <IonPage className="flex flex-col items-center justify-start font-['centurygothic']">
+      <IonPage className="flex flex-col items-center justify-start font-['centurygothic'] overflow-scroll">
         {isOnPhone && <h1 className="font-bold text-lg my-8">Informations pratiques</h1>} 
         {
           isOnPhone ? <div className="w-full space-y-12 items-center flex flex-col">

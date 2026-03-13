@@ -122,3 +122,9 @@ ion-content {
 .app-content {
   background: linear-gradient(90deg, rgba(254,252,253,1) 4%, rgba(245,241,230,1) 22%, rgba(245,241,230,1) 78%, rgba(254,252,253,1) 97%);
 }
+
+@media (hover: hover) {
+  .borderhover {
+    @apply hover:border-green-600 hover:rounded-lg hover:border
+  }
+}

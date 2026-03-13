@@ -91,7 +91,6 @@ const App: FC = () => {
       await authStore.initialize()
       errorStore.initialise()
       await fetchApi.get<ApiBaseEvent>(`/next_event`).then(async({ data }) => {
-        console.log(data)
         if (isDbAvailable()) {
           const event = await repo(Event).findOneBy({ id: data.id })
           if (!event) {

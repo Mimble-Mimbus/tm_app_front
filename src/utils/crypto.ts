@@ -1,3 +1,5 @@
+/* not imported because crypto API not working in android */
+
 import { nativeStorage } from "./nativeStorage";
 
 const subtle = window.crypto.subtle

@@ -6,13 +6,13 @@ import { observer } from "mobx-react";
 const Footer: FC = () => {
   return (
     <div className="flex content-between h-16 w-full">
-        <button className="stroke-yellow font-bold align-bottom mx-auto font-['chancery'] text-xl" >
+        <button className="stroke-yellow font-bold align-bottom mx-auto font-['chancery'] text-xl opacity-50" >
           Programme
         </button>
         <Link to={`/event/${eventStore.eventId}/interactive-map`} className="stroke-yellow font-bold align-bottom mx-auto font-['chancery'] text-xl middle" >
           Plan
         </Link>
-        <button className="stroke-yellow font-bold align-bottom mx-auto font-['chancery'] text-xl" >
+        <button className="stroke-yellow font-bold align-bottom mx-auto font-['chancery'] text-xl opacity-50" >
           Ma visite
         </button>
     </div>

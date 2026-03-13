@@ -1,4 +1,5 @@
 import { RouteComponentProps } from 'react-router'
+import { isDbAvailable } from './utils'
 
 export type PageType = "all" | "app" | "web"
 
@@ -10,9 +11,7 @@ export interface RouteData {
   readonly isActivated?: boolean
 }
 
-export const router = [
-  
-  {
+export const router = [{
     path: '/',
     pageName: "Accueil",
     type: 'all',
@@ -67,27 +66,25 @@ export const router = [
   }, {
     path: '/tickets',
     pageName: 'Tickets',
-    type: 'app'
+    type: 'app',
+    isActivated: isDbAvailable()
   }, {
     path: '/login',
     pageName: 'Login',
     type: 'all',
-    isActivated: false
   }, {
     path: '/generate-migration',
     pageName: 'GenerateMigration',
     type: 'all',
-    isActivated: false
+    isActivated: import.meta.env.DEV
   }, {
     path: '/event/:idevent/quests',
     pageName: 'Quests',
     type: 'all',
-    isActivated: false
   }, {
     path: '/quest-details/:id',
     pageName: 'QuestDetails',
     type: 'all',
-    isActivated: false
   },{
     path: '/contact',
     pageName: 'Contact',
@@ -96,22 +93,18 @@ export const router = [
     path: '/register-account',
     pageName: 'RegisterAccount',
     type: 'all',
-    isActivated: false
   }, {
     path: '/verify-email',
     pageName: 'VerifyEmail',
     type: 'web',
-    isActivated: false
   }, {
     path: '/forgot-password',
     pageName: 'ForgotPassword',
     type: 'all',
-    isActivated: false
   }, {
     path: '/reset-password',
     pageName: 'ResetPassword',
     type: 'web',
-    isActivated: false
   }, {
     path: '*',
     pageName: 'NotFound',

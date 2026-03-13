@@ -42,7 +42,7 @@ await applyPolyfills().then(() => {
       await dataSource.runMigrations()
     }
 
-    await loadTickets()
+    // await loadTickets()
     await saveDb()
   }
 

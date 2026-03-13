@@ -23,7 +23,6 @@ const ResetPassword: FC = () => {
   }, [])
 
   useUpdateEffect(() => {
-    console.log(password, confirmPassword)
     if ((password == confirmPassword)) {
       setIsPassWordInvalid(false)
     } else {

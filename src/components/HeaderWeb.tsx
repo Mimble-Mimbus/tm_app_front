@@ -5,7 +5,7 @@ import eventStore from "../store/eventStore";
 
 
 const Link: FC<PropsWithChildren<{ path: string }>> = ({children, path}) => (
-  <IonItem lines="none" className="text-secondary font-sans font-medium" color="purple" routerLink={path}>{children}</IonItem>
+  <IonItem lines="none" className="text-secondary font-['centurygothic'] font-medium text-lg" color="purple" routerLink={path}>{children}</IonItem>
 )
 
 
@@ -13,8 +13,10 @@ const HeaderWeb: FC = observer(() => {
   const id = eventStore.eventId
   return (
     <IonHeader>
-      <IonToolbar color="purple">
-        <h1 className="text-secondary flex items-center font-bold w-full justify-center text-4xl h-[15vh]"> Terra Mimbusia </h1>
+      <IonToolbar className="bg-aura">
+        <div className=" text-purple-base font-['chancery'] flex items-center font-bold w-full justify-center text-4xl h-[15vh]">
+          <h1 className="border border-purple-base rounded-lg py-3 px-5"> Terra Mimbusia</h1> 
+        </div>
         <nav className="flex justify-around">
           <div className="flex">
             <Link path="/program"> Programme </Link>

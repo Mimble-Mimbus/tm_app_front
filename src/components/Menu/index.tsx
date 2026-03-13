@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import eventStore from "../../store/eventStore";
 import authStore from "../../store/authStore";
 import { map, albums, person, home, informationCircle, megaphone, people   } from "ionicons/icons";
+import { isDbAvailable } from "../../utils";
 
 const Menu: FC = () => {
   const data = eventStore.eventId
@@ -42,10 +43,20 @@ const Menu: FC = () => {
     })
   }
 
+  if (isDbAvailable()) {
+    linkList.push( {
+      title: 'Billets',
+      path: '/tickets',
+      icon: albums
+    })
+  } 
+
   return (
     <nav className="h-full w-full ion-padding">
       {linkList.map((link, index) => (
-        <MenuLink key={index} link={link.path} content={link.title} icon={link.icon}/>
+        <div className="borderhover ion-activatable" key={index}>
+          <MenuLink link={link.path} content={link.title} icon={link.icon}/>
+        </div>
       ))}
     </nav>
   )
