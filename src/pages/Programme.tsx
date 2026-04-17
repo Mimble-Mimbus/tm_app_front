@@ -3,7 +3,9 @@ import { FC } from "react";
 
 const Programme: FC = () => {
   return (<IonPage className="middle">
-      <p>Voici le programme du Weekend</p>
+      <h1>Voici le programme du Weekend</h1>
+      <img src="../assets/img/dishonored.jpg" alt="Programme de la journée du Samedi"></img>
+      <img  src="../assets/img/dishonored.jpg" alt="Programme de la journée du Dimanche"></img>
   </IonPage>)
 }
 
