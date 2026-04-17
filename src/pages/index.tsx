@@ -19,5 +19,6 @@ import RegisterAccount from './RegisterAccount'
 import VerifyEmail from './VerifyEmail'
 import ResetPassword from './ResetPassword'
 import ForgotPassword from './ForgotPassword'
+import Programme from './Programme'
 
-export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact, RegisterAccount, VerifyEmail, ResetPassword, ForgotPassword }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact, RegisterAccount, VerifyEmail, ResetPassword, ForgotPassword, Programme }
