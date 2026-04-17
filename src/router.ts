@@ -106,6 +106,10 @@ export const router = [{
     pageName: 'ResetPassword',
     type: 'web',
   }, {
+    path: '/Programme',
+    pageName: 'Programme',
+    type: 'web',
+  },{
     path: '*',
     pageName: 'NotFound',
     type: 'all',
