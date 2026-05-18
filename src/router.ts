@@ -110,6 +110,10 @@ export const router = [{
     pageName: 'Programme',
     type: 'app',
   },{
+    path: '/ldvelh',
+    pageName: 'Ldvelh',
+    type: 'app',
+  },{
     path: '*',
     pageName: 'NotFound',
     type: 'all',
