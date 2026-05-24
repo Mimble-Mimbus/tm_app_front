@@ -13,7 +13,7 @@ const Guildes: FC = () => {
 				<img src="https://imgs.search.brave.com/sr5pmLgharwZW2e0mgJ1hQwZQFAOtsrOingLaxvTa34/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMjIx/NDQ2OTc4OS9mci9w/aG90by9zY2lucXVl/LWNyb2NvZGlsZS1h/dXgteWV1eC1yb3Vn/ZXMuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPWlHSGEzUWRJ/VHAxb2xXbDhueU15/T2N0alJ3MDZYSkVT/N2hoekZJRXVjdkU9" alt="Image de la tuile">
 				</img>
 				<p>
-					Pas de crainte, nous sommes là !
+					Pas de crainte, nous sommes là
 				</p>
 			</div>
 			<div className="tuile-verso">
