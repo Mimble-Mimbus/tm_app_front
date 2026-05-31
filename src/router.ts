@@ -36,7 +36,7 @@ export const router = [{
     pageName: "Informations",
     type: 'all',
   }, {
-    path: '/mimble-mibus',
+    path: '/mimble-mimbus',
     pageName: "MimbleMimbus",
     type: 'all',
   }, {
@@ -106,6 +106,18 @@ export const router = [{
     pageName: 'ResetPassword',
     type: 'web',
   }, {
+    path: '/programme',
+    pageName: 'Programme',
+    type: 'app',
+  },{
+    path: '/ldvelh',
+    pageName: 'Ldvelh',
+    type: 'app',
+  },{
+    path: '/guildes',
+    pageName: 'Guildes',
+    type: 'app',
+  },{
     path: '*',
     pageName: 'NotFound',
     type: 'all',
