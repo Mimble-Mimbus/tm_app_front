@@ -114,6 +114,10 @@ export const router = [{
     pageName: 'Ldvelh',
     type: 'app',
   },{
+    path: '/guildes',
+    pageName: 'Guildes',
+    type: 'app',
+  },{
     path: '*',
     pageName: 'NotFound',
     type: 'all',

@@ -21,5 +21,6 @@ import ResetPassword from './ResetPassword'
 import ForgotPassword from './ForgotPassword'
 import Programme from './Programme'
 import Ldvelh from './Ldvelh'
+import Guildes from './Guildes'
 
-export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact, RegisterAccount, VerifyEmail, ResetPassword, ForgotPassword, Programme, Ldvelh }
+export default { Login, Account, Accueil, Animation, AnimationCreation, CaracterCard, Informations, InteractiveMap, VoluntaryInterface, MimbleMimbus, ListAnimations, Tickets, GenerateMigration, NotFound, Quests, QuestDetails, Contact, RegisterAccount, VerifyEmail, ResetPassword, ForgotPassword, Programme, Ldvelh, Guildes }
