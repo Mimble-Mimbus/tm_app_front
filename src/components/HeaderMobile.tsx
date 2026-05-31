@@ -6,6 +6,7 @@ import { qrCode } from 'ionicons/icons'
 import ornamentSrc from '../assets/img/ornament.png'
 import ornamentMirrorSrc from '../assets/img/ornament-mirror.png'
 import burgerFoldSrc from '../assets/img/burger_fold_icon.png'
+import { isMobile } from "../utils";
 
 const HeaderMobile: FC<{ scan: () => Promise<void> }> = ({ scan }) => {
   const router = useIonRouter()
@@ -28,11 +29,11 @@ const HeaderMobile: FC<{ scan: () => Promise<void> }> = ({ scan }) => {
               <span className="text-black text-2xl font-['pala'] uppercase tracking-wide">Mimbusia</span>
             </div>
           </div>
-        <button onClick={scan} className="font-bold stroke-yellow w-1/4 mx-auto text-center font-['chancery'] text-xl flex flex-col">
+        {isMobile  && <button onClick={scan} className="font-bold stroke-yellow w-1/4 mx-auto text-center font-['chancery'] text-xl flex flex-col">
           {/* <img src="src/assets/img/profile_icon.png" alt="profil" className="mx-auto" /> */}
           <IonIcon icon={qrCode} color='purple' className="w-8 h-8 text-purple-base" />
           scan
-        </button>
+        </button>}
       </div>
     </IonHeader>
   );

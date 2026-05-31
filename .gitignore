@@ -34,3 +34,4 @@ yarn-error.log*
 
 /.ionic/ssl/cert.pem
 /.ionic/ssl/key.pem
+.vercel

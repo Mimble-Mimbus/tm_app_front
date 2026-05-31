@@ -21,7 +21,7 @@ export const router = [{
     pageName: 'AnimationCreation',
     type: 'all',
     auth: true,
-    isActivated: false
+    isActivated: true
   }, {
     path: '/event/:idevent/activity/:type/:id',
     pageName: "Animation",
@@ -30,7 +30,7 @@ export const router = [{
     path: '/event/:idevent/quest',
     pageName: "QuestDetails",
     type: 'all',
-    isActivated: false
+    isActivated: true
   },  {
     path: '/event/:idevent/informations',
     pageName: "Informations",
@@ -44,7 +44,7 @@ export const router = [{
     pageName: "Account",
     auth: true,
     type: 'all',
-    isActivated: false
+    isActivated: true
   }, {
     path: '/event/:idevent/animations',
     pageName: "ListAnimations",
