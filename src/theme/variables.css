@@ -316,8 +316,44 @@ http://ionicframework.com/docs/theming/ */
 }
 
 /* --- Le Verso --- */
-.tuile-verso {
-  background-color: #2c3e50; /* Couleur de fond du verso */
+#verso-astrange {
+  background-color: #701226; /* Couleur de fond du verso */
+  color: #ffffff;
+  transform: rotateY(180deg); /* Le verso est retourné par défaut */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+#verso-luxdor {
+  background-color: #bf9b30; /* Couleur de fond du verso */
+  color: #ffffff;
+  transform: rotateY(180deg); /* Le verso est retourné par défaut */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+#verso-ro {
+  background-color: #4c687c; /* Couleur de fond du verso */
+  color: #ffffff;
+  transform: rotateY(180deg); /* Le verso est retourné par défaut */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+#verso-xym {
+  background-color: #003b27; /* Couleur de fond du verso */
   color: #ffffff;
   transform: rotateY(180deg); /* Le verso est retourné par défaut */
   display: flex;

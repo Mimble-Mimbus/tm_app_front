@@ -16,7 +16,7 @@ const Guildes: FC = () => {
 					Pas de crainte, nous sommes là
 				</p>
 			</div>
-			<div className="tuile-verso">
+			<div className="tuile-verso" id="verso-astrange">
 				<p>
 					Impulsifs et passionnés, ils sont les élus de toutes les prophéties, protégeront et étendront leur influence à tous les univers !</p>
 			</div>
@@ -33,7 +33,7 @@ const Guildes: FC = () => {
 					Le savoir, toujours !
 				</p>
 			</div>
-			<div className="tuile-verso">
+			<div className="tuile-verso" id="verso-luxdor">
 				<p>
 					Érudits et inventeurs à l’esprit vif faisant face aux dangers grâce à leur intelligence et leur créativité. 
 				</p>
@@ -53,7 +53,7 @@ const Guildes: FC = () => {
 					Un pas après l'autre !
 				</p>
 			</div>
-			<div className="tuile-verso">
+			<div className="tuile-verso" id="verso-ro">
 				<p>
 					Justiciers à leurs heures perdues, ils sont les modèles de camaraderie et de résilience. Pour eux, le mot “impossible” n’existe pas
 				</p>
@@ -71,7 +71,7 @@ const Guildes: FC = () => {
 					Rétablissons l'équilibre !
 				</p>
 			</div>
-			<div className="tuile-verso">
+			<div className="tuile-verso" id="verso-xym">
 				<p>
 					Proches de la nature et justes, ses membres souhaitent rétablir l’équilibre du monde là où il a été chamboulé.
 				</p>
