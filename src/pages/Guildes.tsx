@@ -55,7 +55,7 @@ const Guildes: FC = () => {
 			</div>
 			<div className="tuile-verso" id="verso-ro">
 				<p>
-					Justiciers à leurs heures perdues, ils sont les modèles de camaraderie et de résilience. Pour eux, le mot “impossible” n’existe pas
+					Justiciers à leurs heures perdues, ils sont les modèles de camaraderie et de résilience. Pour eux, le mot “impossible” n’existe pas.
 				</p>
 			</div>
 		</label>
