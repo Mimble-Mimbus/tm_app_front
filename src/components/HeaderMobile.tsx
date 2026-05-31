@@ -1,22 +1,42 @@
-import { IonButton, IonHeader, IonIcon, IonItem, IonToolbar, useIonRouter } from "@ionic/react";
-import { personOutline, searchOutline } from "ionicons/icons";
+import { IonHeader, IonIcon, useIonRouter } from "@ionic/react";
 import { menuController } from '@ionic/core/components'
-import { FC, useEffect } from "react";
+import { FC } from "react";
+import { qrCode } from 'ionicons/icons'
 
-const HeaderMobile: FC<{scan: () => Promise<void>}> = ({ scan }) => {
+import ornamentSrc from '../assets/img/ornament.png'
+import ornamentMirrorSrc from '../assets/img/ornament-mirror.png'
+import burgerFoldSrc from '../assets/img/burger_fold_icon.png'
+import { isMobile } from "../utils";
+
+const HeaderMobile: FC<{ scan: () => Promise<void> }> = ({ scan }) => {
+  const router = useIonRouter()
   return (
-  <IonHeader color='grey'>
-    <IonToolbar color='grey'>
-      <IonButton slot="start" className="ml-6 w-[13%]" color="purple" onClick={() => menuController.open('navMenuControl')}>
-        <IonIcon className="py-1" icon={personOutline} />
-      </IonButton>
-      <IonButton size="small" slot={'end'} color='purple' className="w-[70px] h-[40px] flex mx-2 middle rounded-lg" onClick={scan}>
-        <IonItem lines="none" color={'purple'} className="w-full h-auto text-white flex flex-col text-xs">
-          <IonIcon className="h-full w-full text-white" icon={searchOutline} />
-        </IonItem>
-      </IonButton>
-    </IonToolbar>
-  </IonHeader>
-)}
+    <IonHeader className="middle h-fit relative z-20 bg-white">
+      <img src={ornamentSrc} className="absolute w-1/3 left-1 top-1 pointer-events-none" alt="" />
+      <img src={ornamentMirrorSrc} className="absolute w-1/3 right-1 top-1 pointer-events-none" alt="" />
+      <div className="flex justify-between items-end w-full px-5 py-2 mb-0">
+        <button className="font-bold stroke-yellow w-1/4 align-bottom mx-auto text-center font-['chancery'] text-xl" onClick={() => menuController.open('navMenuControl')}>
+          <img src={burgerFoldSrc} alt="menu" className="mx-auto" />
+          Menu
+        </button>
+          <div onClick={() => router.push('/')} className="flex flex-col justify-center w-2/4">
+            <div className="text-center relative top-[14px]">
+              <span className="stroke-yellow font-['solander'] text-6xl uppercase font-bold">
+                <span className="text-7xl">T</span>erra
+              </span>
+            </div>
+            <div className="text-center">
+              <span className="text-black text-2xl font-['pala'] uppercase tracking-wide">Mimbusia</span>
+            </div>
+          </div>
+        {isMobile  && <button onClick={scan} className="font-bold stroke-yellow w-1/4 mx-auto text-center font-['chancery'] text-xl flex flex-col">
+          {/* <img src="src/assets/img/profile_icon.png" alt="profil" className="mx-auto" /> */}
+          <IonIcon icon={qrCode} color='purple' className="w-8 h-8 text-purple-base" />
+          scan
+        </button>}
+      </div>
+    </IonHeader>
+  );
+}
 
 export default HeaderMobile

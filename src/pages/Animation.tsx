@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
+import { IonButton, IonContent, IonImg, IonPage, IonRadio, IonRadioGroup } from "@ionic/react"
 import { FC, FormEvent, useEffect, useMemo, useState } from "react"
 import { apiPaths, useApi } from "../hook/useApi"
 import { Schedule } from "../types/activity"
@@ -9,6 +9,14 @@ import Modal from '../components/Modal'
 import { useMediaQuery } from "usehooks-ts"
 import { useWindow } from "../hook/useWindow"
 import FormError from "../components/FormError"
+
+import imageDragonSrc from '../assets/img/dragon_articles.png'
+import clsx from "clsx"
+
+const activityTypeDict: Record<string,any> = {
+  'entertainment': 'Animation',
+  'rpg-activity': 'JDR'
+}
 
 const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
   const { params } = match
@@ -57,18 +65,29 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
       </Modal>
       {data && <IonContent className="w-full">
         <div className="flex flex-col w-full items-center px-8 md:px-0">
-          <h1 className="md:bg-gray-400 title py-2 w-full text-center md:w-2/3">{data.name}</h1>
-          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between md:w-2/3 w-full mt-2">
+          <div className="flex items-end h-[30vh] w-full">
+            <h1 className="md:bg-gray-400 title py-2 w-1/2 text-center md:w-1/3 font-['chancery'] stroke-yellow">{data.name}</h1>
+            <IonImg className="w-[350px] right-4 absolute" src={imageDragonSrc} />
+          </div>
+          {isOnPhone && <div className="h-px border-0 bg-black w-full font-semibold" />}
+          <div className="w-full py-2 flex">
+            <p className="bg-purple-base px-1 h-fit w-fit text-xl font-['chancery'] text-white font-semibold mr-4">{activityTypeDict[params.type]}</p>
+            <div>{data.schedules.map((schedule, index) => {
+              const date = new Date(schedule.start)
+              return <p className="text-purple-base font-['chancery'] text-2xl font-semibold" key={index}>{time(date)}</p>
+            })}</div>
+          </div>
+          {isOnPhone && <div className="h-px border-0 bg-black w-full font-semibold mb-2" />}
+          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between md:w-2/3 w-full mt-2 font-['centurygothic']<">
             {isOnPhone ?  
-              <p className="text-center">{data.description}</p> :
+              <p className="text-center font-['centurygothic']">{data.description}</p> :
               <div className="flex flex-col w-[47%] text-center items-center">
                 <p className="w-full bg-gray-400 py-2 text-xl font-medium">Description</p>
                 <p className="mt-6 w-11/12 text-start">{data.description}</p>
               </div>
             }
-            
             {isOnPhone && <div className="h-px my-6 border-0 bg-black w-full font-semibold" />}
-            <div className="md:w-[47%]">
+            <div className="md:w-[47%] font-['centurygothic']">
               {isOnPhone ? 
                 <p className="text-2xl mb-4 text-center">Reserver</p>:
                 <p className="text-xl py-2 bg-gray-400 font-medium text-center">Horaires et zones</p>
@@ -76,30 +95,32 @@ const Animation: FC<EventAndIdParams<{ type: string }>> = ({ match }) => {
               <div className="w-full h-16 flex">
                 <div className="w-1/6 h-full bg-orange-400"></div>
                 <div className="w-5/6 h-full bg-orange-200 flex items-center">
-                  <p className="ml-5">Plus que {currentSchedule?.availableSeats} restantes !</p> 
+                  <p className="ml-5">Plus que {currentSchedule?.availableSeats} places restantes !</p> 
                 </div>  
               </div>
-              <form onSubmit={submit} className="self-start mt-8 space-y-6 w-full">
-                <IonRadioGroup class="flex flex-col space-y-6 w-full" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
-                  {data.schedules.map(schedule => {
-                    const date = new Date(schedule.start)
-                    return <IonRadio key={schedule.id} className="text-xl md:text-base w-full" value={schedule.id} justify="start" labelPlacement="end" color="purple">
-                       Créneau de {week[date.getDay()]} {time(date)}
-                    </IonRadio>
-                  })}
-                </IonRadioGroup>
-                <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
-                  {places.map((num, index) => (
-                    <option value={num} key={index}>{num} places</option>
-                  ))}
-                </select>
-                <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
-                <FormError path="name"/>
-                <input type="number" className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
-                <FormError path="phoneNumber"/>
-                <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
-                <FormError path="email"/>
-                <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
+              <form onSubmit={submit} className={clsx(currentSchedule?.availableSeats! < 1 ? "opacity-50 ": " ", "mt-8 w-full")}>
+                <fieldset disabled={currentSchedule?.availableSeats! < 1} className="self-start space-y-6 w-full">
+                  <IonRadioGroup class="flex flex-col space-y-6 w-full" value={currentScheduleId} onIonChange={event => setCurrentScheduleId(event.target.value)} >
+                    {data.schedules.map(schedule => {
+                      const date = new Date(schedule.start)
+                      return <IonRadio key={schedule.id} className="text-xl md:text-base w-full" value={schedule.id} justify="start" labelPlacement="end" color="purple">
+                        Créneau de {week[date.getDay()]} {time(date)}
+                      </IonRadio>
+                    })}
+                  </IonRadioGroup>
+                  <select className="input" value={seats} onChange={(event => setSeats(parseInt(event.target.value)))}>
+                    {places.map((num, index) => (
+                      <option value={num} key={index}>{num} places</option>
+                    ))}
+                  </select>
+                  <input className="input" required onChange={event => setName(event.target.value)} placeholder="Votre nom" />
+                  <FormError path="name"/>
+                  <input type="number" className="input" required onChange={event => setPhoneNumber(event.target.value)} placeholder="Votre numéro de téléphone" />
+                  <FormError path="phoneNumber"/>
+                  <input className="input" required onChange={event => setEmail(event.target.value)} placeholder="Votre email" />
+                  <FormError path="email"/>
+                  <IonButton type="submit" className="w-full h-14 text-lg rounded-lg" color="purple">Réserver</IonButton>
+                </fieldset>
               </form>
             </div>
           </div>

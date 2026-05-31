@@ -1,11 +1,46 @@
-import { IonContent, IonPage } from "@ionic/react";
-import { FC } from "react";
+import { IonPage } from "@ionic/react";
+import { FC, useEffect, useState } from "react";
 import { apiPaths, useApi } from "../hook/useApi";
 import { IdParams } from "../router";
+import { useQRCodeScanner } from "../components/useQRCodeScanner";
+import fetchApi from '../utils/axios'
 
 const QuestDetails: FC<IdParams<{ id: string }>> = ({ match }) => {
   const id = match.params.id
   const { data } = useApi(apiPaths.quest, { id })
+  const [isOpen, setIsopen] = useState(false)
+  const [msg, setMsg] = useState<string>()
+  const { scan, error } = useQRCodeScanner(async(value) => {
+    if (error) {
+      setMsg(error)
+      return
+    }
+
+    let rawValue = value[0].rawValue
+    await fetchApi.post('/validate_quest', { qrCode: rawValue })
+      .then((res) => {
+    
+      })
+  })
+  async function scanQrcode () {
+    if (msg) {
+      setIsopen(true)
+    } else {
+      await scan()
+    }
+  }
+
+  useEffect(() => {
+    if (msg) {
+      setIsopen(true)
+    }
+  }, [msg])
+
+  useEffect(() => {
+    if (error) {
+      setMsg(error)
+    }
+  }, [error])
 
   if (!data) return null
 

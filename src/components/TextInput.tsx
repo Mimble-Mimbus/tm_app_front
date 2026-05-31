@@ -35,10 +35,10 @@ const TextInput: FC<ITextInput | ITextInputArea> = ({ name, required, label, onC
   }
 
   return (<label htmlFor={name || label} className="flex flex-col w-11/12">
-    <span className="text-lg font-extrabold flex">{label}</span>
+    <span className="text-lg font-extrabold flex text-purple-base">{label}</span>
     {!textArea ?
-      <input readOnly={readonly} disabled={disabled} max={max} min={min}  type={type} className={clsx("px-4 py-3 bg-white rounded-md border-[1px] w-full mt-3", disabled || readonly ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} /> :
-      <textarea readOnly={readonly} disabled={disabled} className={clsx("px-4 py-3 rounded-md border-[1px] bg-white w-full mt-3 h-32", disabled || readonly ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} />
+      <input readOnly={readonly} disabled={disabled} max={max} min={min}  type={type} className={clsx("px-4 py-3 bg-white rounded-md border-[1px] w-full mt-3 border-purple-base", disabled || readonly ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} /> :
+      <textarea readOnly={readonly} disabled={disabled} className={clsx("px-4 py-3 rounded-md border-[1px] bg-white w-full mt-3 h-32 border-purple-basex<x<", disabled || readonly ? 'text-gray-400 border-gray-400': 'text-black border-gray-500')} name={name || label} onChange={onChange} onBeforeInput={beforeInput} required={required} placeholder={placeHolder} />
     }
     {path && <FormError path={path} />}
   </label>)

@@ -8,12 +8,18 @@ export default defineConfig({
     react(),
     legacy()
   ],
+  base: '/',
+  build: {
+    rollupOptions: {
+      input: './index.html'
+    }
+  },
   esbuild: {
     keepNames: true,
     supported: {
       'top-level-await': true
     },
-    target: 'esnext'
+    target: 'esnext',
   },
   optimizeDeps: {
     esbuildOptions: {
